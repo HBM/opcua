@@ -15,6 +15,7 @@ export default class Client {
   }
 
   public onopen(event: Event): void {
+    console.log('onopen', event)
     this.hello()
   }
 
@@ -36,7 +37,6 @@ export default class Client {
 
     const header = new ConnectionProtocolMessageHeader()
     header.decode(data)
-
 
     switch (header.MessageType) {
       case 'ACK': {

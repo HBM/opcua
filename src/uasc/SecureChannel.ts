@@ -167,7 +167,6 @@ export default class SecureChannel {
           position: offset
         })
 
-
         this.secureChannelId = response.SecurityToken.ChannelId
         this.securityTokenId = response.SecurityToken.TokenId
 

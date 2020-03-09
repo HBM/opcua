@@ -42,7 +42,6 @@ export default class Connection extends EventTarget {
   }
 
   public onmessage = (event: MessageEvent): void => {
-
     const header = new ConnectionProtocolMessageHeader()
     const offset = header.decode(event.data)
 
