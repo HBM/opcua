@@ -13,6 +13,7 @@ import SequenceHeader from '../uasc/SequenceHeader'
 import SymmetricSecurityHeader from '../uasc/SymmetricSecurityHeader'
 import AsymmetricSecurityHeader from '../uasc/AsymmetricSecurityHeader'
 import SecureConversationMessageHeader from '../uasc/SecureConversationMessageHeader'
+import QualifiedName from './QualifiedName'
 
 const factory = (name: string): unknown => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,8 +26,6 @@ const factory = (name: string): unknown => {
       return String()
     case 'uint32':
       return Number()
-    // case 'Uint32Array':
-    //   return new Uint32Array()
     case 'Variant':
       return new Variant()
     case 'DiagnosticInfo':
@@ -55,6 +54,8 @@ const factory = (name: string): unknown => {
       return new AsymmetricSecurityHeader()
     case 'SecureConversationMessageHeader':
       return new SecureConversationMessageHeader()
+    case 'QualifiedName':
+      return new QualifiedName()
     default:
       throw new Error(`unsupported class name: ${name}`)
   }
