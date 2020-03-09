@@ -17,3 +17,13 @@ jobs:
       - run: npm run prettier:ci
       - run: npm run eslint
       - run: npm test
+
+      - name: post coverage
+        env:
+          SERIESCI_TOKEN: ${{ secrets.SERIESCI_TOKEN }}
+        run: |
+          npm t -- --coverage --coverageReporters="text-summary" | grep Statements | awk '{print $3}' | xargs -I {} curl \
+            --header "Authorization: Token ${SERIESCI_TOKEN}" \
+            --data-urlencode value="{}" \
+            --data sha="$(git rev-parse HEAD)" \
+            https://seriesci.com/api/HBM/opcua/coverage/one
