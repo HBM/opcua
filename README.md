@@ -28,9 +28,7 @@ We rely on [reflection and decorators](https://www.typescriptlang.org/docs/handb
 
 The client architecture consists of multiple layers. They closely follow the official OPC UA specification. Read the following diagram from bottom to top. On the right side you find the responsibilities for each layer.
 
-<div style="display: flex; justify-content: center">
-    <img src="https://github.com/hbm/opcua/raw/master/doc/layers.png" alt="layers"/>
-</div>
+![layers](https://github.com/hbm/opcua/raw/master/doc/layers.png)
 
 The OPC UA handshake is quite complex and several steps are necessary to get an active session. Those steps are
 
@@ -41,6 +39,4 @@ The OPC UA handshake is quite complex and several steps are necessary to get an 
 
 The following diagram shows this sequence and highlights response parameters that the client has to store internally (e.g. channel id, token id, authentication token, sequence number, request id).
 
-<div style="display: flex; justify-content: center">
-    <img src="https://github.com/hbm/opcua/raw/master/doc/handshake.png" alt="handshake"/>
-</div>
+![handshake](https://github.com/hbm/opcua/raw/master/doc/handshake.png)
