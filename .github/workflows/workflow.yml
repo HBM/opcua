@@ -1,0 +1,19 @@
+name: Main workflow
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.8'
+      - run: npm ci
+      - run: npm run tsc
+      - run: npm run prettier:ci
+      - run: npm run eslint
+      - run: npm test

@@ -1,0 +1,6 @@
+
+.vscode/
+server
+dist/
+node_modules/
+coverage

@@ -1,0 +1,41 @@
+{
+  "name": "opcua",
+  "version": "1.0.0",
+  "description": "TypeScript / JavaScript OPC UA client for the browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && jest",
+    "tsc": "tsc --skipLibCheck",
+    "watch": "tsc -w --skipLibCheck",
+    "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
+    "prettier:ci": "prettier --list-different \"./**/*.{js,ts,json,html,yml}\"",
+    "eslint": "eslint \"./**/*.{js,ts}\"",
+    "webpack": "webpack --config ./demo/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hbm/opcua.git"
+  },
+  "author": "Mirco Zeiss",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hbm/opcua/issues"
+  },
+  "homepage": "https://github.com/hbm/opcua#readme",
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.1",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "jest": "^25.1.0",
+    "prettier": "1.19.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {}
+}

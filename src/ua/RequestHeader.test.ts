@@ -1,0 +1,40 @@
+import { RequestHeader } from './generated'
+import { NewTwoByteNodeId } from './NodeId'
+import run from './run'
+
+export const NewNullRequestHeader = (): RequestHeader =>
+  new RequestHeader({
+    AuthenticationToken: NewTwoByteNodeId(0),
+    Timestamp: new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
+  })
+
+// prettier-ignore
+export const NullRequestHeaderBytes = new Uint8Array([
+  0x00, 0x00, 0x00, 0x80, 0x3e, 0xd5, 0xde, 0xb1,
+  0x9d, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x00
+])
+
+describe('RequestHeader', () => {
+  run([
+    {
+      name: 'normal',
+      instance: new RequestHeader({
+        Timestamp: new Date(Date.UTC(1601, 0, 1, 0, 0, 0, 0))
+      }),
+      // prettier-ignore
+      bytes: new Uint8Array([
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00
+      ])
+    },
+    {
+      name: 'null',
+      instance: NewNullRequestHeader(),
+      bytes: NullRequestHeaderBytes
+    }
+  ])
+})
