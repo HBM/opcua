@@ -12,10 +12,6 @@ import (
 	"text/template"
 )
 
-// enumeratedTypesZeroValue has the zero value for all enumerated types.
-// e.g. NodeIdType -> NodeIdTypeTwoByte
-var enumeratedTypesZeroValue = map[string]string{}
-
 var builtinTypes = map[string]string{
 	"opc:Boolean":    "boolean",
 	"opc:Byte":       "uint8",
@@ -31,8 +27,7 @@ var builtinTypes = map[string]string{
 	"opc:String":     "string",
 	"opc:DateTime":   "Date",
 	"opc:ByteString": "ByteString",
-	// "ua:StatusCode":  "StatusCode",
-	"opc:Guid": "Guid",
+	"opc:Guid":       "Guid",
 }
 
 func main() {
@@ -49,11 +44,6 @@ func main() {
 	}
 
 	var b bytes.Buffer
-
-	// decorators
-	// if err := tmplDecorators.Execute(&b, decorators); err != nil {
-	// 	log.Fatal(err)
-	// }
 
 	b.WriteString(`
 export const Type = (name: string) => (
@@ -84,21 +74,9 @@ export const TypeArray = (name: string) => (
 		// save zero value for every enumerated type
 		for i, v := range t.EnumeratedValues {
 			if i == 0 {
-				enumeratedTypesZeroValue[t.Name] = v.Name
+				t.ZeroValue = v.Name
 				break
 			}
-		}
-
-		// map length in bits to typescript type
-		switch {
-		case t.LengthInBits <= 8:
-			t.Type = "uint8"
-		case t.LengthInBits <= 16:
-			t.Type = "uint16"
-		case t.LengthInBits <= 32:
-			t.Type = "uint32"
-		default:
-			t.Type = "uint64"
 		}
 
 		if err := tmplEnum.Execute(&b, t); err != nil {
@@ -108,8 +86,6 @@ export const TypeArray = (name: string) => (
 
 	// structured types
 	for _, t := range dict.StructuredTypes {
-		// spew.Dump(t)
-
 		// tns:DataTypeSchemaHeader
 
 		if !(t.BaseType == "ua:ExtensionObject" ||
@@ -138,6 +114,23 @@ export const TypeArray = (name: string) => (
 				continue
 			}
 
+			// check enumerated types
+			for _, et := range dict.EnumeratedTypes {
+				if f.GetReplacedTypeName() == et.Name {
+					f.EnumType = et.GetType()
+					f.ZeroValue = et.ZeroValue
+				}
+			}
+
+			// check opaque types
+			// status code is an opaque type
+			for _, ot := range dict.OpaqueTypes {
+				if f.GetReplacedTypeName() == ot.Name {
+					f.EnumType = ot.GetType()
+					f.ZeroValue = "OK"
+				}
+			}
+
 			fields = append(fields, f)
 		}
 
@@ -155,93 +148,6 @@ export const TypeArray = (name: string) => (
 
 	log.Printf("Wrote %s", out)
 }
-
-// func Enums(dict *typeDictionary) []Type {
-// 	var enums []Type
-// 	for _, t := range dict.EnumeratedTypes {
-// 		spew.Dump(t)
-// 		e := Type{
-// 			// Name: goname.Format(t.Name),
-// 			Name: t.Name,
-// 			Kind: KindEnum,
-// 		}
-
-// 		switch {
-// 		case t.LengthInBits <= 8:
-// 			e.Type = "uint8"
-// 		case t.LengthInBits <= 16:
-// 			e.Type = "uint16"
-// 		case t.LengthInBits <= 32:
-// 			e.Type = "uint32"
-// 		default:
-// 			e.Type = "uint64"
-// 		}
-
-// 		for _, val := range t.EnumeratedValues {
-// 			v := Value{
-// 				// Name:      goname.Format(e.Name + val.Name),
-// 				Name:      e.Name + val.Name,
-// 				ShortName: val.Name,
-// 				Value:     val.Value,
-// 			}
-// 			e.Values = append(e.Values, v)
-// 		}
-// 		enums = append(enums, e)
-// 	}
-// 	return enums
-// }
-
-// type Kind int
-
-// const (
-// 	KindEnum Kind = iota
-// 	KindExtensionObject
-// )
-
-// type Value struct {
-// 	Name      string
-// 	ShortName string
-// 	Value     int
-// }
-
-// type Field struct {
-// 	Name string
-// 	Type string
-// }
-
-// type Type struct {
-// 	// Name is the Go name of the OPC/UA type.
-// 	Name string
-// 	// Type is the Go type of the OPC/UA type.
-// 	Type string
-// 	// Kind is the kind of OPC/UA type.
-// 	Kind Kind
-// 	// Base is the OPC/UA type this type is derived from.
-// 	Base *Type
-// 	// Fields is the list of struct fields.
-// 	Fields []Field
-// 	// Values is the list of enum values.
-// 	Values []Value
-// }
-
-// func writeEnums(enums []Type) {
-// 	var b bytes.Buffer
-// 	for _, enum := range enums {
-// 		// if err := FormatType(w, t); err != nil {
-// 		// 	return err
-// 		// }
-// 		if err := tmplEnum.Execute(&b, enum); err != nil {
-// 			log.Fatal(err)
-// 		}
-// 	}
-
-// 	filename := filepath.Join("..", "..", "src", "ua", "generated.ts")
-// 	if err := ioutil.WriteFile(filename, b.Bytes(), 0644); err != nil {
-// 		log.Fatalf("Failed to write %s: %v", filename, err)
-// 	}
-
-// 	log.Printf("Wrote %s", filename)
-// }
 
 var tmplDecorators = template.Must(template.New("").Parse(`
 {{ range $key, $value := . }}
@@ -262,11 +168,11 @@ import DiagnosticInfo from './DiagnosticInfo'
 import QualifiedName from './QualifiedName'
 import Variant from './Variant'
 import DataValue from './DataValue'
-import { StatusOK } from './StatusCode'
+import { StatusCodeOK } from './StatusCode'
 `))
 
 var tmplEnum = template.Must(template.New("").Parse(`
-type {{ .Name }} = {{ .Type }}
+type {{ .Name }} = {{ .GetType }}
 {{ $Name := .Name }}
 {{ range $v := .EnumeratedValues -}}
 	export const {{ $Name }}{{ $v.Name }}: {{ $Name }} = {{ $v.Value }}
@@ -294,6 +200,7 @@ type typeDictionary struct {
 	XMLName         xml.Name          `xml:"TypeDictionary"`
 	StructuredTypes []*structuredType `xml:"StructuredType"`
 	EnumeratedTypes []*enumeratedType `xml:"EnumeratedType"`
+	OpaqueTypes     []*enumeratedType `xml:"OpaqueType"`
 }
 
 type enumeratedType struct {
@@ -302,6 +209,20 @@ type enumeratedType struct {
 	Documentation    string             `xml:"Documentation"`
 	EnumeratedValues []*enumeratedValue `xml:"EnumeratedValue"`
 	Type             string
+	ZeroValue        string
+}
+
+func (et *enumeratedType) GetType() string {
+	switch {
+	case et.LengthInBits <= 8:
+		return "uint8"
+	case et.LengthInBits <= 16:
+		return "uint16"
+	case et.LengthInBits <= 32:
+		return "uint32"
+	default:
+		return "uint64"
+	}
 }
 
 type enumeratedValue struct {
@@ -331,7 +252,12 @@ type field struct {
 	LengthField string `xml:",attr"`
 	SwitchField string `xml:",attr"`
 	SwitchValue string `xml:",attr"`
-	// IsEnum      bool
+	ZeroValue   string
+	EnumType    string
+}
+
+func (f *field) GetReplacedTypeName() string {
+	return strings.NewReplacer("ua:", "", "tns:", "").Replace(f.TypeName)
 }
 
 func (f *field) GetZeroValue() string {
@@ -342,8 +268,8 @@ func (f *field) GetZeroValue() string {
 	t := f.GetTypeScriptType()
 
 	// check for enumeration type
-	if zeroValue, ok := enumeratedTypesZeroValue[t]; ok {
-		return t + zeroValue
+	if f.ZeroValue != "" {
+		return t + f.ZeroValue
 	}
 
 	switch t {
@@ -352,13 +278,11 @@ func (f *field) GetZeroValue() string {
 	case "int64", "uint64":
 		return "BigInt(0)"
 	case "string":
-		return `''`
+		return "''"
 	case "ByteString":
 		return "new Uint8Array()"
 	case "boolean":
 		return "false"
-	case "StatusCode":
-		return "StatusOK"
 	default:
 		return fmt.Sprintf("new %s()", t)
 	}
@@ -371,8 +295,7 @@ func (f *field) IsSlice() bool {
 func (f *field) GetTypeScriptType() string {
 	t, ok := builtinTypes[f.TypeName]
 	if !ok {
-		prefix := strings.NewReplacer("ua:", "", "tns:", "")
-		t = prefix.Replace(f.TypeName)
+		t = f.GetReplacedTypeName()
 	}
 	if f.IsSlice() {
 		switch t {
@@ -421,21 +344,12 @@ func (f *field) GetDecorator() string {
 	}
 
 	if dec, ok := decorators[t]; ok {
-		// return "@Type" + dec
 		return fmt.Sprintf("@Type('%s')", dec)
 	}
 
-	switch t {
-	// todo: have a look at all enums
-	case
-		"StatusCode",
-		"SecurityTokenRequestType",
-		"MessageSecurityMode",
-		"ApplicationType",
-		"TimestampsToReturn",
-		"UserTokenType":
-		return "@Type('uint32')"
-	default:
-		return "@Type('object')"
+	if f.EnumType != "" {
+		return fmt.Sprintf("@Type('%s')", f.EnumType)
 	}
+
+	return "@Type('object')"
 }

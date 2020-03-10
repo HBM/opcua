@@ -23,7 +23,7 @@ import DiagnosticInfo from './DiagnosticInfo'
 import QualifiedName from './QualifiedName'
 import Variant from './Variant'
 import DataValue from './DataValue'
-import { StatusOK } from './StatusCode'
+import { StatusCodeOK } from './StatusCode'
 
 type NodeIdType = uint8
 
@@ -558,7 +558,7 @@ export class RationalNumber {
 }
 
 export class IdentityMappingRuleType {
-  @Type('object')
+  @Type('uint32')
   public CriteriaType: IdentityCriteriaType
   @Type('string')
   public Criteria: string
@@ -651,7 +651,7 @@ export class StructureDefinition {
   public DefaultEncodingId: NodeId
   @Type('object')
   public BaseDataType: NodeId
-  @Type('object')
+  @Type('uint32')
   public StructureType: StructureType
   @TypeArray('StructureField')
   public Fields: StructureField[] | null
@@ -842,7 +842,7 @@ export class FieldMetaData {
   public Name: string
   @Type('object')
   public Description: LocalizedText
-  @Type('object')
+  @Type('uint16')
   public FieldFlags: DataSetFieldFlags
   @Type('uint8')
   public BuiltInType: uint8
@@ -1013,7 +1013,7 @@ export class DataSetWriterDataType {
   public Enabled: boolean
   @Type('uint16')
   public DataSetWriterId: uint16
-  @Type('object')
+  @Type('uint32')
   public DataSetFieldContentMask: DataSetFieldContentMask
   @Type('uint32')
   public KeyFrameCount: uint32
@@ -1270,7 +1270,7 @@ export class DataSetReaderDataType {
   public DataSetWriterId: uint16
   @Type('object')
   public DataSetMetaData: DataSetMetaDataType
-  @Type('object')
+  @Type('uint32')
   public DataSetFieldContentMask: DataSetFieldContentMask
   @Type('float64')
   public MessageReceiveTimeout: float64
@@ -1443,7 +1443,7 @@ export class FieldTargetDataType {
   public AttributeId: uint32
   @Type('string')
   public WriteIndexRange: string
-  @Type('object')
+  @Type('uint32')
   public OverrideValueHandling: OverrideValueHandling
   @Type('object')
   public OverrideValue: Variant
@@ -1505,7 +1505,7 @@ export class AliasNameDataType {
 export class RolePermissionType {
   @Type('object')
   public RoleId: NodeId
-  @Type('object')
+  @Type('uint32')
   public Permissions: PermissionType
 
   constructor(options?: { RoleId?: NodeId; Permissions?: PermissionType }) {
@@ -1536,7 +1536,7 @@ export class ReferenceNode {
 export class Node {
   @Type('object')
   public NodeId: NodeId
-  @Type('object')
+  @Type('uint32')
   public NodeClass: NodeClass
   @Type('object')
   public BrowseName: QualifiedName
@@ -1713,7 +1713,7 @@ export class ResponseHeader {
   }) {
     this.Timestamp = options?.Timestamp ?? new Date()
     this.RequestHandle = options?.RequestHandle ?? 0
-    this.ServiceResult = options?.ServiceResult ?? StatusOK
+    this.ServiceResult = options?.ServiceResult ?? StatusCodeOK
     this.ServiceDiagnostics =
       options?.ServiceDiagnostics ?? new DiagnosticInfo()
     this.StringTable = options?.StringTable ?? null
@@ -2461,7 +2461,7 @@ export class AddNodesItem {
   public RequestedNewNodeId: ExpandedNodeId
   @Type('object')
   public BrowseName: QualifiedName
-  @Type('object')
+  @Type('uint32')
   public NodeClass: NodeClass
   @Type('object')
   public NodeAttributes: ExtensionObject
@@ -2495,7 +2495,7 @@ export class AddNodesResult {
   public AddedNodeId: NodeId
 
   constructor(options?: { StatusCode?: StatusCode; AddedNodeId?: NodeId }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.AddedNodeId = options?.AddedNodeId ?? new NodeId()
   }
 }
@@ -2545,7 +2545,7 @@ export class AddReferencesItem {
   public TargetServerUri: string
   @Type('object')
   public TargetNodeId: ExpandedNodeId
-  @Type('object')
+  @Type('uint32')
   public TargetNodeClass: NodeClass
 
   constructor(options?: {
@@ -2728,7 +2728,7 @@ export class ViewDescription {
 export class BrowseDescription {
   @Type('object')
   public NodeId: NodeId
-  @Type('object')
+  @Type('uint32')
   public BrowseDirection: BrowseDirection
   @Type('object')
   public ReferenceTypeId: NodeId
@@ -2767,7 +2767,7 @@ export class ReferenceDescription {
   public BrowseName: QualifiedName
   @Type('object')
   public DisplayName: LocalizedText
-  @Type('object')
+  @Type('uint32')
   public NodeClass: NodeClass
   @Type('object')
   public TypeDefinition: ExpandedNodeId
@@ -2804,7 +2804,7 @@ export class BrowseResult {
     ContinuationPoint?: ByteString
     References?: ReferenceDescription[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.ContinuationPoint = options?.ContinuationPoint ?? new Uint8Array()
     this.References = options?.References ?? null
   }
@@ -2963,7 +2963,7 @@ export class BrowsePathResult {
     StatusCode?: StatusCode
     Targets?: BrowsePathTarget[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.Targets = options?.Targets ?? null
   }
 }
@@ -3182,7 +3182,7 @@ export class NodeReference {
 }
 
 export class ContentFilterElement {
-  @Type('object')
+  @Type('uint32')
   public FilterOperator: FilterOperator
   @TypeArray('ExtensionObject')
   public FilterOperands: ExtensionObject[] | null
@@ -3218,7 +3218,7 @@ export class ContentFilterElementResult {
     OperandStatusCodes?: StatusCode[] | null
     OperandDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.OperandStatusCodes = options?.OperandStatusCodes ?? null
     this.OperandDiagnosticInfos = options?.OperandDiagnosticInfos ?? null
   }
@@ -3252,7 +3252,7 @@ export class ParsingResult {
     DataStatusCodes?: StatusCode[] | null
     DataDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.DataStatusCodes = options?.DataStatusCodes ?? null
     this.DataDiagnosticInfos = options?.DataDiagnosticInfos ?? null
   }
@@ -3461,7 +3461,7 @@ export class HistoryReadResult {
     ContinuationPoint?: ByteString
     HistoryData?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.ContinuationPoint = options?.ContinuationPoint ?? new Uint8Array()
     this.HistoryData = options?.HistoryData ?? new ExtensionObject()
   }
@@ -3479,7 +3479,7 @@ export class HistoryData {
 export class ModificationInfo {
   @Type('Date')
   public ModificationTime: Date
-  @Type('object')
+  @Type('uint32')
   public UpdateType: HistoryUpdateType
   @Type('string')
   public UserName: string
@@ -3640,7 +3640,7 @@ export class HistoryUpdateResult {
     OperationResults?: StatusCode[] | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.OperationResults = options?.OperationResults ?? null
     this.DiagnosticInfos = options?.DiagnosticInfos ?? null
   }
@@ -3715,7 +3715,7 @@ export class CallMethodResult {
     InputArgumentDiagnosticInfos?: DiagnosticInfo[] | null
     OutputArguments?: Variant[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.InputArgumentResults = options?.InputArgumentResults ?? null
     this.InputArgumentDiagnosticInfos =
       options?.InputArgumentDiagnosticInfos ?? null
@@ -3815,7 +3815,7 @@ export class MonitoringParameters {
 export class MonitoredItemCreateRequest {
   @Type('object')
   public ItemToMonitor: ReadValueId
-  @Type('object')
+  @Type('uint32')
   public MonitoringMode: MonitoringMode
   @Type('object')
   public RequestedParameters: MonitoringParameters
@@ -3851,7 +3851,7 @@ export class MonitoredItemCreateResult {
     RevisedQueueSize?: uint32
     FilterResult?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.MonitoredItemId = options?.MonitoredItemId ?? 0
     this.RevisedSamplingInterval = options?.RevisedSamplingInterval ?? 0
     this.RevisedQueueSize = options?.RevisedQueueSize ?? 0
@@ -3934,7 +3934,7 @@ export class MonitoredItemModifyResult {
     RevisedQueueSize?: uint32
     FilterResult?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.RevisedSamplingInterval = options?.RevisedSamplingInterval ?? 0
     this.RevisedQueueSize = options?.RevisedQueueSize ?? 0
     this.FilterResult = options?.FilterResult ?? new ExtensionObject()
@@ -3989,7 +3989,7 @@ export class SetMonitoringModeRequest {
   public RequestHeader: RequestHeader
   @Type('uint32')
   public SubscriptionId: uint32
-  @Type('object')
+  @Type('uint32')
   public MonitoringMode: MonitoringMode
   @TypeArray('uint32')
   public MonitoredItemIds: Uint32Array | null
@@ -4431,7 +4431,7 @@ export class TransferResult {
     StatusCode?: StatusCode
     AvailableSequenceNumbers?: Uint32Array | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.AvailableSequenceNumbers = options?.AvailableSequenceNumbers ?? null
   }
 }
@@ -4544,7 +4544,7 @@ export class RedundantServerDataType {
   public ServerId: string
   @Type('uint8')
   public ServiceLevel: uint8
-  @Type('object')
+  @Type('uint32')
   public ServerState: ServerState
 
   constructor(options?: {
@@ -4667,7 +4667,7 @@ export class ServerStatusDataType {
   public StartTime: Date
   @Type('Date')
   public CurrentTime: Date
-  @Type('object')
+  @Type('uint32')
   public State: ServerState
   @Type('object')
   public BuildInfo: BuildInfo
@@ -4963,7 +4963,7 @@ export class StatusResult {
     StatusCode?: StatusCode
     DiagnosticInfo?: DiagnosticInfo
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusOK
+    this.StatusCode = options?.StatusCode ?? StatusCodeOK
     this.DiagnosticInfo = options?.DiagnosticInfo ?? new DiagnosticInfo()
   }
 }
@@ -5200,7 +5200,7 @@ export class AxisInformation {
   public EURange: Range
   @Type('object')
   public Title: LocalizedText
-  @Type('object')
+  @Type('uint32')
   public AxisScaleType: AxisScaleEnumeration
   @TypeArray('float64')
   public AxisSteps: Float64Array | null

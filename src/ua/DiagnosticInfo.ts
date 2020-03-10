@@ -1,5 +1,5 @@
 import Bucket from './Bucket'
-import { StatusOK } from './StatusCode'
+import { StatusCodeOK } from './StatusCode'
 
 interface Options {
   EncodingMask?: uint8
@@ -38,7 +38,7 @@ export default class DiagnosticInfo implements EnDecoder {
     this.Locale = options?.Locale ?? 0
     this.LocalizedText = options?.LocalizedText ?? 0
     this.AdditionalInfo = options?.AdditionalInfo ?? ''
-    this.InnerStatusCode = options?.InnerStatusCode ?? StatusOK
+    this.InnerStatusCode = options?.InnerStatusCode ?? StatusCodeOK
     this.InnerDiagnosticInfo = options?.InnerDiagnosticInfo ?? null
   }
 
