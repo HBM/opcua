@@ -4,9 +4,10 @@
   "description": "TypeScript / JavaScript OPC UA client for the browser",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && jest",
-    "tsc": "tsc --skipLibCheck",
-    "watch": "tsc -w --skipLibCheck",
+    "clear": "rm -fr dist coverage",
+    "test": "npm clear && tsc --sourceMap && jest",
+    "tsc": "npm clear && tsc --skipLibCheck",
+    "watch": "npm clear && tsc -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,json,html,yml}\"",
     "eslint": "eslint \"./**/*.{js,ts}\"",
