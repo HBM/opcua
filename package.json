@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clear": "rm -fr dist coverage",
-    "test": "npm clear && tsc --sourceMap && jest",
-    "tsc": "npm clear && tsc --skipLibCheck",
-    "watch": "npm clear && tsc -w --skipLibCheck",
+    "test": "npm run clear && tsc --sourceMap && jest",
+    "tsc": "npm run clear && tsc --skipLibCheck",
+    "watch": "npm run clear && tsc -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,json,html,yml}\"",
     "eslint": "eslint \"./**/*.{js,ts}\"",
