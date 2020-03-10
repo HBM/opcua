@@ -3387,7 +3387,7 @@ export class ReadRequest {
   public RequestHeader: RequestHeader
   @Type('float64')
   public MaxAge: float64
-  @Type('object')
+  @Type('uint32')
   public TimestampsToReturn: TimestampsToReturn
   @TypeArray('ReadValueId')
   public NodesToRead: ReadValueId[] | null
@@ -3518,7 +3518,7 @@ export class HistoryReadRequest {
   public RequestHeader: RequestHeader
   @Type('object')
   public HistoryReadDetails: ExtensionObject
-  @Type('object')
+  @Type('uint32')
   public TimestampsToReturn: TimestampsToReturn
   @Type('boolean')
   public ReleaseContinuationPoints: boolean
@@ -3864,7 +3864,7 @@ export class CreateMonitoredItemsRequest {
   public RequestHeader: RequestHeader
   @Type('uint32')
   public SubscriptionId: uint32
-  @Type('object')
+  @Type('uint32')
   public TimestampsToReturn: TimestampsToReturn
   @TypeArray('MonitoredItemCreateRequest')
   public ItemsToCreate: MonitoredItemCreateRequest[] | null
@@ -3946,7 +3946,7 @@ export class ModifyMonitoredItemsRequest {
   public RequestHeader: RequestHeader
   @Type('uint32')
   public SubscriptionId: uint32
-  @Type('object')
+  @Type('uint32')
   public TimestampsToReturn: TimestampsToReturn
   @TypeArray('MonitoredItemModifyRequest')
   public ItemsToModify: MonitoredItemModifyRequest[] | null

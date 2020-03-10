@@ -427,8 +427,13 @@ func (f *field) GetDecorator() string {
 
 	switch t {
 	// todo: have a look at all enums
-	case "StatusCode", "SecurityTokenRequestType", "MessageSecurityMode", "ApplicationType", "UserTokenType":
-		// return "@TypeUint32"
+	case
+		"StatusCode",
+		"SecurityTokenRequestType",
+		"MessageSecurityMode",
+		"ApplicationType",
+		"TimestampsToReturn",
+		"UserTokenType":
 		return "@Type('uint32')"
 	default:
 		return "@Type('object')"
