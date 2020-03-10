@@ -40,3 +40,8 @@ The OPC UA handshake is quite complex and several steps are necessary to get an 
 The following diagram shows this sequence and highlights response parameters that the client has to store internally (e.g. channel id, token id, authentication token, sequence number, request id).
 
 ![handshake](https://github.com/hbm/opcua/raw/master/doc/handshake.png)
+
+You need an OPC UA server implementation that supports WebSockets to test the client. Two options exist:
+
+1. Use [open62541](https://github.com/open62541/open62541) with WebSockets enabled
+1. Use [websockify](https://github.com/novnc/websockify) for servers that do not support WebSockets (that only support TCP connections)
