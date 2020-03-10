@@ -1,6 +1,4 @@
 // https://reference.opcfoundation.org/v104/Core/docs/Part6/A.1/
-type AttributeId = uint32
-
 export const AttributeIdInvalid: AttributeId = 0
 export const AttributeIdNodeId: AttributeId = 1
 export const AttributeIdNodeClass: AttributeId = 2
@@ -29,3 +27,31 @@ export const AttributeIdRolePermissions: AttributeId = 24
 export const AttributeIdUserRolePermissions: AttributeId = 25
 export const AttributeIdAccessRestrictions: AttributeId = 26
 export const AttributeIdAccessLevelEx: AttributeId = 27
+
+// https://reference.opcfoundation.org/v104/Core/docs/Part6/5.1.2/
+export const TypeIdNull: TypeId = 0 // not part of specification but some servers (e.g. Prosys) return it anyway
+export const TypeIdBoolean: TypeId = 1
+export const TypeIdSByte: TypeId = 2
+export const TypeIdByte: TypeId = 3
+export const TypeIdInt16: TypeId = 4
+export const TypeIdUint16: TypeId = 5
+export const TypeIdInt32: TypeId = 6
+export const TypeIdUint32: TypeId = 7
+export const TypeIdInt64: TypeId = 8
+export const TypeIdUint64: TypeId = 9
+export const TypeIdFloat: TypeId = 10
+export const TypeIdDouble: TypeId = 11
+export const TypeIdString: TypeId = 12
+export const TypeIdDateTime: TypeId = 13
+export const TypeIdGUID: TypeId = 14
+export const TypeIdByteString: TypeId = 15
+export const TypeIdXMLElement: TypeId = 16
+export const TypeIdNodeID: TypeId = 17
+export const TypeIdExpandedNodeID: TypeId = 18
+export const TypeIdStatusCode: TypeId = 19
+export const TypeIdQualifiedName: TypeId = 20
+export const TypeIdLocalizedText: TypeId = 21
+export const TypeIdExtensionObject: TypeId = 22
+export const TypeIdDataValue: TypeId = 23
+export const TypeIdVariant: TypeId = 24
+export const TypeIdDiagnosticInfo: TypeId = 25

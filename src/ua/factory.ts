@@ -14,6 +14,7 @@ import SymmetricSecurityHeader from '../uasc/SymmetricSecurityHeader'
 import AsymmetricSecurityHeader from '../uasc/AsymmetricSecurityHeader'
 import SecureConversationMessageHeader from '../uasc/SecureConversationMessageHeader'
 import QualifiedName from './QualifiedName'
+import DataValue from './DataValue'
 
 const factory = (name: string): unknown => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,6 +57,8 @@ const factory = (name: string): unknown => {
       return new SecureConversationMessageHeader()
     case 'QualifiedName':
       return new QualifiedName()
+    case 'DataValue':
+      return new DataValue()
     default:
       throw new Error(`unsupported class name: ${name}`)
   }

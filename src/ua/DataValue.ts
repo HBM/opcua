@@ -1,5 +1,4 @@
 import Variant from './Variant'
-import { StatusOK } from './StatusCode'
 import Bucket from './Bucket'
 
 export const DataValueValue = 0x1
@@ -11,31 +10,41 @@ export const DataValueServerPicoseconds = 0x20
 
 interface Options {
   EncodingMask?: uint8
-  Value: Variant
-  Status: StatusCode
-  SourceTimestamp: Date
-  SourcePicoSeconds: uint16
-  ServerTimestamp: Date
-  ServerPicoSeconds: uint16
+  Value?: Variant
+  Status?: StatusCode
+  SourceTimestamp?: Date
+  SourcePicoSeconds?: uint16
+  ServerTimestamp?: Date
+  ServerPicoSeconds?: uint16
 }
 
 export default class DataValue {
   public EncodingMask: uint8
-  public Value: Variant
-  public Status: StatusCode
-  public SourceTimestamp: Date
-  public SourcePicoSeconds: uint16
-  public ServerTimestamp: Date
-  public ServerPicoSeconds: uint16
+  public Value: Variant | null
+  public Status: StatusCode | null
+  public SourceTimestamp: Date | null
+  public SourcePicoSeconds: uint16 | null
+  public ServerTimestamp: Date | null
+  public ServerPicoSeconds: uint16 | null
 
   constructor(options?: Options) {
     this.EncodingMask = options?.EncodingMask ?? 0
-    this.Value = options?.Value ?? new Variant()
-    this.Status = options?.Status ?? StatusOK
-    this.SourceTimestamp = options?.SourceTimestamp ?? new Date()
-    this.SourcePicoSeconds = options?.SourcePicoSeconds ?? 0
-    this.ServerTimestamp = options?.ServerTimestamp ?? new Date()
-    this.ServerPicoSeconds = options?.ServerPicoSeconds ?? 0
+    this.Value = this.has(DataValueValue) ? (options?.Value as Variant) : null
+    this.Status = this.has(DataValueStatusCode)
+      ? (options?.Status as StatusCode)
+      : null
+    this.SourceTimestamp = this.has(DataValueSourceTimestamp)
+      ? (options?.SourceTimestamp as Date)
+      : null
+    this.SourcePicoSeconds = this.has(DataValueSourcePicoseconds)
+      ? (options?.SourcePicoSeconds as uint16)
+      : null
+    this.ServerTimestamp = this.has(DataValueServerTimestamp)
+      ? (options?.ServerTimestamp as Date)
+      : null
+    this.ServerPicoSeconds = this.has(DataValueServerPicoseconds)
+      ? (options?.ServerPicoSeconds as uint16)
+      : null
   }
 
   public encode(): ArrayBuffer {
@@ -47,23 +56,23 @@ export default class DataValue {
     }
 
     if (this.has(DataValueStatusCode)) {
-      bucket.writeUint32(this.Status)
+      bucket.writeUint32(this.Status as uint32)
     }
 
     if (this.has(DataValueSourceTimestamp)) {
-      bucket.writeDate(this.SourceTimestamp)
+      bucket.writeDate(this.SourceTimestamp as Date)
     }
 
     if (this.has(DataValueSourcePicoseconds)) {
-      bucket.writeUint16(this.SourcePicoSeconds)
+      bucket.writeUint16(this.SourcePicoSeconds as uint16)
     }
 
     if (this.has(DataValueServerTimestamp)) {
-      bucket.writeDate(this.ServerTimestamp)
+      bucket.writeDate(this.ServerTimestamp as Date)
     }
 
     if (this.has(DataValueServerPicoseconds)) {
-      bucket.writeUint16(this.ServerPicoSeconds)
+      bucket.writeUint16(this.ServerPicoSeconds as uint16)
     }
 
     return bucket.bytes

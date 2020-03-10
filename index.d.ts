@@ -12,6 +12,10 @@ type ByteString = Uint8Array
 
 type TypedArray = Uint8Array | Uint16Array | Uint32Array | Float64Array
 
+type TypeId = uint8
+
+type AttributeId = uint32
+
 type StatusCode = uint32
 type SecurityTokenRequestType = uint32
 type MessageSecurityMode = uint32

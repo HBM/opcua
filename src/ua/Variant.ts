@@ -6,41 +6,38 @@ import ExtensionObject from './ExtensionObject'
 import NodeId from './NodeId'
 import ExpandedNodeId from './ExpandedNodeId'
 import Guid from './Guid'
+import {
+  TypeIdBoolean,
+  TypeIdSByte,
+  TypeIdByte,
+  TypeIdInt16,
+  TypeIdUint16,
+  TypeIdInt32,
+  TypeIdUint32,
+  TypeIdInt64,
+  TypeIdUint64,
+  TypeIdFloat,
+  TypeIdDouble,
+  TypeIdString,
+  TypeIdDateTime,
+  TypeIdGUID,
+  TypeIdByteString,
+  TypeIdNodeID,
+  TypeIdExpandedNodeID,
+  TypeIdStatusCode,
+  TypeIdQualifiedName,
+  TypeIdLocalizedText,
+  TypeIdExtensionObject,
+  TypeIdDataValue,
+  TypeIdVariant,
+  TypeIdDiagnosticInfo
+} from './enums'
 
 // VariantArrayDimensions flags whether the array has more than one dimension
 export const VariantArrayDimensions = 0x40
 
 // VariantArrayValues flags whether the value is an array.
 export const VariantArrayValues = 0x80
-
-type TypeID = uint8
-
-export const TypeIDNull: TypeID = 0 // not part of specification but some servers (e.g. Prosys) return it anyway
-export const TypeIDBoolean: TypeID = 1
-export const TypeIDSByte: TypeID = 2
-export const TypeIDByte: TypeID = 3
-export const TypeIDInt16: TypeID = 4
-export const TypeIDUint16: TypeID = 5
-export const TypeIDInt32: TypeID = 6
-export const TypeIDUint32: TypeID = 7
-export const TypeIDInt64: TypeID = 8
-export const TypeIDUint64: TypeID = 9
-export const TypeIDFloat: TypeID = 10
-export const TypeIDDouble: TypeID = 11
-export const TypeIDString: TypeID = 12
-export const TypeIDDateTime: TypeID = 13
-export const TypeIDGUID: TypeID = 14
-export const TypeIDByteString: TypeID = 15
-export const TypeIDXMLElement: TypeID = 16
-export const TypeIDNodeID: TypeID = 17
-export const TypeIDExpandedNodeID: TypeID = 18
-export const TypeIDStatusCode: TypeID = 19
-export const TypeIDQualifiedName: TypeID = 20
-export const TypeIDLocalizedText: TypeID = 21
-export const TypeIDExtensionObject: TypeID = 22
-export const TypeIDDataValue: TypeID = 23
-export const TypeIDVariant: TypeID = 24
-export const TypeIDDiagnosticInfo: TypeID = 25
 
 export default class Variant implements EnDecoder {
   public EncodingMask: uint8
@@ -95,63 +92,63 @@ export default class Variant implements EnDecoder {
 
   public encodeValue(b: Bucket, v: unknown): void {
     switch (this.type()) {
-      case TypeIDBoolean: {
+      case TypeIdBoolean: {
         b.writeBoolean(v as boolean)
         break
       }
-      case TypeIDSByte: {
+      case TypeIdSByte: {
         b.writeInt8(v as int8)
         break
       }
-      case TypeIDByte: {
+      case TypeIdByte: {
         b.writeUint8(v as uint8)
         break
       }
-      case TypeIDInt16: {
+      case TypeIdInt16: {
         b.writeInt16(v as int16)
         break
       }
-      case TypeIDUint16: {
+      case TypeIdUint16: {
         b.writeUint16(v as uint16)
         break
       }
-      case TypeIDInt32: {
+      case TypeIdInt32: {
         b.writeInt32(v as int32)
         break
       }
-      case TypeIDUint32: {
+      case TypeIdUint32: {
         b.writeUint32(v as uint32)
         break
       }
-      case TypeIDInt64: {
+      case TypeIdInt64: {
         b.writeInt64(v as int64)
         break
       }
-      case TypeIDUint64: {
+      case TypeIdUint64: {
         b.writeUint64(v as uint64)
         break
       }
-      case TypeIDFloat: {
+      case TypeIdFloat: {
         b.writeFloat32(v as float32)
         break
       }
-      case TypeIDDouble: {
+      case TypeIdDouble: {
         b.writeFloat64(v as float64)
         break
       }
-      case TypeIDString: {
+      case TypeIdString: {
         b.writeString(v as string)
         break
       }
-      case TypeIDDateTime: {
+      case TypeIdDateTime: {
         b.writeDate(v as Date)
         break
       }
-      case TypeIDGUID: {
+      case TypeIdGUID: {
         b.writeStruct(v)
         break
       }
-      case TypeIDByteString: {
+      case TypeIdByteString: {
         b.writeByteString(v as Uint8Array)
         break
       }
@@ -159,39 +156,39 @@ export default class Variant implements EnDecoder {
       //     b.writeString(string(v))
       //     break
       //   }
-      case TypeIDNodeID: {
+      case TypeIdNodeID: {
         b.writeStruct(v)
         break
       }
-      case TypeIDExpandedNodeID: {
+      case TypeIdExpandedNodeID: {
         b.writeStruct(v)
         break
       }
-      case TypeIDStatusCode: {
+      case TypeIdStatusCode: {
         b.writeUint32(v as uint32)
         break
       }
-      case TypeIDQualifiedName: {
+      case TypeIdQualifiedName: {
         b.writeStruct(v)
         break
       }
-      case TypeIDLocalizedText: {
+      case TypeIdLocalizedText: {
         b.writeStruct(v)
         break
       }
-      case TypeIDExtensionObject: {
+      case TypeIdExtensionObject: {
         b.writeStruct(v)
         break
       }
-      case TypeIDDataValue: {
+      case TypeIdDataValue: {
         b.writeStruct(v)
         break
       }
-      case TypeIDVariant: {
+      case TypeIdVariant: {
         b.writeStruct(v)
         break
       }
-      case TypeIDDiagnosticInfo: {
+      case TypeIdDiagnosticInfo: {
         b.writeStruct(v)
         break
       }
@@ -204,103 +201,103 @@ export default class Variant implements EnDecoder {
     return (this.EncodingMask & mask) === mask
   }
 
-  public type(): TypeID {
+  public type(): TypeId {
     return this.EncodingMask & 0x3f
   }
 
   public decodeValue(b: Bucket): unknown {
     switch (this.type()) {
-      case TypeIDBoolean: {
+      case TypeIdBoolean: {
         return b.readBoolean()
       }
-      case TypeIDSByte: {
+      case TypeIdSByte: {
         return b.readInt8()
       }
-      case TypeIDByte: {
+      case TypeIdByte: {
         return b.readUint8()
       }
-      case TypeIDInt16: {
+      case TypeIdInt16: {
         return b.readInt16()
       }
-      case TypeIDUint16: {
+      case TypeIdUint16: {
         return b.readUint16()
       }
-      case TypeIDInt32: {
+      case TypeIdInt32: {
         return b.readInt32()
       }
-      case TypeIDUint32: {
+      case TypeIdUint32: {
         return b.readUint32()
       }
-      case TypeIDInt64: {
+      case TypeIdInt64: {
         return b.readInt64()
       }
-      case TypeIDUint64: {
+      case TypeIdUint64: {
         return b.readUint64()
       }
-      case TypeIDFloat: {
+      case TypeIdFloat: {
         return b.readFloat32()
       }
-      case TypeIDDouble: {
+      case TypeIdDouble: {
         return b.readFloat64()
       }
-      case TypeIDString: {
+      case TypeIdString: {
         return b.readString()
       }
-      case TypeIDDateTime: {
+      case TypeIdDateTime: {
         return b.readDate()
       }
-      case TypeIDGUID: {
+      case TypeIdGUID: {
         const v = new Guid()
         b.readStruct(v)
         return v
       }
-      case TypeIDByteString: {
+      case TypeIdByteString: {
         return b.readByteString()
       }
       // case TypeIDXMLElement: {
       // return XMLElement(buf.ReadString())
       // break
       // }
-      case TypeIDNodeID: {
+      case TypeIdNodeID: {
         const v = new NodeId()
         b.readStruct(v)
         return v
       }
-      case TypeIDExpandedNodeID: {
+      case TypeIdExpandedNodeID: {
         const v = new ExpandedNodeId()
         b.readStruct(v)
         return v
       }
-      case TypeIDStatusCode: {
+      case TypeIdStatusCode: {
         return b.readUint32()
       }
-      case TypeIDQualifiedName: {
+      case TypeIdQualifiedName: {
         const v = new QualifiedName()
         b.readStruct(v)
         return v
       }
-      case TypeIDLocalizedText: {
+      case TypeIdLocalizedText: {
         const v = new LocalizedText()
         b.readStruct(v)
         return v
       }
-      case TypeIDExtensionObject: {
+      case TypeIdExtensionObject: {
         const v = new ExtensionObject()
         b.readStruct(v)
         return v
       }
-      case TypeIDDataValue: {
+      case TypeIdDataValue: {
         const v = new Date()
         b.readStruct(v)
         return v
       }
-      case TypeIDVariant: {
+      case TypeIdVariant: {
         // todo(fs): limit recursion depth to 100
         const v = new Variant()
         b.readStruct(v)
         return v
       }
-      case TypeIDDiagnosticInfo: {
+      case TypeIdDiagnosticInfo: {
         // todo(fs): limit recursion depth to 100
         const v = new DiagnosticInfo()
         b.readStruct(v)
