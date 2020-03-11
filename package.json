@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clear": "rm -fr dist coverage",
-    "test": "npm run clear && tsc --sourceMap && jest",
+    "test:cov": "npm run clear && tsc --sourceMap && jest --coverage true",
+    "test": "npm run clear && tsc && jest",
     "tsc": "npm run clear && tsc --skipLibCheck",
     "watch": "npm run clear && tsc -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
