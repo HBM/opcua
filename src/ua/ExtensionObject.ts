@@ -1,6 +1,6 @@
 import Bucket from './Bucket'
 import factory from './factory'
-import { map } from '../id/id'
+import { mapIdToName } from '../id/id'
 import ExpandedNodeId, { NewTwoByteExpandedNodeId } from './ExpandedNodeId'
 
 export const ExtensionObjectEmpty = 0
@@ -58,7 +58,7 @@ export default class ExtensionObject implements EnDecoder {
       return bucket.position
     }
 
-    const name = map.get(this.TypeId.NodeId.Identifier as number)
+    const name = mapIdToName.get(this.TypeId.NodeId.Identifier as number)
     if (name === undefined) {
       throw new Error(
         `invalid extension object with id ${this.TypeId.NodeId.Identifier}`
