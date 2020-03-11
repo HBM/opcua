@@ -13,6 +13,10 @@ export const TypeArray = (name: string) => (
   Reflect.defineMetadata('design:subtype', name, target, key)
 }
 
+export interface Request {
+  RequestHeader: RequestHeader
+}
+
 import 'reflect-metadata'
 import LocalizedText from './LocalizedText'
 import ExtensionObject from './ExtensionObject'

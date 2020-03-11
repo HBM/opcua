@@ -1,11 +1,11 @@
 import { Message, ChunkHeader } from './Message'
 import {
-  IdCreateSessionRequest,
-  IdActivateSessionRequest,
-  IdCreateSessionResponse,
-  IdActivateSessionResponse,
   mapNameToId,
-  IdOpenSecureChannelRequest
+  IdOpenSecureChannelRequestEncodingDefaultBinary,
+  IdCreateSessionRequestEncodingDefaultBinary,
+  IdActivateSessionRequestEncodingDefaultBinary,
+  IdCreateSessionResponseEncodingDefaultBinary,
+  IdActivateSessionResponseEncodingDefaultBinary
 } from '../id/id'
 import ExpandedNodeId from '../ua/ExpandedNodeId'
 import NodeId, { NewFourByteNodeId } from '../ua/NodeId'
@@ -26,7 +26,8 @@ import {
   CreateSessionResponse,
   ActivateSessionRequest,
   ActivateSessionResponse,
-  MessageSecurityModeNone
+  MessageSecurityModeNone,
+  Request
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 
@@ -72,29 +73,22 @@ export default class SecureChannel extends EventTarget {
     this.send(open)
   }
 
-  public send = (request: unknown): void => {
+  public send = (request: Request): void => {
+    if (this.authenticationToken) {
+      request.RequestHeader.AuthenticationToken = this.authenticationToken
+    }
+
     // get type id from constructor name
-    const typeId = mapNameToId.get((request as object).constructor.name)
-
-    const messageType =
-      typeId === IdOpenSecureChannelRequest
-        ? MessageTypeOpenSecureChannel
-        : MessageTypeMessage
-
-    // todo: fix message type depending on typeId
-    // problem: things are different:
-    // - type id
-    // - message type
-    // - security header
+    const typeId = mapNameToId.get(
+      (request as object).constructor.name + 'EncodingDefaultBinary'
+    )
 
     const message = new Message({
       ChunkHeader: new ChunkHeader({
         Header: new SecureConversationMessageHeader({
-          MessageType: messageType,
           IsFinal: ChunkTypeFinal,
           SecureChannelId: this.secureChannelId
         }),
-        SecurityHeader: new AsymmetricSecurityHeader(),
         SequenceHeader: new SequenceHeader({
           SequenceNumber: this.sequenceNumber++,
           RequestId: this.requestId++
@@ -105,9 +99,21 @@ export default class SecureChannel extends EventTarget {
       }),
       Service: request
     })
-    console.log(message)
-    const body = message.encode()
 
+    switch (typeId) {
+      case IdOpenSecureChannelRequestEncodingDefaultBinary:
+        message.ChunkHeader.Header.MessageType = MessageTypeOpenSecureChannel
+        message.ChunkHeader.SecurityHeader = new AsymmetricSecurityHeader()
+        break
+      default:
+        message.ChunkHeader.Header.MessageType = MessageTypeMessage
+        message.ChunkHeader.SecurityHeader = new SymmetricSecurityHeader({
+          TokenId: this.securityTokenId
+        })
+        break
+    }
+
+    const body = message.encode()
     this.connection.socket.send(new Uint8Array(body))
   }
 
@@ -129,7 +135,10 @@ export default class SecureChannel extends EventTarget {
         })
       }),
       TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(0, IdCreateSessionRequest)
+        NodeId: NewFourByteNodeId(
+          0,
+          IdCreateSessionRequestEncodingDefaultBinary
+        )
       }),
       Service: request
     })
@@ -155,7 +164,10 @@ export default class SecureChannel extends EventTarget {
         })
       }),
       TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(0, IdActivateSessionRequest)
+        NodeId: NewFourByteNodeId(
+          0,
+          IdActivateSessionRequestEncodingDefaultBinary
+        )
       }),
       Service: request
     })
@@ -209,7 +221,10 @@ export default class SecureChannel extends EventTarget {
           position: offset
         })
 
-        if (typeId.NodeId.Identifier === IdCreateSessionResponse) {
+        if (
+          typeId.NodeId.Identifier ===
+          IdCreateSessionResponseEncodingDefaultBinary
+        ) {
           const response = new CreateSessionResponse()
           offset = decode({
             bytes: event.data,
@@ -223,7 +238,10 @@ export default class SecureChannel extends EventTarget {
             })
           })
           this.sendactivate(activate)
-        } else if (typeId.NodeId.Identifier === IdActivateSessionResponse) {
+        } else if (
+          typeId.NodeId.Identifier ===
+          IdActivateSessionResponseEncodingDefaultBinary
+        ) {
           const activateSessionResponse = new ActivateSessionResponse()
           decode({
             bytes: event.data,

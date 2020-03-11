@@ -3,7 +3,7 @@ import ExtensionObject, {
   ExtensionObjectEmpty
 } from './ExtensionObject'
 import { AnonymousIdentityToken } from './generated'
-import { IdAnonymousIdentityToken } from '../id/id'
+import { IdAnonymousIdentityTokenEncodingDefaultBinary } from '../id/id'
 import run from './run'
 import {
   NewTwoByteExpandedNodeId,
@@ -23,7 +23,10 @@ describe('ExtensionObject', () => {
     {
       name: 'anonymous',
       instance: new ExtensionObject({
-        TypeId: NewFourByteExpandedNodeId(0, IdAnonymousIdentityToken),
+        TypeId: NewFourByteExpandedNodeId(
+          0,
+          IdAnonymousIdentityTokenEncodingDefaultBinary
+        ),
         Encoding: ExtensionObjectBinary,
         Value: new AnonymousIdentityToken({
           PolicyId: 'anonymous'

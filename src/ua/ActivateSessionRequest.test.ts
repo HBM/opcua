@@ -5,7 +5,7 @@ import {
   NewNullRequestHeader
 } from './RequestHeader.test'
 import run from './run'
-import { IdAnonymousIdentityToken } from '../id/id'
+import { IdAnonymousIdentityTokenEncodingDefaultBinary } from '../id/id'
 import { NewFourByteExpandedNodeId } from './ExpandedNodeId'
 
 describe('ActivateSessionRequest', () => {
@@ -15,7 +15,10 @@ describe('ActivateSessionRequest', () => {
       instance: new ActivateSessionRequest({
         RequestHeader: NewNullRequestHeader(),
         UserIdentityToken: new ExtensionObject({
-          TypeId: NewFourByteExpandedNodeId(0, IdAnonymousIdentityToken),
+          TypeId: NewFourByteExpandedNodeId(
+            0,
+            IdAnonymousIdentityTokenEncodingDefaultBinary
+          ),
           Encoding: ExtensionObjectBinary,
           Value: new AnonymousIdentityToken({
             PolicyId: 'anonymous'

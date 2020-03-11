@@ -65,7 +65,7 @@ export default class ExtensionObject implements EnDecoder {
       )
     }
 
-    this.Value = factory(name)
+    this.Value = factory(name.replace(/EncodingDefaultBinary/gi, ''))
     bucket.readStruct(this.Value)
 
     return bucket.position

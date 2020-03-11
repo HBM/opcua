@@ -22,7 +22,6 @@ func main() {
 	rows := make([][]string, 0)
 	reader := csv.NewReader(f)
 
-	binary := "_Encoding_DefaultBinary"
 	for {
 		record, err := reader.Read()
 		if err == io.EOF {
@@ -31,15 +30,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		if strings.Contains(record[0], binary) {
-			// rewrite name to match our type definitions
-			record[0] = strings.ReplaceAll(record[0], binary, "")
-			rows = append(rows, record)
+		if record[1] == "2000" {
+			break
 		}
-		// skip all json and xml to make final bundle smaller
-		// if strings.Contains(record[0], "Encoding_DefaultJson") || strings.Contains(record[0], "Encoding_DefaultXml") {
-		// 	continue
-		// }
+		record[0] = strings.ReplaceAll(record[0], "_", "")
+		rows = append(rows, record)
 	}
 
 	var b bytes.Buffer

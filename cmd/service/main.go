@@ -149,15 +149,11 @@ export const TypeArray = (name: string) => (
 	log.Printf("Wrote %s", out)
 }
 
-var tmplDecorators = template.Must(template.New("").Parse(`
-{{ range $key, $value := . }}
-export const Type{{ $value }} = (target: object, key: string | symbol): void => {
-  Reflect.defineMetadata('design:type', '{{ $key }}', target, key)
-}
-{{ end }}
-`))
-
 var tmplImports = template.Must(template.New("").Parse(`
+export interface Request {
+  RequestHeader: RequestHeader
+}
+
 import 'reflect-metadata'
 import LocalizedText from './LocalizedText'
 import ExtensionObject from './ExtensionObject'
