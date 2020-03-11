@@ -304,7 +304,13 @@ func (f *field) GetTypeScriptType() string {
 		case "float64":
 			t = "Float64Array"
 		default:
-			t += "[]"
+			// check for enumeration, e.g. StatusCode[] -> Uint32Array
+			switch f.EnumType {
+			case "uint32":
+				t = "Uint32Array"
+			default:
+				t += "[]"
+			}
 		}
 		t += " | null"
 	}
@@ -339,6 +345,10 @@ func (f *field) GetDecorator() string {
 		case "Float64Array | null":
 			return "@TypeArray('float64')"
 		default:
+			// check for enumeration, e.g. StatusCode[] -> @TypeArray('uint32')
+			if f.EnumType != "" {
+				return fmt.Sprintf("@TypeArray('%s')", f.EnumType)
+			}
 			return fmt.Sprintf("@TypeArray('%s')", strings.ReplaceAll(t, "[] | null", ""))
 		}
 	}

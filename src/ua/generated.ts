@@ -2002,14 +2002,14 @@ export class RegisterServer2Request {
 export class RegisterServer2Response {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public ConfigurationResults: StatusCode[] | null
+  @TypeArray('uint32')
+  public ConfigurationResults: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    ConfigurationResults?: StatusCode[] | null
+    ConfigurationResults?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -2341,15 +2341,15 @@ export class ActivateSessionResponse {
   public ResponseHeader: ResponseHeader
   @Type('ByteString')
   public ServerNonce: ByteString
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
     ServerNonce?: ByteString
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -2583,14 +2583,14 @@ export class AddReferencesRequest {
 export class AddReferencesResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -2629,14 +2629,14 @@ export class DeleteNodesRequest {
 export class DeleteNodesResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -2690,14 +2690,14 @@ export class DeleteReferencesRequest {
 export class DeleteReferencesResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -3208,14 +3208,14 @@ export class ContentFilter {
 export class ContentFilterElementResult {
   @Type('uint32')
   public StatusCode: StatusCode
-  @TypeArray('StatusCode')
-  public OperandStatusCodes: StatusCode[] | null
+  @TypeArray('uint32')
+  public OperandStatusCodes: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public OperandDiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     StatusCode?: StatusCode
-    OperandStatusCodes?: StatusCode[] | null
+    OperandStatusCodes?: Uint32Array | null
     OperandDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.StatusCode = options?.StatusCode ?? StatusCodeOK
@@ -3242,14 +3242,14 @@ export class ContentFilterResult {
 export class ParsingResult {
   @Type('uint32')
   public StatusCode: StatusCode
-  @TypeArray('StatusCode')
-  public DataStatusCodes: StatusCode[] | null
+  @TypeArray('uint32')
+  public DataStatusCodes: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DataDiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     StatusCode?: StatusCode
-    DataStatusCodes?: StatusCode[] | null
+    DataStatusCodes?: Uint32Array | null
     DataDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.StatusCode = options?.StatusCode ?? StatusCodeOK
@@ -3602,14 +3602,14 @@ export class WriteRequest {
 export class WriteResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -3630,14 +3630,14 @@ export class HistoryUpdateDetails {
 export class HistoryUpdateResult {
   @Type('uint32')
   public StatusCode: StatusCode
-  @TypeArray('StatusCode')
-  public OperationResults: StatusCode[] | null
+  @TypeArray('uint32')
+  public OperationResults: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     StatusCode?: StatusCode
-    OperationResults?: StatusCode[] | null
+    OperationResults?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.StatusCode = options?.StatusCode ?? StatusCodeOK
@@ -3702,8 +3702,8 @@ export class CallMethodRequest {
 export class CallMethodResult {
   @Type('uint32')
   public StatusCode: StatusCode
-  @TypeArray('StatusCode')
-  public InputArgumentResults: StatusCode[] | null
+  @TypeArray('uint32')
+  public InputArgumentResults: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public InputArgumentDiagnosticInfos: DiagnosticInfo[] | null
   @TypeArray('Variant')
@@ -3711,7 +3711,7 @@ export class CallMethodResult {
 
   constructor(options?: {
     StatusCode?: StatusCode
-    InputArgumentResults?: StatusCode[] | null
+    InputArgumentResults?: Uint32Array | null
     InputArgumentDiagnosticInfos?: DiagnosticInfo[] | null
     OutputArguments?: Variant[] | null
   }) {
@@ -4010,14 +4010,14 @@ export class SetMonitoringModeRequest {
 export class SetMonitoringModeResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -4056,20 +4056,20 @@ export class SetTriggeringRequest {
 export class SetTriggeringResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public AddResults: StatusCode[] | null
+  @TypeArray('uint32')
+  public AddResults: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public AddDiagnosticInfos: DiagnosticInfo[] | null
-  @TypeArray('StatusCode')
-  public RemoveResults: StatusCode[] | null
+  @TypeArray('uint32')
+  public RemoveResults: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public RemoveDiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    AddResults?: StatusCode[] | null
+    AddResults?: Uint32Array | null
     AddDiagnosticInfos?: DiagnosticInfo[] | null
-    RemoveResults?: StatusCode[] | null
+    RemoveResults?: Uint32Array | null
     RemoveDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -4102,14 +4102,14 @@ export class DeleteMonitoredItemsRequest {
 export class DeleteMonitoredItemsResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -4260,14 +4260,14 @@ export class SetPublishingModeRequest {
 export class SetPublishingModeResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -4361,8 +4361,8 @@ export class PublishResponse {
   public MoreNotifications: boolean
   @Type('object')
   public NotificationMessage: NotificationMessage
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
@@ -4372,7 +4372,7 @@ export class PublishResponse {
     AvailableSequenceNumbers?: Uint32Array | null
     MoreNotifications?: boolean
     NotificationMessage?: NotificationMessage
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
@@ -4492,14 +4492,14 @@ export class DeleteSubscriptionsRequest {
 export class DeleteSubscriptionsResponse {
   @Type('object')
   public ResponseHeader: ResponseHeader
-  @TypeArray('StatusCode')
-  public Results: StatusCode[] | null
+  @TypeArray('uint32')
+  public Results: Uint32Array | null
   @TypeArray('DiagnosticInfo')
   public DiagnosticInfos: DiagnosticInfo[] | null
 
   constructor(options?: {
     ResponseHeader?: ResponseHeader
-    Results?: StatusCode[] | null
+    Results?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
