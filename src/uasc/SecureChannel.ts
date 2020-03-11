@@ -1,10 +1,11 @@
 import { Message, ChunkHeader } from './Message'
 import {
-  IdOpenSecureChannelRequest,
   IdCreateSessionRequest,
   IdActivateSessionRequest,
   IdCreateSessionResponse,
-  IdActivateSessionResponse
+  IdActivateSessionResponse,
+  mapNameToId,
+  IdOpenSecureChannelRequest
 } from '../id/id'
 import ExpandedNodeId from '../ua/ExpandedNodeId'
 import NodeId, { NewFourByteNodeId } from '../ua/NodeId'
@@ -33,7 +34,7 @@ interface Options {
   connection?: Connection
 }
 
-export default class SecureChannel {
+export default class SecureChannel extends EventTarget {
   private secureChannelId: uint32
   private sequenceNumber: uint32
   private securityTokenId: uint32
@@ -43,6 +44,7 @@ export default class SecureChannel {
   // private requestHeader: RequestHeader
 
   constructor(options?: Options) {
+    super()
     this.secureChannelId = 0
     this.sequenceNumber = 0
     this.securityTokenId = 0
@@ -71,10 +73,24 @@ export default class SecureChannel {
   }
 
   public send = (request: unknown): void => {
+    // get type id from constructor name
+    const typeId = mapNameToId.get((request as object).constructor.name)
+
+    const messageType =
+      typeId === IdOpenSecureChannelRequest
+        ? MessageTypeOpenSecureChannel
+        : MessageTypeMessage
+
+    // todo: fix message type depending on typeId
+    // problem: things are different:
+    // - type id
+    // - message type
+    // - security header
+
     const message = new Message({
       ChunkHeader: new ChunkHeader({
         Header: new SecureConversationMessageHeader({
-          MessageType: MessageTypeOpenSecureChannel,
+          MessageType: messageType,
           IsFinal: ChunkTypeFinal,
           SecureChannelId: this.secureChannelId
         }),
@@ -85,10 +101,11 @@ export default class SecureChannel {
         })
       }),
       TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(0, IdOpenSecureChannelRequest)
+        NodeId: NewFourByteNodeId(0, typeId as number)
       }),
       Service: request
     })
+    console.log(message)
     const body = message.encode()
 
     this.connection.socket.send(new Uint8Array(body))
@@ -213,6 +230,7 @@ export default class SecureChannel {
             instance: activateSessionResponse,
             position: offset
           })
+          this.dispatchEvent(new Event('session:activate'))
         }
 
         break

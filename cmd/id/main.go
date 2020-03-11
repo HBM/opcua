@@ -61,7 +61,12 @@ var tmpl = template.Must(template.New("").Parse(
 {{range .}}export const Id{{index . 0}} = {{index . 1}}
 {{end}}
 
-export const map = new Map([
+export const mapIdToName = new Map([
   {{ range . }}[{{ index . 1 }}, '{{ index . 0 }}'],
+  {{ end }}
+])
+
+export const mapNameToId = new Map([
+  {{ range . }}['{{ index . 0 }}', {{ index . 1 }}],
   {{ end }}
 ])`))
