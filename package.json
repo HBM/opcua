@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clear": "rm -fr dist coverage",
-    "test:cov": "npm run clear && tsc --sourceMap && jest --coverage true",
+    "test:cov": "npm run clear && tsc --sourceMap && jest --coverage",
     "test": "npm run clear && tsc && jest",
     "tsc": "npm run clear && tsc --skipLibCheck",
     "watch": "npm run clear && tsc -w --skipLibCheck",
