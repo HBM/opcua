@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 )
 
@@ -23,6 +24,11 @@ func main() {
 	rows, err := csv.NewReader(f).ReadAll()
 	if err != nil {
 		panic(err)
+	}
+
+	for i := range rows {
+		// make eslint happy
+		rows[i][0] = strings.ReplaceAll(rows[i][0], "_", "")
 	}
 
 	var b bytes.Buffer
