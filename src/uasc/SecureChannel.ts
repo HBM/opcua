@@ -2,8 +2,6 @@ import { Message, ChunkHeader } from './Message'
 import {
   mapNameToId,
   IdOpenSecureChannelRequestEncodingDefaultBinary,
-  IdCreateSessionRequestEncodingDefaultBinary,
-  IdActivateSessionRequestEncodingDefaultBinary,
   IdCreateSessionResponseEncodingDefaultBinary,
   IdActivateSessionResponseEncodingDefaultBinary
 } from '../id/id'
@@ -122,65 +120,6 @@ export default class SecureChannel extends EventTarget {
     this.connection.socket.send(new Uint8Array(body))
   }
 
-  public sendfoo = (request: unknown): void => {
-    const message = new Message({
-      ChunkHeader: new ChunkHeader({
-        Header: new SecureConversationMessageHeader({
-          MessageType: MessageTypeMessage,
-          IsFinal: ChunkTypeFinal,
-          SecureChannelId: this.secureChannelId
-        }),
-        SecurityHeader: new SymmetricSecurityHeader({
-          TokenId: this.securityTokenId
-        }),
-        // AsymmetricSecurityHeader: new AsymmetricSecurityHeader(),
-        SequenceHeader: new SequenceHeader({
-          SequenceNumber: this.sequenceNumber += 1,
-          RequestId: this.requestId += 1
-        })
-      }),
-      TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(
-          0,
-          IdCreateSessionRequestEncodingDefaultBinary
-        )
-      }),
-      Service: request
-    })
-    const body = message.encode()
-
-    this.connection.socket.send(new Uint8Array(body))
-  }
-
-  public sendactivate = (request: unknown): void => {
-    const message = new Message({
-      ChunkHeader: new ChunkHeader({
-        Header: new SecureConversationMessageHeader({
-          MessageType: MessageTypeMessage,
-          IsFinal: ChunkTypeFinal,
-          SecureChannelId: this.secureChannelId
-        }),
-        SecurityHeader: new SymmetricSecurityHeader({
-          TokenId: this.securityTokenId
-        }),
-        SequenceHeader: new SequenceHeader({
-          SequenceNumber: this.sequenceNumber += 1,
-          RequestId: this.requestId += 1
-        })
-      }),
-      TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(
-          0,
-          IdActivateSessionRequestEncodingDefaultBinary
-        )
-      }),
-      Service: request
-    })
-    const body = message.encode()
-
-    this.connection.socket.send(new Uint8Array(body))
-  }
-
   public onmessage = (event: MessageEvent): void => {
     const header = new ChunkHeader()
     let offset = header.decode(event.data)
@@ -214,7 +153,7 @@ export default class SecureChannel extends EventTarget {
         //   SecurityMode: MessageSecurityModeNone,
         //   RequestedLifetime: 3600000
         // })
-        this.sendfoo(create)
+        this.send(create)
 
         break
       }
@@ -242,7 +181,7 @@ export default class SecureChannel extends EventTarget {
               AuthenticationToken: this.authenticationToken
             })
           })
-          this.sendactivate(activate)
+          this.send(activate)
         } else if (
           typeId.NodeId.Identifier ===
           IdActivateSessionResponseEncodingDefaultBinary
@@ -264,6 +203,9 @@ export default class SecureChannel extends EventTarget {
               position: offset
             })
             callback(response)
+
+            // remove callback from map
+            this.callbacks.delete(header.SequenceHeader.RequestId)
           }
         }
 
