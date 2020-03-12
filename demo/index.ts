@@ -8,7 +8,7 @@ import {
 import { NewTwoByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 
-const client = new Client()
+const client = new Client('ws://localhost:1234')
 
 client.addEventListener('session:activate', async event => {
   console.log(event)
