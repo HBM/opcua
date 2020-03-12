@@ -2,3 +2,5 @@ cmd
 demo
 doc
 .github
+coverage
+src
