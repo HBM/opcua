@@ -1,5 +1,10 @@
 import Client from '../src/Client'
-import { BrowseRequest, BrowseDescription, BrowseDirectionBoth, BrowseResultMaskAll } from '../src/ua/generated'
+import {
+  BrowseRequest,
+  BrowseDescription,
+  BrowseDirectionBoth,
+  BrowseResultMaskAll
+} from '../src/ua/generated'
 import { NewTwoByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 
