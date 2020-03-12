@@ -27,28 +27,6 @@ export class ChunkHeader {
     this.SequenceHeader = options?.SequenceHeader ?? new SequenceHeader()
   }
 
-  // public encode(): ArrayBuffer {
-  //   const bucket = new Bucket()
-  //   bucket.writeStruct(this.Header)
-  //   switch (this.Header.MessageType) {
-  //     case MessageTypeOpenSecureChannel: {
-  //       bucket.writeStruct(this.AsymmetricSecurityHeader)
-  //       break
-  //     }
-
-  //     case MessageTypeMessage:
-  //     case MessageTypeCloseSecureChannel: {
-  //       bucket.writeStruct(this.SymmetricSecurityHeader)
-  //       break
-  //     }
-
-  //     default:
-  //       break
-  //   }
-  //   bucket.writeStruct(this.SequenceHeader)
-  //   return bucket.bytes
-  // }
-
   public decode(b: ArrayBuffer, position?: number): number {
     const bucket = new Bucket(b, position)
 
@@ -94,7 +72,6 @@ export class Message {
   }
 
   public decode(b: ArrayBuffer, position?: number): number {
-    // let pos = 0
     position = this.ChunkHeader.decode(b)
     position = this.ChunkHeader.SequenceHeader.decode(b, position)
 
@@ -107,27 +84,11 @@ export class Message {
 
   public encode(): ArrayBuffer {
     const body = new Bucket()
-    // body.writeStruct(this.MessageHeader)
-    switch (this.ChunkHeader.Header.MessageType) {
-      case MessageTypeOpenSecureChannel: {
-        body.writeStruct(this.ChunkHeader.SecurityHeader)
-        break
-      }
-
-      case MessageTypeMessage:
-      case MessageTypeCloseSecureChannel: {
-        body.writeStruct(this.ChunkHeader.SecurityHeader)
-        break
-      }
-
-      default:
-        throw new Error(
-          `invalid message type ${this.ChunkHeader.Header.MessageType}`
-        )
-    }
+    body.writeStruct(this.ChunkHeader.SecurityHeader)
     body.writeStruct(this.ChunkHeader.SequenceHeader)
     body.writeStruct(this.TypeId)
     body.writeStruct(this.Service)
+
     this.ChunkHeader.Header.MessageSize = 12 + body.bytes.byteLength
     const bucket = new Bucket()
     bucket.writeStruct(this.ChunkHeader.Header)

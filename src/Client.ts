@@ -18,7 +18,6 @@ export default class Client extends EventTarget {
     console.log(req)
 
     return new Promise(resolve => {
-      // resolve()
       this.secureChannel.send(req, resolve)
     })
   }

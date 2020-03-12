@@ -3,7 +3,8 @@ import {
   mapNameToId,
   IdOpenSecureChannelRequestEncodingDefaultBinary,
   IdCreateSessionResponseEncodingDefaultBinary,
-  IdActivateSessionResponseEncodingDefaultBinary
+  IdActivateSessionResponseEncodingDefaultBinary,
+  mapIdToName
 } from '../id/id'
 import ExpandedNodeId from '../ua/ExpandedNodeId'
 import NodeId, { NewFourByteNodeId } from '../ua/NodeId'
@@ -25,10 +26,10 @@ import {
   ActivateSessionRequest,
   ActivateSessionResponse,
   MessageSecurityModeNone,
-  Request,
-  BrowseResponse
+  Request
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
+import factory from '../ua/factory'
 
 export default class SecureChannel extends EventTarget {
   private secureChannelId: uint32
@@ -58,9 +59,7 @@ export default class SecureChannel extends EventTarget {
   public onack = (): void => {
     // open secure channel
     const open = new OpenSecureChannelRequest({
-      RequestHeader: new RequestHeader({
-        RequestHandle: 0
-      }),
+      RequestHeader: new RequestHeader(),
       RequestType: SecurityTokenRequestTypeIssue,
       SecurityMode: MessageSecurityModeNone,
       RequestedLifetime: 3600000
@@ -145,14 +144,6 @@ export default class SecureChannel extends EventTarget {
 
         // create session
         const create = new CreateSessionRequest({})
-        // const open = new OpenSecureChannelRequest({
-        //   RequestHeader: new RequestHeader({
-        //     RequestHandle: 0
-        //   }),
-        //   RequestType: SecurityTokenRequestTypeIssue,
-        //   SecurityMode: MessageSecurityModeNone,
-        //   RequestedLifetime: 3600000
-        // })
         this.send(create)
 
         break
@@ -176,6 +167,7 @@ export default class SecureChannel extends EventTarget {
             position: offset
           })
           this.authenticationToken = response.AuthenticationToken
+
           const activate = new ActivateSessionRequest({
             RequestHeader: new RequestHeader({
               AuthenticationToken: this.authenticationToken
@@ -196,14 +188,16 @@ export default class SecureChannel extends EventTarget {
         } else {
           const callback = this.callbacks.get(header.SequenceHeader.RequestId)
           if (callback) {
-            const response = new BrowseResponse()
-            decode({
-              bytes: event.data,
-              instance: response,
-              position: offset
-            })
-            callback(response)
-
+            const name = mapIdToName.get(typeId.NodeId.Identifier as number)
+            if (name) {
+              const instance = factory(name)
+              decode({
+                bytes: event.data,
+                instance,
+                position: offset
+              })
+              callback(instance)
+            }
             // remove callback from map
             this.callbacks.delete(header.SequenceHeader.RequestId)
           }
