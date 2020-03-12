@@ -27,7 +27,8 @@ import {
   ActivateSessionRequest,
   ActivateSessionResponse,
   MessageSecurityModeNone,
-  Request
+  Request,
+  BrowseResponse
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 
@@ -42,7 +43,9 @@ export default class SecureChannel extends EventTarget {
   private requestId: uint32
   private connection: Connection
   private authenticationToken: NodeId | null
-  // private requestHeader: RequestHeader
+
+  // store request id and callback function (i.e. promise resolve function)
+  private callbacks: Map<uint32, Function>
 
   constructor(options?: Options) {
     super()
@@ -53,11 +56,10 @@ export default class SecureChannel extends EventTarget {
     this.connection =
       options?.connection ?? new Connection({ endpoint: 'ws://localhost:1234' })
     this.authenticationToken = null
-    // this.requestHeader = new RequestHeader()
 
     this.connection?.socket.addEventListener('message', this.onmessage)
     this.connection?.addEventListener('ack', this.onack)
-    // this.socket.addEventListener('message', this.onmessage)
+    this.callbacks = new Map()
   }
 
   public onack = (): void => {
@@ -73,7 +75,8 @@ export default class SecureChannel extends EventTarget {
     this.send(open)
   }
 
-  public send = (request: Request): void => {
+  public send = (request: Request, resolve?: Function): void => {
+    // set auth token if we already have one
     if (this.authenticationToken) {
       request.RequestHeader.AuthenticationToken = this.authenticationToken
     }
@@ -90,8 +93,8 @@ export default class SecureChannel extends EventTarget {
           SecureChannelId: this.secureChannelId
         }),
         SequenceHeader: new SequenceHeader({
-          SequenceNumber: this.sequenceNumber++,
-          RequestId: this.requestId++
+          SequenceNumber: this.sequenceNumber += 1,
+          RequestId: this.requestId += 1
         })
       }),
       TypeId: new ExpandedNodeId({
@@ -100,6 +103,12 @@ export default class SecureChannel extends EventTarget {
       Service: request
     })
 
+    // store resolve function for request id
+    if (resolve) {
+      this.callbacks.set(this.requestId, resolve)
+    }
+
+    // set message type and security header
     switch (typeId) {
       case IdOpenSecureChannelRequestEncodingDefaultBinary:
         message.ChunkHeader.Header.MessageType = MessageTypeOpenSecureChannel
@@ -113,6 +122,7 @@ export default class SecureChannel extends EventTarget {
         break
     }
 
+    // encode and send
     const body = message.encode()
     this.connection.socket.send(new Uint8Array(body))
   }
@@ -130,8 +140,8 @@ export default class SecureChannel extends EventTarget {
         }),
         // AsymmetricSecurityHeader: new AsymmetricSecurityHeader(),
         SequenceHeader: new SequenceHeader({
-          SequenceNumber: this.sequenceNumber++,
-          RequestId: this.requestId++
+          SequenceNumber: this.sequenceNumber += 1,
+          RequestId: this.requestId += 1
         })
       }),
       TypeId: new ExpandedNodeId({
@@ -159,8 +169,8 @@ export default class SecureChannel extends EventTarget {
           TokenId: this.securityTokenId
         }),
         SequenceHeader: new SequenceHeader({
-          SequenceNumber: this.sequenceNumber++,
-          RequestId: this.requestId++
+          SequenceNumber: this.sequenceNumber += 1,
+          RequestId: this.requestId += 1
         })
       }),
       TypeId: new ExpandedNodeId({
@@ -249,6 +259,17 @@ export default class SecureChannel extends EventTarget {
             position: offset
           })
           this.dispatchEvent(new Event('session:activate'))
+        } else {
+          const callback = this.callbacks.get(header.SequenceHeader.RequestId)
+          if (callback) {
+            const response = new BrowseResponse()
+            decode({
+              bytes: event.data,
+              instance: response,
+              position: offset
+            })
+            callback(response)
+          }
         }
 
         break
@@ -258,81 +279,4 @@ export default class SecureChannel extends EventTarget {
         break
     }
   }
-
-  // public newRequestMessage(v: unknown): Message {
-
-  //   this.requestHeader.RequestHandle++
-  //   this.requestHeader.Timestamp = new Date()
-  //   this.requestHeader.TimeoutHint = 5000
-
-  //   return this.newMessage(v, 123)
-  // }
-
-  // public newMessage(service: unknown, id: number): Message {
-  //   switch (id) {
-  //     case IdOpenSecureChannelRequest:
-  //       return new Message({
-  //         MessageHeader: new MessageHeader({
-  //           Header: new Header({
-  //             MessageType: MessageTypeOpenSecureChannel,
-  //             IsFinal: ChunkTypeFinal,
-  //             SecureChannelId: this.secureChannelId
-  //           }),
-  //           AsymmetricSecurityHeader: new AsymmetricSecurityHeader(),
-  //           SequenceHeader: new SequenceHeader({
-  //             SequenceNumber: this.sequenceNumber,
-  //             RequestId: this.requestId
-  //           })
-  //         }),
-  //         TypeId: new ExpandedNodeId({
-  //           NodeId: NewFourByteNodeId(0, id)
-  //         }),
-  //         Service: service
-  //       })
-
-  //     case IdCloseSecureChannelRequest:
-  //       return new Message({
-  //         MessageHeader: new MessageHeader({
-  //           Header: new Header({
-  //             MessageType: MessageTypeCloseSecureChannel,
-  //             IsFinal: ChunkTypeFinal,
-  //             SecureChannelId: this.secureChannelId
-  //           }),
-  //           SymmetricSecurityHeader: new SymmetricSecurityHeader({
-  //             TokenId: this.securityTokenID
-  //           }),
-  //           SequenceHeader: new SequenceHeader({
-  //             SequenceNumber: this.sequenceNumber,
-  //             RequestId: this.requestId
-  //           })
-  //         }),
-  //         TypeId: new ExpandedNodeId({
-  //           NodeId: NewFourByteNodeId(0, id)
-  //         }),
-  //         Service: service
-  //       })
-
-  //     default:
-  //       return new Message({
-  //         MessageHeader: new MessageHeader({
-  //           Header: new Header({
-  //             MessageType: MessageTypeMessage,
-  //             IsFinal: ChunkTypeFinal,
-  //             SecureChannelId: this.secureChannelId
-  //           }),
-  //           SymmetricSecurityHeader: new SymmetricSecurityHeader({
-  //             TokenId: this.securityTokenID
-  //           }),
-  //           SequenceHeader: new SequenceHeader({
-  //             SequenceNumber: this.sequenceNumber,
-  //             RequestId: this.requestId
-  //           })
-  //         }),
-  //         TypeId: new ExpandedNodeId({
-  //           NodeId: NewFourByteNodeId(0, id)
-  //         }),
-  //         Service: service
-  //       })
-  //   }
-  // }
 }

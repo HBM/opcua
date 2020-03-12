@@ -1,50 +1,22 @@
-// import Client from '../src/Client'
-
-// const client = new Client('ws://localhost:7681')
-// console.log(client)
-
-// import Connection from '../src/uacp/Connection'
-// import SecureChannel from '../src/uasc/SecureChannel'
-
-// const channel = new SecureChannel()
-
-// console.log(channel)
-
-// const connection = new Connection({ endpoint: 'ws://localhost:7681' })
-
-// console.log(connection)
-
-// connection.addEventListener('ack', event => {
-//   console.log('high level ack', event)
-// })
-
 import Client from '../src/Client'
-import {
-  BrowseRequest,
-  BrowseDescription,
-  BrowseDirectionBoth,
-  BrowseResultMaskAll
-} from '../src/ua/generated'
+import { BrowseRequest, BrowseDescription } from '../src/ua/generated'
 import { NewTwoByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 
 const client = new Client()
 
-client.addEventListener('session:activate', event => {
+client.addEventListener('session:activate', async event => {
   console.log(event)
 
   const req = new BrowseRequest({
     NodesToBrowse: [
       new BrowseDescription({
-        NodeId: NewTwoByteNodeId(IdRootFolder),
-        BrowseDirection: BrowseDirectionBoth,
-        IncludeSubtypes: true,
-        // NodeClassMask: BrowseResultMaskAll
-        ResultMask: BrowseResultMaskAll
+        NodeId: NewTwoByteNodeId(IdRootFolder)
       })
     ]
   })
-  client.browse(req)
 
-  // browser request
+  const res = await client.browse(req)
+  console.log('awaited')
+  console.log(res)
 })

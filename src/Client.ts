@@ -1,5 +1,5 @@
 import SecureChannel from './uasc/SecureChannel'
-import { BrowseRequest } from './ua/generated'
+import { BrowseRequest, BrowseResponse } from './ua/generated'
 
 export default class Client extends EventTarget {
   public secureChannel: SecureChannel
@@ -12,8 +12,12 @@ export default class Client extends EventTarget {
     })
   }
 
-  public browse(req: BrowseRequest): void {
+  public browse(req: BrowseRequest): Promise<BrowseResponse> {
     console.log(req)
-    this.secureChannel.send(req)
+
+    return new Promise(resolve => {
+      // resolve()
+      this.secureChannel.send(req, resolve)
+    })
   }
 }
