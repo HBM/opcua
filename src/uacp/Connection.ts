@@ -2,8 +2,6 @@ import AcknowledgeMessage from './AcknowledgeMessage'
 import HelloMessage from './HelloMessage'
 import { encode } from '../ua/encode'
 import ConnectionProtocolMessageHeader from './ConnectionProtocolMessageHeader'
-// import OpenSecureChannelResponse from '../ua/OpenSecureChannelResponse'
-// import { Decode } from '../ua/decode'
 
 const KB = 1024
 const MB = 1024 * KB
@@ -13,17 +11,13 @@ const DefaultReceiveBufferSize = 0xffff
 const DefaultSendBufferSize = 0xffff
 const DefaultMaxChunkCount = 512
 
-interface Options {
-  endpoint: string
-}
-
 export default class Connection extends EventTarget {
   public acknowledge: AcknowledgeMessage
   public socket: WebSocket
 
-  constructor(options: Options) {
+  constructor(endpointUrl: string) {
     super()
-    this.socket = new WebSocket(options.endpoint)
+    this.socket = new WebSocket(endpointUrl)
     this.socket.binaryType = 'arraybuffer'
     this.acknowledge = new AcknowledgeMessage({
       ReceiveBufferSize: DefaultReceiveBufferSize,

@@ -32,10 +32,6 @@ import {
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 
-interface Options {
-  connection?: Connection
-}
-
 export default class SecureChannel extends EventTarget {
   private secureChannelId: uint32
   private sequenceNumber: uint32
@@ -47,14 +43,13 @@ export default class SecureChannel extends EventTarget {
   // store request id and callback function (i.e. promise resolve function)
   private callbacks: Map<uint32, Function>
 
-  constructor(options?: Options) {
+  constructor(endpointUrl: string) {
     super()
     this.secureChannelId = 0
     this.sequenceNumber = 0
     this.securityTokenId = 0
     this.requestId = 0
-    this.connection =
-      options?.connection ?? new Connection({ endpoint: 'ws://localhost:1234' })
+    this.connection = new Connection(endpointUrl)
     this.authenticationToken = null
 
     this.connection?.socket.addEventListener('message', this.onmessage)
