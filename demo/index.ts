@@ -1,5 +1,5 @@
 import Client from '../src/Client'
-import { BrowseRequest, BrowseDescription } from '../src/ua/generated'
+import { BrowseRequest, BrowseDescription, BrowseDirectionBoth, BrowseResultMaskAll } from '../src/ua/generated'
 import { NewTwoByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 
@@ -11,7 +11,10 @@ client.addEventListener('session:activate', async event => {
   const req = new BrowseRequest({
     NodesToBrowse: [
       new BrowseDescription({
-        NodeId: NewTwoByteNodeId(IdRootFolder)
+        NodeId: NewTwoByteNodeId(IdRootFolder),
+        BrowseDirection: BrowseDirectionBoth,
+        IncludeSubtypes: true,
+        ResultMask: BrowseResultMaskAll
       })
     ]
   })

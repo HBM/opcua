@@ -13,6 +13,35 @@ TypeScript / JavaScript OPC UA client for the browser.
 - OPC UA binary data encoding ([Part 6: Mappings - 5.2.1](https://reference.opcfoundation.org/v104/Core/docs/Part6/5.2.1/))
 - WebSockets transport protocol ([Part 6: Mappings - 7.5.1](https://reference.opcfoundation.org/v104/Core/docs/Part6/7.5.1/))
 
+## Usage
+
+```bash
+npm i opcua
+```
+
+```ts
+import Client from 'opcua'
+
+const client = new Client()
+
+// wait for an active session
+client.addEventListener('session:activate', async event => {
+
+  // browse the root folder
+  const req = new BrowseRequest({
+    NodesToBrowse: [
+      new BrowseDescription({
+        NodeId: NewTwoByteNodeId(IdRootFolder)
+      })
+    ]
+  })
+
+  // all requests use async / await
+  const res = await client.browse(req)
+  console.log(res)
+})
+```
+
 ## Development
 
 The source code is written in TypeScript. We use the TypeScript compiler to create the JavaScript files for the browser.
