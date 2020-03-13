@@ -68,7 +68,7 @@ We rely on [reflection and decorators](https://www.typescriptlang.org/docs/handb
 
 The client architecture consists of multiple layers. They closely follow the official OPC UA specification. Read the following diagram from bottom to top. On the right side you find the responsibilities for each layer.
 
-![layers](https://github.com/hbm/opcua/raw/master/doc/layers.png)
+![layers](doc/layers.svg)
 
 The OPC UA handshake is quite complex and several steps are necessary to get an active session. Those steps are
 
@@ -79,7 +79,7 @@ The OPC UA handshake is quite complex and several steps are necessary to get an 
 
 The following diagram shows this sequence and highlights response parameters that the client has to store internally (e.g. channel id, token id, authentication token, sequence number, request id).
 
-![handshake](https://github.com/hbm/opcua/raw/master/doc/handshake.png)
+![handshake](doc/handshake.svg)
 
 You need an OPC UA server implementation that supports WebSockets to test the client. Two options exist:
 
