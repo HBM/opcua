@@ -50,8 +50,7 @@ client.addEventListener('session:activate', async event => {
 
 https://reference.opcfoundation.org/v104/Core/docs/Part4/5.12.1/#5.12.1.5
 
-![queue](https://github.com/hbm/opcua/raw/master/doc/queue.png)
-
+![queue](doc/queue.svg)
 
 ## Development
 
