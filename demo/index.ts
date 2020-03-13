@@ -6,7 +6,7 @@ import {
   BrowseResultMaskAll,
   CreateSubscriptionRequest,
   BrowseResult,
-  ReferenceDescription,
+  ReferenceDescription
 } from '../src/ua/generated'
 import { NewTwoByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
@@ -30,8 +30,8 @@ client.addEventListener('session:activate', async event => {
 
   const res = await client.browse(req)
 
-  for (const result of (res.Results as BrowseResult[])) {
-    for (const ref of (result.References as ReferenceDescription[])) {
+  for (const result of res.Results as BrowseResult[]) {
+    for (const ref of result.References as ReferenceDescription[]) {
       console.log(ref.DisplayName.Text)
     }
   }
