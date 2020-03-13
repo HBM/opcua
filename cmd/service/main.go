@@ -168,7 +168,7 @@ import { StatusCodeOK } from './StatusCode'
 `))
 
 var tmplEnum = template.Must(template.New("").Parse(`
-type {{ .Name }} = {{ .GetType }}
+export type {{ .Name }} = {{ .GetType }}
 {{ $Name := .Name }}
 {{ range $v := .EnumeratedValues -}}
 	export const {{ $Name }}{{ $v.Name }}: {{ $Name }} = {{ $v.Value }}

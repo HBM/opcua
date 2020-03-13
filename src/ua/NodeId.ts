@@ -1,22 +1,24 @@
 import Bucket from './Bucket'
 import Guid from './Guid'
-
-export const NodeIdTypeTwoByte: uint8 = 0
-export const NodeIdTypeFourByte: uint8 = 1
-export const NodeIdTypeNumeric: uint8 = 2
-export const NodeIdTypeString: uint8 = 3
-export const NodeIdTypeGuid: uint8 = 4
-export const NodeIdTypeByteString: uint8 = 5
+import {
+  NodeIdType,
+  NodeIdTypeTwoByte,
+  NodeIdTypeFourByte,
+  NodeIdTypeNumeric,
+  NodeIdTypeGuid,
+  NodeIdTypeByteString,
+  NodeIdTypeString
+} from './generated'
 
 interface Options {
-  Type?: uint8
+  Type?: NodeIdType
   Identifier: number | string | ByteString | Guid
   Namespace?: number
 }
 
 // https://reference.opcfoundation.org/v104/Core/docs/Part6/5.2.2/#5.2.2.9
 export default class NodeId implements EnDecoder {
-  public Type: uint8
+  public Type: NodeIdType
   public Identifier: number | string | ByteString | Guid
   public Namespace: uint16
 

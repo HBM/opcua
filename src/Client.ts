@@ -1,5 +1,10 @@
 import SecureChannel from './uasc/SecureChannel'
-import { BrowseRequest, BrowseResponse } from './ua/generated'
+import {
+  BrowseRequest,
+  BrowseResponse,
+  CreateSubscriptionRequest,
+  CreateSubscriptionResponse
+} from './ua/generated'
 
 export default class Client extends EventTarget {
   public endpointUrl: string
@@ -17,6 +22,14 @@ export default class Client extends EventTarget {
   public browse(req: BrowseRequest): Promise<BrowseResponse> {
     console.log(req)
 
+    return new Promise(resolve => {
+      this.secureChannel.send(req, resolve)
+    })
+  }
+
+  public subscribe(
+    req: CreateSubscriptionRequest
+  ): Promise<CreateSubscriptionResponse> {
     return new Promise(resolve => {
       this.secureChannel.send(req, resolve)
     })

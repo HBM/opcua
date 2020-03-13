@@ -29,7 +29,7 @@ import Variant from './Variant'
 import DataValue from './DataValue'
 import { StatusCodeOK } from './StatusCode'
 
-type NodeIdType = uint8
+export type NodeIdType = uint8
 
 export const NodeIdTypeTwoByte: NodeIdType = 0
 export const NodeIdTypeFourByte: NodeIdType = 1
@@ -38,20 +38,20 @@ export const NodeIdTypeString: NodeIdType = 3
 export const NodeIdTypeGuid: NodeIdType = 4
 export const NodeIdTypeByteString: NodeIdType = 5
 
-type NamingRuleType = uint32
+export type NamingRuleType = uint32
 
 export const NamingRuleTypeMandatory: NamingRuleType = 1
 export const NamingRuleTypeOptional: NamingRuleType = 2
 export const NamingRuleTypeConstraint: NamingRuleType = 3
 
-type OpenFileMode = uint32
+export type OpenFileMode = uint32
 
 export const OpenFileModeRead: OpenFileMode = 1
 export const OpenFileModeWrite: OpenFileMode = 2
 export const OpenFileModeEraseExisting: OpenFileMode = 4
 export const OpenFileModeAppend: OpenFileMode = 8
 
-type IdentityCriteriaType = uint32
+export type IdentityCriteriaType = uint32
 
 export const IdentityCriteriaTypeUserName: IdentityCriteriaType = 1
 export const IdentityCriteriaTypeThumbprint: IdentityCriteriaType = 2
@@ -60,7 +60,7 @@ export const IdentityCriteriaTypeGroupId: IdentityCriteriaType = 4
 export const IdentityCriteriaTypeAnonymous: IdentityCriteriaType = 5
 export const IdentityCriteriaTypeAuthenticatedUser: IdentityCriteriaType = 6
 
-type TrustListMasks = uint32
+export type TrustListMasks = uint32
 
 export const TrustListMasksNone: TrustListMasks = 0
 export const TrustListMasksTrustedCertificates: TrustListMasks = 1
@@ -69,19 +69,19 @@ export const TrustListMasksIssuerCertificates: TrustListMasks = 4
 export const TrustListMasksIssuerCrls: TrustListMasks = 8
 export const TrustListMasksAll: TrustListMasks = 15
 
-type PubSubState = uint32
+export type PubSubState = uint32
 
 export const PubSubStateDisabled: PubSubState = 0
 export const PubSubStatePaused: PubSubState = 1
 export const PubSubStateOperational: PubSubState = 2
 export const PubSubStateError: PubSubState = 3
 
-type DataSetFieldFlags = uint16
+export type DataSetFieldFlags = uint16
 
 export const DataSetFieldFlagsNone: DataSetFieldFlags = 0
 export const DataSetFieldFlagsPromotedField: DataSetFieldFlags = 1
 
-type DataSetFieldContentMask = uint32
+export type DataSetFieldContentMask = uint32
 
 export const DataSetFieldContentMaskNone: DataSetFieldContentMask = 0
 export const DataSetFieldContentMaskStatusCode: DataSetFieldContentMask = 1
@@ -91,19 +91,19 @@ export const DataSetFieldContentMaskSourcePicoSeconds: DataSetFieldContentMask =
 export const DataSetFieldContentMaskServerPicoSeconds: DataSetFieldContentMask = 16
 export const DataSetFieldContentMaskRawData: DataSetFieldContentMask = 32
 
-type OverrideValueHandling = uint32
+export type OverrideValueHandling = uint32
 
 export const OverrideValueHandlingDisabled: OverrideValueHandling = 0
 export const OverrideValueHandlingLastUsableValue: OverrideValueHandling = 1
 export const OverrideValueHandlingOverrideValue: OverrideValueHandling = 2
 
-type DataSetOrderingType = uint32
+export type DataSetOrderingType = uint32
 
 export const DataSetOrderingTypeUndefined: DataSetOrderingType = 0
 export const DataSetOrderingTypeAscendingWriterId: DataSetOrderingType = 1
 export const DataSetOrderingTypeAscendingWriterIdSingle: DataSetOrderingType = 2
 
-type UadpNetworkMessageContentMask = uint32
+export type UadpNetworkMessageContentMask = uint32
 
 export const UadpNetworkMessageContentMaskNone: UadpNetworkMessageContentMask = 0
 export const UadpNetworkMessageContentMaskPublisherId: UadpNetworkMessageContentMask = 1
@@ -118,7 +118,7 @@ export const UadpNetworkMessageContentMaskPicoSeconds: UadpNetworkMessageContent
 export const UadpNetworkMessageContentMaskDataSetClassId: UadpNetworkMessageContentMask = 512
 export const UadpNetworkMessageContentMaskPromotedFields: UadpNetworkMessageContentMask = 1024
 
-type UadpDataSetMessageContentMask = uint32
+export type UadpDataSetMessageContentMask = uint32
 
 export const UadpDataSetMessageContentMaskNone: UadpDataSetMessageContentMask = 0
 export const UadpDataSetMessageContentMaskTimestamp: UadpDataSetMessageContentMask = 1
@@ -128,7 +128,7 @@ export const UadpDataSetMessageContentMaskMajorVersion: UadpDataSetMessageConten
 export const UadpDataSetMessageContentMaskMinorVersion: UadpDataSetMessageContentMask = 16
 export const UadpDataSetMessageContentMaskSequenceNumber: UadpDataSetMessageContentMask = 32
 
-type JsonNetworkMessageContentMask = uint32
+export type JsonNetworkMessageContentMask = uint32
 
 export const JsonNetworkMessageContentMaskNone: JsonNetworkMessageContentMask = 0
 export const JsonNetworkMessageContentMaskNetworkMessageHeader: JsonNetworkMessageContentMask = 1
@@ -138,7 +138,7 @@ export const JsonNetworkMessageContentMaskPublisherId: JsonNetworkMessageContent
 export const JsonNetworkMessageContentMaskDataSetClassId: JsonNetworkMessageContentMask = 16
 export const JsonNetworkMessageContentMaskReplyTo: JsonNetworkMessageContentMask = 32
 
-type JsonDataSetMessageContentMask = uint32
+export type JsonDataSetMessageContentMask = uint32
 
 export const JsonDataSetMessageContentMaskNone: JsonDataSetMessageContentMask = 0
 export const JsonDataSetMessageContentMaskDataSetWriterId: JsonDataSetMessageContentMask = 1
@@ -147,7 +147,7 @@ export const JsonDataSetMessageContentMaskSequenceNumber: JsonDataSetMessageCont
 export const JsonDataSetMessageContentMaskTimestamp: JsonDataSetMessageContentMask = 8
 export const JsonDataSetMessageContentMaskStatus: JsonDataSetMessageContentMask = 16
 
-type BrokerTransportQualityOfService = uint32
+export type BrokerTransportQualityOfService = uint32
 
 export const BrokerTransportQualityOfServiceNotSpecified: BrokerTransportQualityOfService = 0
 export const BrokerTransportQualityOfServiceBestEffort: BrokerTransportQualityOfService = 1
@@ -155,7 +155,7 @@ export const BrokerTransportQualityOfServiceAtLeastOnce: BrokerTransportQualityO
 export const BrokerTransportQualityOfServiceAtMostOnce: BrokerTransportQualityOfService = 3
 export const BrokerTransportQualityOfServiceExactlyOnce: BrokerTransportQualityOfService = 4
 
-type DiagnosticsLevel = uint32
+export type DiagnosticsLevel = uint32
 
 export const DiagnosticsLevelBasic: DiagnosticsLevel = 0
 export const DiagnosticsLevelAdvanced: DiagnosticsLevel = 1
@@ -163,19 +163,19 @@ export const DiagnosticsLevelInfo: DiagnosticsLevel = 2
 export const DiagnosticsLevelLog: DiagnosticsLevel = 3
 export const DiagnosticsLevelDebug: DiagnosticsLevel = 4
 
-type PubSubDiagnosticsCounterClassification = uint32
+export type PubSubDiagnosticsCounterClassification = uint32
 
 export const PubSubDiagnosticsCounterClassificationInformation: PubSubDiagnosticsCounterClassification = 0
 export const PubSubDiagnosticsCounterClassificationError: PubSubDiagnosticsCounterClassification = 1
 
-type IdType = uint32
+export type IdType = uint32
 
 export const IdTypeNumeric: IdType = 0
 export const IdTypeString: IdType = 1
 export const IdTypeGuid: IdType = 2
 export const IdTypeOpaque: IdType = 3
 
-type NodeClass = uint32
+export type NodeClass = uint32
 
 export const NodeClassUnspecified: NodeClass = 0
 export const NodeClassObject: NodeClass = 1
@@ -187,7 +187,7 @@ export const NodeClassReferenceType: NodeClass = 32
 export const NodeClassDataType: NodeClass = 64
 export const NodeClassView: NodeClass = 128
 
-type PermissionType = uint32
+export type PermissionType = uint32
 
 export const PermissionTypeNone: PermissionType = 0
 export const PermissionTypeBrowse: PermissionType = 1
@@ -208,7 +208,7 @@ export const PermissionTypeRemoveReference: PermissionType = 16384
 export const PermissionTypeDeleteNode: PermissionType = 32768
 export const PermissionTypeAddNode: PermissionType = 65536
 
-type AccessLevelType = uint8
+export type AccessLevelType = uint8
 
 export const AccessLevelTypeNone: AccessLevelType = 0
 export const AccessLevelTypeCurrentRead: AccessLevelType = 1
@@ -219,7 +219,7 @@ export const AccessLevelTypeSemanticChange: AccessLevelType = 16
 export const AccessLevelTypeStatusWrite: AccessLevelType = 32
 export const AccessLevelTypeTimestampWrite: AccessLevelType = 64
 
-type AccessLevelExType = uint32
+export type AccessLevelExType = uint32
 
 export const AccessLevelExTypeNone: AccessLevelExType = 0
 export const AccessLevelExTypeCurrentRead: AccessLevelExType = 1
@@ -233,53 +233,53 @@ export const AccessLevelExTypeNonatomicRead: AccessLevelExType = 256
 export const AccessLevelExTypeNonatomicWrite: AccessLevelExType = 512
 export const AccessLevelExTypeWriteFullArrayOnly: AccessLevelExType = 1024
 
-type EventNotifierType = uint8
+export type EventNotifierType = uint8
 
 export const EventNotifierTypeNone: EventNotifierType = 0
 export const EventNotifierTypeSubscribeToEvents: EventNotifierType = 1
 export const EventNotifierTypeHistoryRead: EventNotifierType = 4
 export const EventNotifierTypeHistoryWrite: EventNotifierType = 8
 
-type AccessRestrictionType = uint32
+export type AccessRestrictionType = uint32
 
 export const AccessRestrictionTypeNone: AccessRestrictionType = 0
 export const AccessRestrictionTypeSigningRequired: AccessRestrictionType = 1
 export const AccessRestrictionTypeEncryptionRequired: AccessRestrictionType = 2
 export const AccessRestrictionTypeSessionRequired: AccessRestrictionType = 4
 
-type StructureType = uint32
+export type StructureType = uint32
 
 export const StructureTypeStructure: StructureType = 0
 export const StructureTypeStructureWithOptionalFields: StructureType = 1
 export const StructureTypeUnion: StructureType = 2
 
-type ApplicationType = uint32
+export type ApplicationType = uint32
 
 export const ApplicationTypeServer: ApplicationType = 0
 export const ApplicationTypeClient: ApplicationType = 1
 export const ApplicationTypeClientAndServer: ApplicationType = 2
 export const ApplicationTypeDiscoveryServer: ApplicationType = 3
 
-type MessageSecurityMode = uint32
+export type MessageSecurityMode = uint32
 
 export const MessageSecurityModeInvalid: MessageSecurityMode = 0
 export const MessageSecurityModeNone: MessageSecurityMode = 1
 export const MessageSecurityModeSign: MessageSecurityMode = 2
 export const MessageSecurityModeSignAndEncrypt: MessageSecurityMode = 3
 
-type UserTokenType = uint32
+export type UserTokenType = uint32
 
 export const UserTokenTypeAnonymous: UserTokenType = 0
 export const UserTokenTypeUserName: UserTokenType = 1
 export const UserTokenTypeCertificate: UserTokenType = 2
 export const UserTokenTypeIssuedToken: UserTokenType = 3
 
-type SecurityTokenRequestType = uint32
+export type SecurityTokenRequestType = uint32
 
 export const SecurityTokenRequestTypeIssue: SecurityTokenRequestType = 0
 export const SecurityTokenRequestTypeRenew: SecurityTokenRequestType = 1
 
-type NodeAttributesMask = uint32
+export type NodeAttributesMask = uint32
 
 export const NodeAttributesMaskNone: NodeAttributesMask = 0
 export const NodeAttributesMaskAccessLevel: NodeAttributesMask = 1
@@ -317,7 +317,7 @@ export const NodeAttributesMaskMethod: NodeAttributesMask = 26632548
 export const NodeAttributesMaskReferenceType: NodeAttributesMask = 26537060
 export const NodeAttributesMaskView: NodeAttributesMask = 26501356
 
-type AttributeWriteMask = uint32
+export type AttributeWriteMask = uint32
 
 export const AttributeWriteMaskNone: AttributeWriteMask = 0
 export const AttributeWriteMaskAccessLevel: AttributeWriteMask = 1
@@ -347,14 +347,14 @@ export const AttributeWriteMaskRolePermissions: AttributeWriteMask = 8388608
 export const AttributeWriteMaskAccessRestrictions: AttributeWriteMask = 16777216
 export const AttributeWriteMaskAccessLevelEx: AttributeWriteMask = 33554432
 
-type BrowseDirection = uint32
+export type BrowseDirection = uint32
 
 export const BrowseDirectionForward: BrowseDirection = 0
 export const BrowseDirectionInverse: BrowseDirection = 1
 export const BrowseDirectionBoth: BrowseDirection = 2
 export const BrowseDirectionInvalid: BrowseDirection = 3
 
-type BrowseResultMask = uint32
+export type BrowseResultMask = uint32
 
 export const BrowseResultMaskNone: BrowseResultMask = 0
 export const BrowseResultMaskReferenceTypeId: BrowseResultMask = 1
@@ -367,7 +367,7 @@ export const BrowseResultMaskAll: BrowseResultMask = 63
 export const BrowseResultMaskReferenceTypeInfo: BrowseResultMask = 3
 export const BrowseResultMaskTargetInfo: BrowseResultMask = 60
 
-type FilterOperator = uint32
+export type FilterOperator = uint32
 
 export const FilterOperatorEquals: FilterOperator = 0
 export const FilterOperatorIsNull: FilterOperator = 1
@@ -388,7 +388,7 @@ export const FilterOperatorRelatedTo: FilterOperator = 15
 export const FilterOperatorBitwiseAnd: FilterOperator = 16
 export const FilterOperatorBitwiseOr: FilterOperator = 17
 
-type TimestampsToReturn = uint32
+export type TimestampsToReturn = uint32
 
 export const TimestampsToReturnSource: TimestampsToReturn = 0
 export const TimestampsToReturnServer: TimestampsToReturn = 1
@@ -396,39 +396,39 @@ export const TimestampsToReturnBoth: TimestampsToReturn = 2
 export const TimestampsToReturnNeither: TimestampsToReturn = 3
 export const TimestampsToReturnInvalid: TimestampsToReturn = 4
 
-type HistoryUpdateType = uint32
+export type HistoryUpdateType = uint32
 
 export const HistoryUpdateTypeInsert: HistoryUpdateType = 1
 export const HistoryUpdateTypeReplace: HistoryUpdateType = 2
 export const HistoryUpdateTypeUpdate: HistoryUpdateType = 3
 export const HistoryUpdateTypeDelete: HistoryUpdateType = 4
 
-type PerformUpdateType = uint32
+export type PerformUpdateType = uint32
 
 export const PerformUpdateTypeInsert: PerformUpdateType = 1
 export const PerformUpdateTypeReplace: PerformUpdateType = 2
 export const PerformUpdateTypeUpdate: PerformUpdateType = 3
 export const PerformUpdateTypeRemove: PerformUpdateType = 4
 
-type MonitoringMode = uint32
+export type MonitoringMode = uint32
 
 export const MonitoringModeDisabled: MonitoringMode = 0
 export const MonitoringModeSampling: MonitoringMode = 1
 export const MonitoringModeReporting: MonitoringMode = 2
 
-type DataChangeTrigger = uint32
+export type DataChangeTrigger = uint32
 
 export const DataChangeTriggerStatus: DataChangeTrigger = 0
 export const DataChangeTriggerStatusValue: DataChangeTrigger = 1
 export const DataChangeTriggerStatusValueTimestamp: DataChangeTrigger = 2
 
-type DeadbandType = uint32
+export type DeadbandType = uint32
 
 export const DeadbandTypeNone: DeadbandType = 0
 export const DeadbandTypeAbsolute: DeadbandType = 1
 export const DeadbandTypePercent: DeadbandType = 2
 
-type RedundancySupport = uint32
+export type RedundancySupport = uint32
 
 export const RedundancySupportNone: RedundancySupport = 0
 export const RedundancySupportCold: RedundancySupport = 1
@@ -437,7 +437,7 @@ export const RedundancySupportHot: RedundancySupport = 3
 export const RedundancySupportTransparent: RedundancySupport = 4
 export const RedundancySupportHotAndMirrored: RedundancySupport = 5
 
-type ServerState = uint32
+export type ServerState = uint32
 
 export const ServerStateRunning: ServerState = 0
 export const ServerStateFailed: ServerState = 1
@@ -448,7 +448,7 @@ export const ServerStateTest: ServerState = 5
 export const ServerStateCommunicationFault: ServerState = 6
 export const ServerStateUnknown: ServerState = 7
 
-type ModelChangeStructureVerbMask = uint32
+export type ModelChangeStructureVerbMask = uint32
 
 export const ModelChangeStructureVerbMaskNodeAdded: ModelChangeStructureVerbMask = 1
 export const ModelChangeStructureVerbMaskNodeDeleted: ModelChangeStructureVerbMask = 2
@@ -456,13 +456,13 @@ export const ModelChangeStructureVerbMaskReferenceAdded: ModelChangeStructureVer
 export const ModelChangeStructureVerbMaskReferenceDeleted: ModelChangeStructureVerbMask = 8
 export const ModelChangeStructureVerbMaskDataTypeChanged: ModelChangeStructureVerbMask = 16
 
-type AxisScaleEnumeration = uint32
+export type AxisScaleEnumeration = uint32
 
 export const AxisScaleEnumerationLinear: AxisScaleEnumeration = 0
 export const AxisScaleEnumerationLog: AxisScaleEnumeration = 1
 export const AxisScaleEnumerationLn: AxisScaleEnumeration = 2
 
-type ExceptionDeviationFormat = uint32
+export type ExceptionDeviationFormat = uint32
 
 export const ExceptionDeviationFormatAbsoluteValue: ExceptionDeviationFormat = 0
 export const ExceptionDeviationFormatPercentOfValue: ExceptionDeviationFormat = 1
