@@ -5,10 +5,12 @@ import {
   CreateSubscriptionRequest,
   CreateSubscriptionResponse
 } from './ua/generated'
+import Subscription from './Subscription'
 
 export default class Client extends EventTarget {
   public endpointUrl: string
   public secureChannel: SecureChannel
+  public subscriptions: Map<uint32, Subscription>
 
   constructor(endpointUrl: string) {
     super()
@@ -17,11 +19,10 @@ export default class Client extends EventTarget {
     this.secureChannel.addEventListener('session:activate', event => {
       this.dispatchEvent(new Event(event.type))
     })
+    this.subscriptions = new Map()
   }
 
   public browse(req: BrowseRequest): Promise<BrowseResponse> {
-    console.log(req)
-
     return new Promise(resolve => {
       this.secureChannel.send(req, resolve)
     })

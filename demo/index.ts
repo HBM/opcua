@@ -6,10 +6,16 @@ import {
   BrowseResultMaskAll,
   CreateSubscriptionRequest,
   BrowseResult,
-  ReferenceDescription
+  ReferenceDescription,
+  CreateMonitoredItemsRequest,
+  MonitoredItemCreateRequest,
+  ReadValueId,
+  MonitoringModeReporting
 } from '../src/ua/generated'
-import { NewTwoByteNodeId } from '../src/ua/NodeId'
+import { NewTwoByteNodeId, NewStringNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
+import Subscription from '../src/Subscription'
+import { AttributeIdValue } from '../src/ua/enums'
 
 const client = new Client('ws://localhost:1234')
 
@@ -49,17 +55,24 @@ client.addEventListener('session:activate', async event => {
   )
   console.log(createSubscriptionResponse)
 
-  // create monitored items
-  // const createMonitoredItemsRequest = new CreateMonitoredItemsRequest({
-  //   ItemsToCreate: [
-  //     new MonitoredItemCreateRequest({
-  //       ItemToMonitor: new ReadValueId({
-  //         NodeId: NewStringNodeId(1, 'the.answer')
-  //       }),
-  //       MonitoringMode: MonitoringModeReporting
-  //     })
-  //   ]
-  // })
+  const sub = new Subscription(
+    client,
+    createSubscriptionResponse.SubscriptionId
+  )
 
-  // const createSubscriptionResponse = await client.subscribe(createSubscriptionRequest)
+  // create monitored items
+  const createMonitoredItemsRequest = new CreateMonitoredItemsRequest({
+    ItemsToCreate: [
+      new MonitoredItemCreateRequest({
+        ItemToMonitor: new ReadValueId({
+          NodeId: NewStringNodeId(1, 'the.answer'),
+          AttributeId: AttributeIdValue
+        }),
+        MonitoringMode: MonitoringModeReporting
+      })
+    ]
+  })
+
+  const createMonitoredItemsResponse = sub.monitor(createMonitoredItemsRequest)
+  console.log(createMonitoredItemsResponse)
 })
