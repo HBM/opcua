@@ -42,6 +42,17 @@ client.addEventListener('session:activate', async event => {
 })
 ```
 
+## Subscriptions
+
+... work in progress ... it's pretty complex so we need some diagrams
+
+### Queue overflow handling
+
+https://reference.opcfoundation.org/v104/Core/docs/Part4/5.12.1/#5.12.1.5
+
+![queue](https://github.com/hbm/opcua/raw/master/doc/queue.png)
+
+
 ## Development
 
 The source code is written in TypeScript. We use the TypeScript compiler to create the JavaScript files for the browser.
