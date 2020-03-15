@@ -1,6 +1,8 @@
 import {
   CreateMonitoredItemsRequest,
-  CreateMonitoredItemsResponse
+  CreateMonitoredItemsResponse,
+  PublishRequest,
+  PublishResponse
 } from './ua/generated'
 import Client from './Client'
 
@@ -19,6 +21,12 @@ export default class Subscription extends EventTarget {
   ): Promise<CreateMonitoredItemsResponse> {
     return new Promise(resolve => {
       req.SubscriptionId = this.id
+      this.client.secureChannel.send(req, resolve)
+    })
+  }
+
+  public publish(req: PublishRequest): Promise<PublishResponse> {
+    return new Promise(resolve => {
       this.client.secureChannel.send(req, resolve)
     })
   }

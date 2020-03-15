@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
 export const Type = (name: string) => (
   target: object,
   key: string | symbol
@@ -470,29 +472,6 @@ export const ExceptionDeviationFormatPercentOfRange: ExceptionDeviationFormat = 
 export const ExceptionDeviationFormatPercentOfEURange: ExceptionDeviationFormat = 3
 export const ExceptionDeviationFormatUnknown: ExceptionDeviationFormat = 4
 
-export class CurrencyUnitType {
-  @Type('int16')
-  public NumericCode: int16
-  @Type('int8')
-  public Exponent: int8
-  @Type('string')
-  public AlphabeticCode: string
-  @Type('object')
-  public Currency: LocalizedText
-
-  constructor(options?: {
-    NumericCode?: int16
-    Exponent?: int8
-    AlphabeticCode?: string
-    Currency?: LocalizedText
-  }) {
-    this.NumericCode = options?.NumericCode ?? 0
-    this.Exponent = options?.Exponent ?? 0
-    this.AlphabeticCode = options?.AlphabeticCode ?? ''
-    this.Currency = options?.Currency ?? new LocalizedText()
-  }
-}
-
 export class KeyValuePair {
   @Type('object')
   public Key: QualifiedName
@@ -561,6 +540,75 @@ export class RationalNumber {
   }
 }
 
+export class Vector {}
+
+export class ThreeDVector {
+  @Type('float64')
+  public X: float64
+  @Type('float64')
+  public Y: float64
+  @Type('float64')
+  public Z: float64
+
+  constructor(options?: { X?: float64; Y?: float64; Z?: float64 }) {
+    this.X = options?.X ?? 0
+    this.Y = options?.Y ?? 0
+    this.Z = options?.Z ?? 0
+  }
+}
+
+export class CartesianCoordinates {}
+
+export class ThreeDCartesianCoordinates {
+  @Type('float64')
+  public X: float64
+  @Type('float64')
+  public Y: float64
+  @Type('float64')
+  public Z: float64
+
+  constructor(options?: { X?: float64; Y?: float64; Z?: float64 }) {
+    this.X = options?.X ?? 0
+    this.Y = options?.Y ?? 0
+    this.Z = options?.Z ?? 0
+  }
+}
+
+export class Orientation {}
+
+export class ThreeDOrientation {
+  @Type('float64')
+  public A: float64
+  @Type('float64')
+  public B: float64
+  @Type('float64')
+  public C: float64
+
+  constructor(options?: { A?: float64; B?: float64; C?: float64 }) {
+    this.A = options?.A ?? 0
+    this.B = options?.B ?? 0
+    this.C = options?.C ?? 0
+  }
+}
+
+export class Frame {}
+
+export class ThreeDFrame {
+  @Type('object')
+  public CartesianCoordinates: ThreeDCartesianCoordinates
+  @Type('object')
+  public Orientation: ThreeDOrientation
+
+  constructor(options?: {
+    CartesianCoordinates?: ThreeDCartesianCoordinates
+    Orientation?: ThreeDOrientation
+  }) {
+    this.CartesianCoordinates =
+      options?.CartesianCoordinates ?? new ThreeDCartesianCoordinates()
+    this.Orientation = options?.Orientation ?? new ThreeDOrientation()
+  }
+}
+
 export class IdentityMappingRuleType {
   @Type('uint32')
   public CriteriaType: IdentityCriteriaType
@@ -573,6 +621,29 @@ export class IdentityMappingRuleType {
   }) {
     this.CriteriaType = options?.CriteriaType ?? IdentityCriteriaTypeUserName
     this.Criteria = options?.Criteria ?? ''
+  }
+}
+
+export class CurrencyUnitType {
+  @Type('int16')
+  public NumericCode: int16
+  @Type('int8')
+  public Exponent: int8
+  @Type('string')
+  public AlphabeticCode: string
+  @Type('object')
+  public Currency: LocalizedText
+
+  constructor(options?: {
+    NumericCode?: int16
+    Exponent?: int8
+    AlphabeticCode?: string
+    Currency?: LocalizedText
+  }) {
+    this.NumericCode = options?.NumericCode ?? 0
+    this.Exponent = options?.Exponent ?? 0
+    this.AlphabeticCode = options?.AlphabeticCode ?? ''
+    this.Currency = options?.Currency ?? new LocalizedText()
   }
 }
 
@@ -615,61 +686,38 @@ export class DecimalDataType {
   }
 }
 
-export class StructureField {
-  @Type('string')
-  public Name: string
-  @Type('object')
-  public Description: LocalizedText
-  @Type('object')
-  public DataType: NodeId
-  @Type('int32')
-  public ValueRank: int32
-  @TypeArray('uint32')
-  public ArrayDimensions: Uint32Array | null
-  @Type('uint32')
-  public MaxStringLength: uint32
-  @Type('boolean')
-  public IsOptional: boolean
+export class DataTypeSchemaHeader {
+  @TypeArray('string')
+  public Namespaces: string[] | null
+  @TypeArray('StructureDescription')
+  public StructureDataTypes: StructureDescription[] | null
+  @TypeArray('EnumDescription')
+  public EnumDataTypes: EnumDescription[] | null
+  @TypeArray('SimpleTypeDescription')
+  public SimpleDataTypes: SimpleTypeDescription[] | null
 
   constructor(options?: {
-    Name?: string
-    Description?: LocalizedText
-    DataType?: NodeId
-    ValueRank?: int32
-    ArrayDimensions?: Uint32Array | null
-    MaxStringLength?: uint32
-    IsOptional?: boolean
+    Namespaces?: string[] | null
+    StructureDataTypes?: StructureDescription[] | null
+    EnumDataTypes?: EnumDescription[] | null
+    SimpleDataTypes?: SimpleTypeDescription[] | null
   }) {
-    this.Name = options?.Name ?? ''
-    this.Description = options?.Description ?? new LocalizedText()
-    this.DataType = options?.DataType ?? new NodeId()
-    this.ValueRank = options?.ValueRank ?? 0
-    this.ArrayDimensions = options?.ArrayDimensions ?? null
-    this.MaxStringLength = options?.MaxStringLength ?? 0
-    this.IsOptional = options?.IsOptional ?? false
+    this.Namespaces = options?.Namespaces ?? null
+    this.StructureDataTypes = options?.StructureDataTypes ?? null
+    this.EnumDataTypes = options?.EnumDataTypes ?? null
+    this.SimpleDataTypes = options?.SimpleDataTypes ?? null
   }
 }
 
-export class StructureDefinition {
+export class DataTypeDescription {
   @Type('object')
-  public DefaultEncodingId: NodeId
+  public DataTypeId: NodeId
   @Type('object')
-  public BaseDataType: NodeId
-  @Type('uint32')
-  public StructureType: StructureType
-  @TypeArray('StructureField')
-  public Fields: StructureField[] | null
+  public Name: QualifiedName
 
-  constructor(options?: {
-    DefaultEncodingId?: NodeId
-    BaseDataType?: NodeId
-    StructureType?: StructureType
-    Fields?: StructureField[] | null
-  }) {
-    this.DefaultEncodingId = options?.DefaultEncodingId ?? new NodeId()
-    this.BaseDataType = options?.BaseDataType ?? new NodeId()
-    this.StructureType = options?.StructureType ?? StructureTypeStructure
-    this.Fields = options?.Fields ?? null
+  constructor(options?: { DataTypeId?: NodeId; Name?: QualifiedName }) {
+    this.DataTypeId = options?.DataTypeId ?? new NodeId()
+    this.Name = options?.Name ?? new QualifiedName()
   }
 }
 
@@ -690,38 +738,6 @@ export class StructureDescription {
     this.Name = options?.Name ?? new QualifiedName()
     this.StructureDefinition =
       options?.StructureDefinition ?? new StructureDefinition()
-  }
-}
-
-export class EnumField {
-  @Type('int64')
-  public Value: int64
-  @Type('object')
-  public DisplayName: LocalizedText
-  @Type('object')
-  public Description: LocalizedText
-  @Type('string')
-  public Name: string
-
-  constructor(options?: {
-    Value?: int64
-    DisplayName?: LocalizedText
-    Description?: LocalizedText
-    Name?: string
-  }) {
-    this.Value = options?.Value ?? BigInt(0)
-    this.DisplayName = options?.DisplayName ?? new LocalizedText()
-    this.Description = options?.Description ?? new LocalizedText()
-    this.Name = options?.Name ?? ''
-  }
-}
-
-export class EnumDefinition {
-  @TypeArray('EnumField')
-  public Fields: EnumField[] | null
-
-  constructor(options?: { Fields?: EnumField[] | null }) {
-    this.Fields = options?.Fields ?? null
   }
 }
 
@@ -771,41 +787,6 @@ export class SimpleTypeDescription {
   }
 }
 
-export class DataTypeSchemaHeader {
-  @TypeArray('string')
-  public Namespaces: string[] | null
-  @TypeArray('StructureDescription')
-  public StructureDataTypes: StructureDescription[] | null
-  @TypeArray('EnumDescription')
-  public EnumDataTypes: EnumDescription[] | null
-  @TypeArray('SimpleTypeDescription')
-  public SimpleDataTypes: SimpleTypeDescription[] | null
-
-  constructor(options?: {
-    Namespaces?: string[] | null
-    StructureDataTypes?: StructureDescription[] | null
-    EnumDataTypes?: EnumDescription[] | null
-    SimpleDataTypes?: SimpleTypeDescription[] | null
-  }) {
-    this.Namespaces = options?.Namespaces ?? null
-    this.StructureDataTypes = options?.StructureDataTypes ?? null
-    this.EnumDataTypes = options?.EnumDataTypes ?? null
-    this.SimpleDataTypes = options?.SimpleDataTypes ?? null
-  }
-}
-
-export class DataTypeDescription {
-  @Type('object')
-  public DataTypeId: NodeId
-  @Type('object')
-  public Name: QualifiedName
-
-  constructor(options?: { DataTypeId?: NodeId; Name?: QualifiedName }) {
-    this.DataTypeId = options?.DataTypeId ?? new NodeId()
-    this.Name = options?.Name ?? new QualifiedName()
-  }
-}
-
 export class UABinaryFileDataType {
   @TypeArray('string')
   public Namespaces: string[] | null
@@ -838,6 +819,50 @@ export class UABinaryFileDataType {
     this.SchemaLocation = options?.SchemaLocation ?? ''
     this.FileHeader = options?.FileHeader ?? null
     this.Body = options?.Body ?? new Variant()
+  }
+}
+
+export class DataSetMetaDataType {
+  @TypeArray('string')
+  public Namespaces: string[] | null
+  @TypeArray('StructureDescription')
+  public StructureDataTypes: StructureDescription[] | null
+  @TypeArray('EnumDescription')
+  public EnumDataTypes: EnumDescription[] | null
+  @TypeArray('SimpleTypeDescription')
+  public SimpleDataTypes: SimpleTypeDescription[] | null
+  @Type('string')
+  public Name: string
+  @Type('object')
+  public Description: LocalizedText
+  @TypeArray('FieldMetaData')
+  public Fields: FieldMetaData[] | null
+  @Type('object')
+  public DataSetClassId: Guid
+  @Type('object')
+  public ConfigurationVersion: ConfigurationVersionDataType
+
+  constructor(options?: {
+    Namespaces?: string[] | null
+    StructureDataTypes?: StructureDescription[] | null
+    EnumDataTypes?: EnumDescription[] | null
+    SimpleDataTypes?: SimpleTypeDescription[] | null
+    Name?: string
+    Description?: LocalizedText
+    Fields?: FieldMetaData[] | null
+    DataSetClassId?: Guid
+    ConfigurationVersion?: ConfigurationVersionDataType
+  }) {
+    this.Namespaces = options?.Namespaces ?? null
+    this.StructureDataTypes = options?.StructureDataTypes ?? null
+    this.EnumDataTypes = options?.EnumDataTypes ?? null
+    this.SimpleDataTypes = options?.SimpleDataTypes ?? null
+    this.Name = options?.Name ?? ''
+    this.Description = options?.Description ?? new LocalizedText()
+    this.Fields = options?.Fields ?? null
+    this.DataSetClassId = options?.DataSetClassId ?? new Guid()
+    this.ConfigurationVersion =
+      options?.ConfigurationVersion ?? new ConfigurationVersionDataType()
   }
 }
 
@@ -900,50 +925,6 @@ export class ConfigurationVersionDataType {
   }
 }
 
-export class DataSetMetaDataType {
-  @TypeArray('string')
-  public Namespaces: string[] | null
-  @TypeArray('StructureDescription')
-  public StructureDataTypes: StructureDescription[] | null
-  @TypeArray('EnumDescription')
-  public EnumDataTypes: EnumDescription[] | null
-  @TypeArray('SimpleTypeDescription')
-  public SimpleDataTypes: SimpleTypeDescription[] | null
-  @Type('string')
-  public Name: string
-  @Type('object')
-  public Description: LocalizedText
-  @TypeArray('FieldMetaData')
-  public Fields: FieldMetaData[] | null
-  @Type('object')
-  public DataSetClassId: Guid
-  @Type('object')
-  public ConfigurationVersion: ConfigurationVersionDataType
-
-  constructor(options?: {
-    Namespaces?: string[] | null
-    StructureDataTypes?: StructureDescription[] | null
-    EnumDataTypes?: EnumDescription[] | null
-    SimpleDataTypes?: SimpleTypeDescription[] | null
-    Name?: string
-    Description?: LocalizedText
-    Fields?: FieldMetaData[] | null
-    DataSetClassId?: Guid
-    ConfigurationVersion?: ConfigurationVersionDataType
-  }) {
-    this.Namespaces = options?.Namespaces ?? null
-    this.StructureDataTypes = options?.StructureDataTypes ?? null
-    this.EnumDataTypes = options?.EnumDataTypes ?? null
-    this.SimpleDataTypes = options?.SimpleDataTypes ?? null
-    this.Name = options?.Name ?? ''
-    this.Description = options?.Description ?? new LocalizedText()
-    this.Fields = options?.Fields ?? null
-    this.DataSetClassId = options?.DataSetClassId ?? new Guid()
-    this.ConfigurationVersion =
-      options?.ConfigurationVersion ?? new ConfigurationVersionDataType()
-  }
-}
-
 export class PublishedDataSetDataType {
   @Type('string')
   public Name: string
@@ -970,6 +951,8 @@ export class PublishedDataSetDataType {
     this.DataSetSource = options?.DataSetSource ?? new ExtensionObject()
   }
 }
+
+export class PublishedDataSetSourceDataType {}
 
 export class PublishedVariableDataType {
   @Type('object')
@@ -1007,6 +990,36 @@ export class PublishedVariableDataType {
     this.IndexRange = options?.IndexRange ?? ''
     this.SubstituteValue = options?.SubstituteValue ?? new Variant()
     this.MetaDataProperties = options?.MetaDataProperties ?? null
+  }
+}
+
+export class PublishedDataItemsDataType {
+  @TypeArray('PublishedVariableDataType')
+  public PublishedData: PublishedVariableDataType[] | null
+
+  constructor(options?: {
+    PublishedData?: PublishedVariableDataType[] | null
+  }) {
+    this.PublishedData = options?.PublishedData ?? null
+  }
+}
+
+export class PublishedEventsDataType {
+  @Type('object')
+  public EventNotifier: NodeId
+  @TypeArray('SimpleAttributeOperand')
+  public SelectedFields: SimpleAttributeOperand[] | null
+  @Type('object')
+  public Filter: ContentFilter
+
+  constructor(options?: {
+    EventNotifier?: NodeId
+    SelectedFields?: SimpleAttributeOperand[] | null
+    Filter?: ContentFilter
+  }) {
+    this.EventNotifier = options?.EventNotifier ?? new NodeId()
+    this.SelectedFields = options?.SelectedFields ?? null
+    this.Filter = options?.Filter ?? new ContentFilter()
   }
 }
 
@@ -1054,106 +1067,9 @@ export class DataSetWriterDataType {
   }
 }
 
-export class ApplicationDescription {
-  @Type('string')
-  public ApplicationUri: string
-  @Type('string')
-  public ProductUri: string
-  @Type('object')
-  public ApplicationName: LocalizedText
-  @Type('uint32')
-  public ApplicationType: ApplicationType
-  @Type('string')
-  public GatewayServerUri: string
-  @Type('string')
-  public DiscoveryProfileUri: string
-  @TypeArray('string')
-  public DiscoveryUrls: string[] | null
+export class DataSetWriterTransportDataType {}
 
-  constructor(options?: {
-    ApplicationUri?: string
-    ProductUri?: string
-    ApplicationName?: LocalizedText
-    ApplicationType?: ApplicationType
-    GatewayServerUri?: string
-    DiscoveryProfileUri?: string
-    DiscoveryUrls?: string[] | null
-  }) {
-    this.ApplicationUri = options?.ApplicationUri ?? ''
-    this.ProductUri = options?.ProductUri ?? ''
-    this.ApplicationName = options?.ApplicationName ?? new LocalizedText()
-    this.ApplicationType = options?.ApplicationType ?? ApplicationTypeServer
-    this.GatewayServerUri = options?.GatewayServerUri ?? ''
-    this.DiscoveryProfileUri = options?.DiscoveryProfileUri ?? ''
-    this.DiscoveryUrls = options?.DiscoveryUrls ?? null
-  }
-}
-
-export class UserTokenPolicy {
-  @Type('string')
-  public PolicyId: string
-  @Type('uint32')
-  public TokenType: UserTokenType
-  @Type('string')
-  public IssuedTokenType: string
-  @Type('string')
-  public IssuerEndpointUrl: string
-  @Type('string')
-  public SecurityPolicyUri: string
-
-  constructor(options?: {
-    PolicyId?: string
-    TokenType?: UserTokenType
-    IssuedTokenType?: string
-    IssuerEndpointUrl?: string
-    SecurityPolicyUri?: string
-  }) {
-    this.PolicyId = options?.PolicyId ?? ''
-    this.TokenType = options?.TokenType ?? UserTokenTypeAnonymous
-    this.IssuedTokenType = options?.IssuedTokenType ?? ''
-    this.IssuerEndpointUrl = options?.IssuerEndpointUrl ?? ''
-    this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
-  }
-}
-
-export class EndpointDescription {
-  @Type('string')
-  public EndpointUrl: string
-  @Type('object')
-  public Server: ApplicationDescription
-  @Type('ByteString')
-  public ServerCertificate: ByteString
-  @Type('uint32')
-  public SecurityMode: MessageSecurityMode
-  @Type('string')
-  public SecurityPolicyUri: string
-  @TypeArray('UserTokenPolicy')
-  public UserIdentityTokens: UserTokenPolicy[] | null
-  @Type('string')
-  public TransportProfileUri: string
-  @Type('uint8')
-  public SecurityLevel: uint8
-
-  constructor(options?: {
-    EndpointUrl?: string
-    Server?: ApplicationDescription
-    ServerCertificate?: ByteString
-    SecurityMode?: MessageSecurityMode
-    SecurityPolicyUri?: string
-    UserIdentityTokens?: UserTokenPolicy[] | null
-    TransportProfileUri?: string
-    SecurityLevel?: uint8
-  }) {
-    this.EndpointUrl = options?.EndpointUrl ?? ''
-    this.Server = options?.Server ?? new ApplicationDescription()
-    this.ServerCertificate = options?.ServerCertificate ?? new Uint8Array()
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
-    this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
-    this.UserIdentityTokens = options?.UserIdentityTokens ?? null
-    this.TransportProfileUri = options?.TransportProfileUri ?? ''
-    this.SecurityLevel = options?.SecurityLevel ?? 0
-  }
-}
+export class DataSetWriterMessageDataType {}
 
 export class PubSubGroupDataType {
   @Type('string')
@@ -1261,6 +1177,127 @@ export class WriterGroupDataType {
   }
 }
 
+export class WriterGroupTransportDataType {}
+
+export class WriterGroupMessageDataType {}
+
+export class PubSubConnectionDataType {
+  @Type('string')
+  public Name: string
+  @Type('boolean')
+  public Enabled: boolean
+  @Type('object')
+  public PublisherId: Variant
+  @Type('string')
+  public TransportProfileUri: string
+  @Type('object')
+  public Address: ExtensionObject
+  @TypeArray('KeyValuePair')
+  public ConnectionProperties: KeyValuePair[] | null
+  @Type('object')
+  public TransportSettings: ExtensionObject
+  @TypeArray('WriterGroupDataType')
+  public WriterGroups: WriterGroupDataType[] | null
+  @TypeArray('ReaderGroupDataType')
+  public ReaderGroups: ReaderGroupDataType[] | null
+
+  constructor(options?: {
+    Name?: string
+    Enabled?: boolean
+    PublisherId?: Variant
+    TransportProfileUri?: string
+    Address?: ExtensionObject
+    ConnectionProperties?: KeyValuePair[] | null
+    TransportSettings?: ExtensionObject
+    WriterGroups?: WriterGroupDataType[] | null
+    ReaderGroups?: ReaderGroupDataType[] | null
+  }) {
+    this.Name = options?.Name ?? ''
+    this.Enabled = options?.Enabled ?? false
+    this.PublisherId = options?.PublisherId ?? new Variant()
+    this.TransportProfileUri = options?.TransportProfileUri ?? ''
+    this.Address = options?.Address ?? new ExtensionObject()
+    this.ConnectionProperties = options?.ConnectionProperties ?? null
+    this.TransportSettings = options?.TransportSettings ?? new ExtensionObject()
+    this.WriterGroups = options?.WriterGroups ?? null
+    this.ReaderGroups = options?.ReaderGroups ?? null
+  }
+}
+
+export class ConnectionTransportDataType {}
+
+export class NetworkAddressDataType {
+  @Type('string')
+  public NetworkInterface: string
+
+  constructor(options?: { NetworkInterface?: string }) {
+    this.NetworkInterface = options?.NetworkInterface ?? ''
+  }
+}
+
+export class NetworkAddressUrlDataType {
+  @Type('string')
+  public NetworkInterface: string
+  @Type('string')
+  public Url: string
+
+  constructor(options?: { NetworkInterface?: string; Url?: string }) {
+    this.NetworkInterface = options?.NetworkInterface ?? ''
+    this.Url = options?.Url ?? ''
+  }
+}
+
+export class ReaderGroupDataType {
+  @Type('string')
+  public Name: string
+  @Type('boolean')
+  public Enabled: boolean
+  @Type('uint32')
+  public SecurityMode: MessageSecurityMode
+  @Type('string')
+  public SecurityGroupId: string
+  @TypeArray('EndpointDescription')
+  public SecurityKeyServices: EndpointDescription[] | null
+  @Type('uint32')
+  public MaxNetworkMessageSize: uint32
+  @TypeArray('KeyValuePair')
+  public GroupProperties: KeyValuePair[] | null
+  @Type('object')
+  public TransportSettings: ExtensionObject
+  @Type('object')
+  public MessageSettings: ExtensionObject
+  @TypeArray('DataSetReaderDataType')
+  public DataSetReaders: DataSetReaderDataType[] | null
+
+  constructor(options?: {
+    Name?: string
+    Enabled?: boolean
+    SecurityMode?: MessageSecurityMode
+    SecurityGroupId?: string
+    SecurityKeyServices?: EndpointDescription[] | null
+    MaxNetworkMessageSize?: uint32
+    GroupProperties?: KeyValuePair[] | null
+    TransportSettings?: ExtensionObject
+    MessageSettings?: ExtensionObject
+    DataSetReaders?: DataSetReaderDataType[] | null
+  }) {
+    this.Name = options?.Name ?? ''
+    this.Enabled = options?.Enabled ?? false
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityGroupId = options?.SecurityGroupId ?? ''
+    this.SecurityKeyServices = options?.SecurityKeyServices ?? null
+    this.MaxNetworkMessageSize = options?.MaxNetworkMessageSize ?? 0
+    this.GroupProperties = options?.GroupProperties ?? null
+    this.TransportSettings = options?.TransportSettings ?? new ExtensionObject()
+    this.MessageSettings = options?.MessageSettings ?? new ExtensionObject()
+    this.DataSetReaders = options?.DataSetReaders ?? null
+  }
+}
+
+export class ReaderGroupTransportDataType {}
+
+export class ReaderGroupMessageDataType {}
+
 export class DataSetReaderDataType {
   @Type('string')
   public Name: string
@@ -1337,102 +1374,18 @@ export class DataSetReaderDataType {
   }
 }
 
-export class ReaderGroupDataType {
-  @Type('string')
-  public Name: string
-  @Type('boolean')
-  public Enabled: boolean
-  @Type('uint32')
-  public SecurityMode: MessageSecurityMode
-  @Type('string')
-  public SecurityGroupId: string
-  @TypeArray('EndpointDescription')
-  public SecurityKeyServices: EndpointDescription[] | null
-  @Type('uint32')
-  public MaxNetworkMessageSize: uint32
-  @TypeArray('KeyValuePair')
-  public GroupProperties: KeyValuePair[] | null
-  @Type('object')
-  public TransportSettings: ExtensionObject
-  @Type('object')
-  public MessageSettings: ExtensionObject
-  @TypeArray('DataSetReaderDataType')
-  public DataSetReaders: DataSetReaderDataType[] | null
+export class DataSetReaderTransportDataType {}
 
-  constructor(options?: {
-    Name?: string
-    Enabled?: boolean
-    SecurityMode?: MessageSecurityMode
-    SecurityGroupId?: string
-    SecurityKeyServices?: EndpointDescription[] | null
-    MaxNetworkMessageSize?: uint32
-    GroupProperties?: KeyValuePair[] | null
-    TransportSettings?: ExtensionObject
-    MessageSettings?: ExtensionObject
-    DataSetReaders?: DataSetReaderDataType[] | null
-  }) {
-    this.Name = options?.Name ?? ''
-    this.Enabled = options?.Enabled ?? false
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
-    this.SecurityGroupId = options?.SecurityGroupId ?? ''
-    this.SecurityKeyServices = options?.SecurityKeyServices ?? null
-    this.MaxNetworkMessageSize = options?.MaxNetworkMessageSize ?? 0
-    this.GroupProperties = options?.GroupProperties ?? null
-    this.TransportSettings = options?.TransportSettings ?? new ExtensionObject()
-    this.MessageSettings = options?.MessageSettings ?? new ExtensionObject()
-    this.DataSetReaders = options?.DataSetReaders ?? null
-  }
-}
+export class DataSetReaderMessageDataType {}
 
-export class PubSubConnectionDataType {
-  @Type('string')
-  public Name: string
-  @Type('boolean')
-  public Enabled: boolean
-  @Type('object')
-  public PublisherId: Variant
-  @Type('string')
-  public TransportProfileUri: string
-  @Type('object')
-  public Address: ExtensionObject
-  @TypeArray('KeyValuePair')
-  public ConnectionProperties: KeyValuePair[] | null
-  @Type('object')
-  public TransportSettings: ExtensionObject
-  @TypeArray('WriterGroupDataType')
-  public WriterGroups: WriterGroupDataType[] | null
-  @TypeArray('ReaderGroupDataType')
-  public ReaderGroups: ReaderGroupDataType[] | null
+export class SubscribedDataSetDataType {}
 
-  constructor(options?: {
-    Name?: string
-    Enabled?: boolean
-    PublisherId?: Variant
-    TransportProfileUri?: string
-    Address?: ExtensionObject
-    ConnectionProperties?: KeyValuePair[] | null
-    TransportSettings?: ExtensionObject
-    WriterGroups?: WriterGroupDataType[] | null
-    ReaderGroups?: ReaderGroupDataType[] | null
-  }) {
-    this.Name = options?.Name ?? ''
-    this.Enabled = options?.Enabled ?? false
-    this.PublisherId = options?.PublisherId ?? new Variant()
-    this.TransportProfileUri = options?.TransportProfileUri ?? ''
-    this.Address = options?.Address ?? new ExtensionObject()
-    this.ConnectionProperties = options?.ConnectionProperties ?? null
-    this.TransportSettings = options?.TransportSettings ?? new ExtensionObject()
-    this.WriterGroups = options?.WriterGroups ?? null
-    this.ReaderGroups = options?.ReaderGroups ?? null
-  }
-}
+export class TargetVariablesDataType {
+  @TypeArray('FieldTargetDataType')
+  public TargetVariables: FieldTargetDataType[] | null
 
-export class NetworkAddressDataType {
-  @Type('string')
-  public NetworkInterface: string
-
-  constructor(options?: { NetworkInterface?: string }) {
-    this.NetworkInterface = options?.NetworkInterface ?? ''
+  constructor(options?: { TargetVariables?: FieldTargetDataType[] | null }) {
+    this.TargetVariables = options?.TargetVariables ?? null
   }
 }
 
@@ -1472,6 +1425,21 @@ export class FieldTargetDataType {
   }
 }
 
+export class SubscribedDataSetMirrorDataType {
+  @Type('string')
+  public ParentNodeName: string
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+
+  constructor(options?: {
+    ParentNodeName?: string
+    RolePermissions?: RolePermissionType[] | null
+  }) {
+    this.ParentNodeName = options?.ParentNodeName ?? ''
+    this.RolePermissions = options?.RolePermissions ?? null
+  }
+}
+
 export class PubSubConfigurationDataType {
   @TypeArray('PublishedDataSetDataType')
   public PublishedDataSets: PublishedDataSetDataType[] | null
@@ -1488,6 +1456,271 @@ export class PubSubConfigurationDataType {
     this.PublishedDataSets = options?.PublishedDataSets ?? null
     this.Connections = options?.Connections ?? null
     this.Enabled = options?.Enabled ?? false
+  }
+}
+
+export class UadpWriterGroupMessageDataType {
+  @Type('uint32')
+  public GroupVersion: uint32
+  @Type('uint32')
+  public DataSetOrdering: DataSetOrderingType
+  @Type('uint32')
+  public NetworkMessageContentMask: UadpNetworkMessageContentMask
+  @Type('float64')
+  public SamplingOffset: float64
+  @TypeArray('float64')
+  public PublishingOffset: Float64Array | null
+
+  constructor(options?: {
+    GroupVersion?: uint32
+    DataSetOrdering?: DataSetOrderingType
+    NetworkMessageContentMask?: UadpNetworkMessageContentMask
+    SamplingOffset?: float64
+    PublishingOffset?: Float64Array | null
+  }) {
+    this.GroupVersion = options?.GroupVersion ?? 0
+    this.DataSetOrdering =
+      options?.DataSetOrdering ?? DataSetOrderingTypeUndefined
+    this.NetworkMessageContentMask =
+      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMaskNone
+    this.SamplingOffset = options?.SamplingOffset ?? 0
+    this.PublishingOffset = options?.PublishingOffset ?? null
+  }
+}
+
+export class UadpDataSetWriterMessageDataType {
+  @Type('uint32')
+  public DataSetMessageContentMask: UadpDataSetMessageContentMask
+  @Type('uint16')
+  public ConfiguredSize: uint16
+  @Type('uint16')
+  public NetworkMessageNumber: uint16
+  @Type('uint16')
+  public DataSetOffset: uint16
+
+  constructor(options?: {
+    DataSetMessageContentMask?: UadpDataSetMessageContentMask
+    ConfiguredSize?: uint16
+    NetworkMessageNumber?: uint16
+    DataSetOffset?: uint16
+  }) {
+    this.DataSetMessageContentMask =
+      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMaskNone
+    this.ConfiguredSize = options?.ConfiguredSize ?? 0
+    this.NetworkMessageNumber = options?.NetworkMessageNumber ?? 0
+    this.DataSetOffset = options?.DataSetOffset ?? 0
+  }
+}
+
+export class UadpDataSetReaderMessageDataType {
+  @Type('uint32')
+  public GroupVersion: uint32
+  @Type('uint16')
+  public NetworkMessageNumber: uint16
+  @Type('uint16')
+  public DataSetOffset: uint16
+  @Type('object')
+  public DataSetClassId: Guid
+  @Type('uint32')
+  public NetworkMessageContentMask: UadpNetworkMessageContentMask
+  @Type('uint32')
+  public DataSetMessageContentMask: UadpDataSetMessageContentMask
+  @Type('float64')
+  public PublishingInterval: float64
+  @Type('float64')
+  public ReceiveOffset: float64
+  @Type('float64')
+  public ProcessingOffset: float64
+
+  constructor(options?: {
+    GroupVersion?: uint32
+    NetworkMessageNumber?: uint16
+    DataSetOffset?: uint16
+    DataSetClassId?: Guid
+    NetworkMessageContentMask?: UadpNetworkMessageContentMask
+    DataSetMessageContentMask?: UadpDataSetMessageContentMask
+    PublishingInterval?: float64
+    ReceiveOffset?: float64
+    ProcessingOffset?: float64
+  }) {
+    this.GroupVersion = options?.GroupVersion ?? 0
+    this.NetworkMessageNumber = options?.NetworkMessageNumber ?? 0
+    this.DataSetOffset = options?.DataSetOffset ?? 0
+    this.DataSetClassId = options?.DataSetClassId ?? new Guid()
+    this.NetworkMessageContentMask =
+      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMaskNone
+    this.DataSetMessageContentMask =
+      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMaskNone
+    this.PublishingInterval = options?.PublishingInterval ?? 0
+    this.ReceiveOffset = options?.ReceiveOffset ?? 0
+    this.ProcessingOffset = options?.ProcessingOffset ?? 0
+  }
+}
+
+export class JsonWriterGroupMessageDataType {
+  @Type('uint32')
+  public NetworkMessageContentMask: JsonNetworkMessageContentMask
+
+  constructor(options?: {
+    NetworkMessageContentMask?: JsonNetworkMessageContentMask
+  }) {
+    this.NetworkMessageContentMask =
+      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMaskNone
+  }
+}
+
+export class JsonDataSetWriterMessageDataType {
+  @Type('uint32')
+  public DataSetMessageContentMask: JsonDataSetMessageContentMask
+
+  constructor(options?: {
+    DataSetMessageContentMask?: JsonDataSetMessageContentMask
+  }) {
+    this.DataSetMessageContentMask =
+      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMaskNone
+  }
+}
+
+export class JsonDataSetReaderMessageDataType {
+  @Type('uint32')
+  public NetworkMessageContentMask: JsonNetworkMessageContentMask
+  @Type('uint32')
+  public DataSetMessageContentMask: JsonDataSetMessageContentMask
+
+  constructor(options?: {
+    NetworkMessageContentMask?: JsonNetworkMessageContentMask
+    DataSetMessageContentMask?: JsonDataSetMessageContentMask
+  }) {
+    this.NetworkMessageContentMask =
+      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMaskNone
+    this.DataSetMessageContentMask =
+      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMaskNone
+  }
+}
+
+export class DatagramConnectionTransportDataType {
+  @Type('object')
+  public DiscoveryAddress: ExtensionObject
+
+  constructor(options?: { DiscoveryAddress?: ExtensionObject }) {
+    this.DiscoveryAddress = options?.DiscoveryAddress ?? new ExtensionObject()
+  }
+}
+
+export class DatagramWriterGroupTransportDataType {
+  @Type('uint8')
+  public MessageRepeatCount: uint8
+  @Type('float64')
+  public MessageRepeatDelay: float64
+
+  constructor(options?: {
+    MessageRepeatCount?: uint8
+    MessageRepeatDelay?: float64
+  }) {
+    this.MessageRepeatCount = options?.MessageRepeatCount ?? 0
+    this.MessageRepeatDelay = options?.MessageRepeatDelay ?? 0
+  }
+}
+
+export class BrokerConnectionTransportDataType {
+  @Type('string')
+  public ResourceUri: string
+  @Type('string')
+  public AuthenticationProfileUri: string
+
+  constructor(options?: {
+    ResourceUri?: string
+    AuthenticationProfileUri?: string
+  }) {
+    this.ResourceUri = options?.ResourceUri ?? ''
+    this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
+  }
+}
+
+export class BrokerWriterGroupTransportDataType {
+  @Type('string')
+  public QueueName: string
+  @Type('string')
+  public ResourceUri: string
+  @Type('string')
+  public AuthenticationProfileUri: string
+  @Type('uint32')
+  public RequestedDeliveryGuarantee: BrokerTransportQualityOfService
+
+  constructor(options?: {
+    QueueName?: string
+    ResourceUri?: string
+    AuthenticationProfileUri?: string
+    RequestedDeliveryGuarantee?: BrokerTransportQualityOfService
+  }) {
+    this.QueueName = options?.QueueName ?? ''
+    this.ResourceUri = options?.ResourceUri ?? ''
+    this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
+    this.RequestedDeliveryGuarantee =
+      options?.RequestedDeliveryGuarantee ??
+      BrokerTransportQualityOfServiceNotSpecified
+  }
+}
+
+export class BrokerDataSetWriterTransportDataType {
+  @Type('string')
+  public QueueName: string
+  @Type('string')
+  public ResourceUri: string
+  @Type('string')
+  public AuthenticationProfileUri: string
+  @Type('uint32')
+  public RequestedDeliveryGuarantee: BrokerTransportQualityOfService
+  @Type('string')
+  public MetaDataQueueName: string
+  @Type('float64')
+  public MetaDataUpdateTime: float64
+
+  constructor(options?: {
+    QueueName?: string
+    ResourceUri?: string
+    AuthenticationProfileUri?: string
+    RequestedDeliveryGuarantee?: BrokerTransportQualityOfService
+    MetaDataQueueName?: string
+    MetaDataUpdateTime?: float64
+  }) {
+    this.QueueName = options?.QueueName ?? ''
+    this.ResourceUri = options?.ResourceUri ?? ''
+    this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
+    this.RequestedDeliveryGuarantee =
+      options?.RequestedDeliveryGuarantee ??
+      BrokerTransportQualityOfServiceNotSpecified
+    this.MetaDataQueueName = options?.MetaDataQueueName ?? ''
+    this.MetaDataUpdateTime = options?.MetaDataUpdateTime ?? 0
+  }
+}
+
+export class BrokerDataSetReaderTransportDataType {
+  @Type('string')
+  public QueueName: string
+  @Type('string')
+  public ResourceUri: string
+  @Type('string')
+  public AuthenticationProfileUri: string
+  @Type('uint32')
+  public RequestedDeliveryGuarantee: BrokerTransportQualityOfService
+  @Type('string')
+  public MetaDataQueueName: string
+
+  constructor(options?: {
+    QueueName?: string
+    ResourceUri?: string
+    AuthenticationProfileUri?: string
+    RequestedDeliveryGuarantee?: BrokerTransportQualityOfService
+    MetaDataQueueName?: string
+  }) {
+    this.QueueName = options?.QueueName ?? ''
+    this.ResourceUri = options?.ResourceUri ?? ''
+    this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
+    this.RequestedDeliveryGuarantee =
+      options?.RequestedDeliveryGuarantee ??
+      BrokerTransportQualityOfServiceNotSpecified
+    this.MetaDataQueueName = options?.MetaDataQueueName ?? ''
   }
 }
 
@@ -1518,22 +1751,70 @@ export class RolePermissionType {
   }
 }
 
-export class ReferenceNode {
+export class StructureField {
+  @Type('string')
+  public Name: string
   @Type('object')
-  public ReferenceTypeId: NodeId
+  public Description: LocalizedText
+  @Type('object')
+  public DataType: NodeId
+  @Type('int32')
+  public ValueRank: int32
+  @TypeArray('uint32')
+  public ArrayDimensions: Uint32Array | null
+  @Type('uint32')
+  public MaxStringLength: uint32
   @Type('boolean')
-  public IsInverse: boolean
-  @Type('object')
-  public TargetId: ExpandedNodeId
+  public IsOptional: boolean
 
   constructor(options?: {
-    ReferenceTypeId?: NodeId
-    IsInverse?: boolean
-    TargetId?: ExpandedNodeId
+    Name?: string
+    Description?: LocalizedText
+    DataType?: NodeId
+    ValueRank?: int32
+    ArrayDimensions?: Uint32Array | null
+    MaxStringLength?: uint32
+    IsOptional?: boolean
   }) {
-    this.ReferenceTypeId = options?.ReferenceTypeId ?? new NodeId()
-    this.IsInverse = options?.IsInverse ?? false
-    this.TargetId = options?.TargetId ?? new ExpandedNodeId()
+    this.Name = options?.Name ?? ''
+    this.Description = options?.Description ?? new LocalizedText()
+    this.DataType = options?.DataType ?? new NodeId()
+    this.ValueRank = options?.ValueRank ?? 0
+    this.ArrayDimensions = options?.ArrayDimensions ?? null
+    this.MaxStringLength = options?.MaxStringLength ?? 0
+    this.IsOptional = options?.IsOptional ?? false
+  }
+}
+
+export class StructureDefinition {
+  @Type('object')
+  public DefaultEncodingId: NodeId
+  @Type('object')
+  public BaseDataType: NodeId
+  @Type('uint32')
+  public StructureType: StructureType
+  @TypeArray('StructureField')
+  public Fields: StructureField[] | null
+
+  constructor(options?: {
+    DefaultEncodingId?: NodeId
+    BaseDataType?: NodeId
+    StructureType?: StructureType
+    Fields?: StructureField[] | null
+  }) {
+    this.DefaultEncodingId = options?.DefaultEncodingId ?? new NodeId()
+    this.BaseDataType = options?.BaseDataType ?? new NodeId()
+    this.StructureType = options?.StructureType ?? StructureTypeStructure
+    this.Fields = options?.Fields ?? null
+  }
+}
+
+export class EnumDefinition {
+  @TypeArray('EnumField')
+  public Fields: EnumField[] | null
+
+  constructor(options?: { Fields?: EnumField[] | null }) {
+    this.Fields = options?.Fields ?? null
   }
 }
 
@@ -1588,6 +1869,636 @@ export class Node {
   }
 }
 
+export class InstanceNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+  }
+}
+
+export class TypeNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+  }
+}
+
+export class ObjectNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('uint8')
+  public EventNotifier: uint8
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    EventNotifier?: uint8
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.EventNotifier = options?.EventNotifier ?? 0
+  }
+}
+
+export class ObjectTypeNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('boolean')
+  public IsAbstract: boolean
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    IsAbstract?: boolean
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.IsAbstract = options?.IsAbstract ?? false
+  }
+}
+
+export class VariableNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('object')
+  public Value: Variant
+  @Type('object')
+  public DataType: NodeId
+  @Type('int32')
+  public ValueRank: int32
+  @TypeArray('uint32')
+  public ArrayDimensions: Uint32Array | null
+  @Type('uint8')
+  public AccessLevel: uint8
+  @Type('uint8')
+  public UserAccessLevel: uint8
+  @Type('float64')
+  public MinimumSamplingInterval: float64
+  @Type('boolean')
+  public Historizing: boolean
+  @Type('uint32')
+  public AccessLevelEx: uint32
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    Value?: Variant
+    DataType?: NodeId
+    ValueRank?: int32
+    ArrayDimensions?: Uint32Array | null
+    AccessLevel?: uint8
+    UserAccessLevel?: uint8
+    MinimumSamplingInterval?: float64
+    Historizing?: boolean
+    AccessLevelEx?: uint32
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.Value = options?.Value ?? new Variant()
+    this.DataType = options?.DataType ?? new NodeId()
+    this.ValueRank = options?.ValueRank ?? 0
+    this.ArrayDimensions = options?.ArrayDimensions ?? null
+    this.AccessLevel = options?.AccessLevel ?? 0
+    this.UserAccessLevel = options?.UserAccessLevel ?? 0
+    this.MinimumSamplingInterval = options?.MinimumSamplingInterval ?? 0
+    this.Historizing = options?.Historizing ?? false
+    this.AccessLevelEx = options?.AccessLevelEx ?? 0
+  }
+}
+
+export class VariableTypeNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('object')
+  public Value: Variant
+  @Type('object')
+  public DataType: NodeId
+  @Type('int32')
+  public ValueRank: int32
+  @TypeArray('uint32')
+  public ArrayDimensions: Uint32Array | null
+  @Type('boolean')
+  public IsAbstract: boolean
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    Value?: Variant
+    DataType?: NodeId
+    ValueRank?: int32
+    ArrayDimensions?: Uint32Array | null
+    IsAbstract?: boolean
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.Value = options?.Value ?? new Variant()
+    this.DataType = options?.DataType ?? new NodeId()
+    this.ValueRank = options?.ValueRank ?? 0
+    this.ArrayDimensions = options?.ArrayDimensions ?? null
+    this.IsAbstract = options?.IsAbstract ?? false
+  }
+}
+
+export class ReferenceTypeNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('boolean')
+  public IsAbstract: boolean
+  @Type('boolean')
+  public Symmetric: boolean
+  @Type('object')
+  public InverseName: LocalizedText
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    IsAbstract?: boolean
+    Symmetric?: boolean
+    InverseName?: LocalizedText
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.IsAbstract = options?.IsAbstract ?? false
+    this.Symmetric = options?.Symmetric ?? false
+    this.InverseName = options?.InverseName ?? new LocalizedText()
+  }
+}
+
+export class MethodNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('boolean')
+  public Executable: boolean
+  @Type('boolean')
+  public UserExecutable: boolean
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    Executable?: boolean
+    UserExecutable?: boolean
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.Executable = options?.Executable ?? false
+    this.UserExecutable = options?.UserExecutable ?? false
+  }
+}
+
+export class ViewNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('boolean')
+  public ContainsNoLoops: boolean
+  @Type('uint8')
+  public EventNotifier: uint8
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    ContainsNoLoops?: boolean
+    EventNotifier?: uint8
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.ContainsNoLoops = options?.ContainsNoLoops ?? false
+    this.EventNotifier = options?.EventNotifier ?? 0
+  }
+}
+
+export class DataTypeNode {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public NodeClass: NodeClass
+  @Type('object')
+  public BrowseName: QualifiedName
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('RolePermissionType')
+  public RolePermissions: RolePermissionType[] | null
+  @TypeArray('RolePermissionType')
+  public UserRolePermissions: RolePermissionType[] | null
+  @Type('uint16')
+  public AccessRestrictions: uint16
+  @TypeArray('ReferenceNode')
+  public References: ReferenceNode[] | null
+  @Type('boolean')
+  public IsAbstract: boolean
+  @Type('object')
+  public DataTypeDefinition: ExtensionObject
+
+  constructor(options?: {
+    NodeId?: NodeId
+    NodeClass?: NodeClass
+    BrowseName?: QualifiedName
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    RolePermissions?: RolePermissionType[] | null
+    UserRolePermissions?: RolePermissionType[] | null
+    AccessRestrictions?: uint16
+    References?: ReferenceNode[] | null
+    IsAbstract?: boolean
+    DataTypeDefinition?: ExtensionObject
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.BrowseName = options?.BrowseName ?? new QualifiedName()
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.RolePermissions = options?.RolePermissions ?? null
+    this.UserRolePermissions = options?.UserRolePermissions ?? null
+    this.AccessRestrictions = options?.AccessRestrictions ?? 0
+    this.References = options?.References ?? null
+    this.IsAbstract = options?.IsAbstract ?? false
+    this.DataTypeDefinition =
+      options?.DataTypeDefinition ?? new ExtensionObject()
+  }
+}
+
+export class ReferenceNode {
+  @Type('object')
+  public ReferenceTypeId: NodeId
+  @Type('boolean')
+  public IsInverse: boolean
+  @Type('object')
+  public TargetId: ExpandedNodeId
+
+  constructor(options?: {
+    ReferenceTypeId?: NodeId
+    IsInverse?: boolean
+    TargetId?: ExpandedNodeId
+  }) {
+    this.ReferenceTypeId = options?.ReferenceTypeId ?? new NodeId()
+    this.IsInverse = options?.IsInverse ?? false
+    this.TargetId = options?.TargetId ?? new ExpandedNodeId()
+  }
+}
+
 export class Argument {
   @Type('string')
   public Name: string
@@ -1634,6 +2545,29 @@ export class EnumValueType {
   }
 }
 
+export class EnumField {
+  @Type('int64')
+  public Value: int64
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('string')
+  public Name: string
+
+  constructor(options?: {
+    Value?: int64
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    Name?: string
+  }) {
+    this.Value = options?.Value ?? BigInt(0)
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.Name = options?.Name ?? ''
+  }
+}
+
 export class OptionSet {
   @Type('ByteString')
   public Value: ByteString
@@ -1646,6 +2580,8 @@ export class OptionSet {
   }
 }
 
+export class Union {}
+
 export class TimeZoneDataType {
   @Type('int16')
   public Offset: int16
@@ -1655,6 +2591,41 @@ export class TimeZoneDataType {
   constructor(options?: { Offset?: int16; DaylightSavingInOffset?: boolean }) {
     this.Offset = options?.Offset ?? 0
     this.DaylightSavingInOffset = options?.DaylightSavingInOffset ?? false
+  }
+}
+
+export class ApplicationDescription {
+  @Type('string')
+  public ApplicationUri: string
+  @Type('string')
+  public ProductUri: string
+  @Type('object')
+  public ApplicationName: LocalizedText
+  @Type('uint32')
+  public ApplicationType: ApplicationType
+  @Type('string')
+  public GatewayServerUri: string
+  @Type('string')
+  public DiscoveryProfileUri: string
+  @TypeArray('string')
+  public DiscoveryUrls: string[] | null
+
+  constructor(options?: {
+    ApplicationUri?: string
+    ProductUri?: string
+    ApplicationName?: LocalizedText
+    ApplicationType?: ApplicationType
+    GatewayServerUri?: string
+    DiscoveryProfileUri?: string
+    DiscoveryUrls?: string[] | null
+  }) {
+    this.ApplicationUri = options?.ApplicationUri ?? ''
+    this.ProductUri = options?.ProductUri ?? ''
+    this.ApplicationName = options?.ApplicationName ?? new LocalizedText()
+    this.ApplicationType = options?.ApplicationType ?? ApplicationTypeServer
+    this.GatewayServerUri = options?.GatewayServerUri ?? ''
+    this.DiscoveryProfileUri = options?.DiscoveryProfileUri ?? ''
+    this.DiscoveryUrls = options?.DiscoveryUrls ?? null
   }
 }
 
@@ -1883,6 +2854,72 @@ export class FindServersOnNetworkResponse {
   }
 }
 
+export class UserTokenPolicy {
+  @Type('string')
+  public PolicyId: string
+  @Type('uint32')
+  public TokenType: UserTokenType
+  @Type('string')
+  public IssuedTokenType: string
+  @Type('string')
+  public IssuerEndpointUrl: string
+  @Type('string')
+  public SecurityPolicyUri: string
+
+  constructor(options?: {
+    PolicyId?: string
+    TokenType?: UserTokenType
+    IssuedTokenType?: string
+    IssuerEndpointUrl?: string
+    SecurityPolicyUri?: string
+  }) {
+    this.PolicyId = options?.PolicyId ?? ''
+    this.TokenType = options?.TokenType ?? UserTokenTypeAnonymous
+    this.IssuedTokenType = options?.IssuedTokenType ?? ''
+    this.IssuerEndpointUrl = options?.IssuerEndpointUrl ?? ''
+    this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
+  }
+}
+
+export class EndpointDescription {
+  @Type('string')
+  public EndpointUrl: string
+  @Type('object')
+  public Server: ApplicationDescription
+  @Type('ByteString')
+  public ServerCertificate: ByteString
+  @Type('uint32')
+  public SecurityMode: MessageSecurityMode
+  @Type('string')
+  public SecurityPolicyUri: string
+  @TypeArray('UserTokenPolicy')
+  public UserIdentityTokens: UserTokenPolicy[] | null
+  @Type('string')
+  public TransportProfileUri: string
+  @Type('uint8')
+  public SecurityLevel: uint8
+
+  constructor(options?: {
+    EndpointUrl?: string
+    Server?: ApplicationDescription
+    ServerCertificate?: ByteString
+    SecurityMode?: MessageSecurityMode
+    SecurityPolicyUri?: string
+    UserIdentityTokens?: UserTokenPolicy[] | null
+    TransportProfileUri?: string
+    SecurityLevel?: uint8
+  }) {
+    this.EndpointUrl = options?.EndpointUrl ?? ''
+    this.Server = options?.Server ?? new ApplicationDescription()
+    this.ServerCertificate = options?.ServerCertificate ?? new Uint8Array()
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
+    this.UserIdentityTokens = options?.UserIdentityTokens ?? null
+    this.TransportProfileUri = options?.TransportProfileUri ?? ''
+    this.SecurityLevel = options?.SecurityLevel ?? 0
+  }
+}
+
 export class GetEndpointsRequest {
   @Type('object')
   public RequestHeader: RequestHeader
@@ -1981,6 +3018,23 @@ export class RegisterServerResponse {
 
   constructor(options?: { ResponseHeader?: ResponseHeader }) {
     this.ResponseHeader = options?.ResponseHeader ?? new ResponseHeader()
+  }
+}
+
+export class DiscoveryConfiguration {}
+
+export class MdnsDiscoveryConfiguration {
+  @Type('string')
+  public MdnsServerName: string
+  @TypeArray('string')
+  public ServerCapabilities: string[] | null
+
+  constructor(options?: {
+    MdnsServerName?: string
+    ServerCapabilities?: string[] | null
+  }) {
+    this.MdnsServerName = options?.MdnsServerName ?? ''
+    this.ServerCapabilities = options?.ServerCapabilities ?? null
   }
 }
 
@@ -2444,6 +3498,314 @@ export class NodeAttributes {
   }
 }
 
+export class ObjectAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('uint8')
+  public EventNotifier: uint8
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    EventNotifier?: uint8
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.EventNotifier = options?.EventNotifier ?? 0
+  }
+}
+
+export class VariableAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('object')
+  public Value: Variant
+  @Type('object')
+  public DataType: NodeId
+  @Type('int32')
+  public ValueRank: int32
+  @TypeArray('uint32')
+  public ArrayDimensions: Uint32Array | null
+  @Type('uint8')
+  public AccessLevel: uint8
+  @Type('uint8')
+  public UserAccessLevel: uint8
+  @Type('float64')
+  public MinimumSamplingInterval: float64
+  @Type('boolean')
+  public Historizing: boolean
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    Value?: Variant
+    DataType?: NodeId
+    ValueRank?: int32
+    ArrayDimensions?: Uint32Array | null
+    AccessLevel?: uint8
+    UserAccessLevel?: uint8
+    MinimumSamplingInterval?: float64
+    Historizing?: boolean
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.Value = options?.Value ?? new Variant()
+    this.DataType = options?.DataType ?? new NodeId()
+    this.ValueRank = options?.ValueRank ?? 0
+    this.ArrayDimensions = options?.ArrayDimensions ?? null
+    this.AccessLevel = options?.AccessLevel ?? 0
+    this.UserAccessLevel = options?.UserAccessLevel ?? 0
+    this.MinimumSamplingInterval = options?.MinimumSamplingInterval ?? 0
+    this.Historizing = options?.Historizing ?? false
+  }
+}
+
+export class MethodAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('boolean')
+  public Executable: boolean
+  @Type('boolean')
+  public UserExecutable: boolean
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    Executable?: boolean
+    UserExecutable?: boolean
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.Executable = options?.Executable ?? false
+    this.UserExecutable = options?.UserExecutable ?? false
+  }
+}
+
+export class ObjectTypeAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('boolean')
+  public IsAbstract: boolean
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    IsAbstract?: boolean
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.IsAbstract = options?.IsAbstract ?? false
+  }
+}
+
+export class VariableTypeAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('object')
+  public Value: Variant
+  @Type('object')
+  public DataType: NodeId
+  @Type('int32')
+  public ValueRank: int32
+  @TypeArray('uint32')
+  public ArrayDimensions: Uint32Array | null
+  @Type('boolean')
+  public IsAbstract: boolean
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    Value?: Variant
+    DataType?: NodeId
+    ValueRank?: int32
+    ArrayDimensions?: Uint32Array | null
+    IsAbstract?: boolean
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.Value = options?.Value ?? new Variant()
+    this.DataType = options?.DataType ?? new NodeId()
+    this.ValueRank = options?.ValueRank ?? 0
+    this.ArrayDimensions = options?.ArrayDimensions ?? null
+    this.IsAbstract = options?.IsAbstract ?? false
+  }
+}
+
+export class ReferenceTypeAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('boolean')
+  public IsAbstract: boolean
+  @Type('boolean')
+  public Symmetric: boolean
+  @Type('object')
+  public InverseName: LocalizedText
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    IsAbstract?: boolean
+    Symmetric?: boolean
+    InverseName?: LocalizedText
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.IsAbstract = options?.IsAbstract ?? false
+    this.Symmetric = options?.Symmetric ?? false
+    this.InverseName = options?.InverseName ?? new LocalizedText()
+  }
+}
+
+export class DataTypeAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('boolean')
+  public IsAbstract: boolean
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    IsAbstract?: boolean
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.IsAbstract = options?.IsAbstract ?? false
+  }
+}
+
+export class ViewAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @Type('boolean')
+  public ContainsNoLoops: boolean
+  @Type('uint8')
+  public EventNotifier: uint8
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    ContainsNoLoops?: boolean
+    EventNotifier?: uint8
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.ContainsNoLoops = options?.ContainsNoLoops ?? false
+    this.EventNotifier = options?.EventNotifier ?? 0
+  }
+}
+
 export class GenericAttributeValue {
   @Type('uint32')
   public AttributeId: uint32
@@ -2453,6 +3815,37 @@ export class GenericAttributeValue {
   constructor(options?: { AttributeId?: uint32; Value?: Variant }) {
     this.AttributeId = options?.AttributeId ?? 0
     this.Value = options?.Value ?? new Variant()
+  }
+}
+
+export class GenericAttributes {
+  @Type('uint32')
+  public SpecifiedAttributes: uint32
+  @Type('object')
+  public DisplayName: LocalizedText
+  @Type('object')
+  public Description: LocalizedText
+  @Type('uint32')
+  public WriteMask: uint32
+  @Type('uint32')
+  public UserWriteMask: uint32
+  @TypeArray('GenericAttributeValue')
+  public AttributeValues: GenericAttributeValue[] | null
+
+  constructor(options?: {
+    SpecifiedAttributes?: uint32
+    DisplayName?: LocalizedText
+    Description?: LocalizedText
+    WriteMask?: uint32
+    UserWriteMask?: uint32
+    AttributeValues?: GenericAttributeValue[] | null
+  }) {
+    this.SpecifiedAttributes = options?.SpecifiedAttributes ?? 0
+    this.DisplayName = options?.DisplayName ?? new LocalizedText()
+    this.Description = options?.Description ?? new LocalizedText()
+    this.WriteMask = options?.WriteMask ?? 0
+    this.UserWriteMask = options?.UserWriteMask ?? 0
+    this.AttributeValues = options?.AttributeValues ?? null
   }
 }
 
@@ -3209,6 +4602,76 @@ export class ContentFilter {
   }
 }
 
+export class FilterOperand {}
+
+export class ElementOperand {
+  @Type('uint32')
+  public Index: uint32
+
+  constructor(options?: { Index?: uint32 }) {
+    this.Index = options?.Index ?? 0
+  }
+}
+
+export class LiteralOperand {
+  @Type('object')
+  public Value: Variant
+
+  constructor(options?: { Value?: Variant }) {
+    this.Value = options?.Value ?? new Variant()
+  }
+}
+
+export class AttributeOperand {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('string')
+  public Alias: string
+  @Type('object')
+  public BrowsePath: RelativePath
+  @Type('uint32')
+  public AttributeId: uint32
+  @Type('string')
+  public IndexRange: string
+
+  constructor(options?: {
+    NodeId?: NodeId
+    Alias?: string
+    BrowsePath?: RelativePath
+    AttributeId?: uint32
+    IndexRange?: string
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.Alias = options?.Alias ?? ''
+    this.BrowsePath = options?.BrowsePath ?? new RelativePath()
+    this.AttributeId = options?.AttributeId ?? 0
+    this.IndexRange = options?.IndexRange ?? ''
+  }
+}
+
+export class SimpleAttributeOperand {
+  @Type('object')
+  public TypeDefinitionId: NodeId
+  @TypeArray('QualifiedName')
+  public BrowsePath: QualifiedName[] | null
+  @Type('uint32')
+  public AttributeId: uint32
+  @Type('string')
+  public IndexRange: string
+
+  constructor(options?: {
+    TypeDefinitionId?: NodeId
+    BrowsePath?: QualifiedName[] | null
+    AttributeId?: uint32
+    IndexRange?: string
+  }) {
+    this.TypeDefinitionId = options?.TypeDefinitionId ?? new NodeId()
+    this.BrowsePath = options?.BrowsePath ?? null
+    this.AttributeId = options?.AttributeId ?? 0
+    this.IndexRange = options?.IndexRange ?? ''
+  }
+}
+
 export class ContentFilterElementResult {
   @Type('uint32')
   public StatusCode: StatusCode
@@ -3471,6 +4934,110 @@ export class HistoryReadResult {
   }
 }
 
+export class HistoryReadDetails {}
+
+export class ReadEventDetails {
+  @Type('uint32')
+  public NumValuesPerNode: uint32
+  @Type('Date')
+  public StartTime: Date
+  @Type('Date')
+  public EndTime: Date
+  @Type('object')
+  public Filter: EventFilter
+
+  constructor(options?: {
+    NumValuesPerNode?: uint32
+    StartTime?: Date
+    EndTime?: Date
+    Filter?: EventFilter
+  }) {
+    this.NumValuesPerNode = options?.NumValuesPerNode ?? 0
+    this.StartTime = options?.StartTime ?? new Date()
+    this.EndTime = options?.EndTime ?? new Date()
+    this.Filter = options?.Filter ?? new EventFilter()
+  }
+}
+
+export class ReadRawModifiedDetails {
+  @Type('boolean')
+  public IsReadModified: boolean
+  @Type('Date')
+  public StartTime: Date
+  @Type('Date')
+  public EndTime: Date
+  @Type('uint32')
+  public NumValuesPerNode: uint32
+  @Type('boolean')
+  public ReturnBounds: boolean
+
+  constructor(options?: {
+    IsReadModified?: boolean
+    StartTime?: Date
+    EndTime?: Date
+    NumValuesPerNode?: uint32
+    ReturnBounds?: boolean
+  }) {
+    this.IsReadModified = options?.IsReadModified ?? false
+    this.StartTime = options?.StartTime ?? new Date()
+    this.EndTime = options?.EndTime ?? new Date()
+    this.NumValuesPerNode = options?.NumValuesPerNode ?? 0
+    this.ReturnBounds = options?.ReturnBounds ?? false
+  }
+}
+
+export class ReadProcessedDetails {
+  @Type('Date')
+  public StartTime: Date
+  @Type('Date')
+  public EndTime: Date
+  @Type('float64')
+  public ProcessingInterval: float64
+  @TypeArray('NodeId')
+  public AggregateType: NodeId[] | null
+  @Type('object')
+  public AggregateConfiguration: AggregateConfiguration
+
+  constructor(options?: {
+    StartTime?: Date
+    EndTime?: Date
+    ProcessingInterval?: float64
+    AggregateType?: NodeId[] | null
+    AggregateConfiguration?: AggregateConfiguration
+  }) {
+    this.StartTime = options?.StartTime ?? new Date()
+    this.EndTime = options?.EndTime ?? new Date()
+    this.ProcessingInterval = options?.ProcessingInterval ?? 0
+    this.AggregateType = options?.AggregateType ?? null
+    this.AggregateConfiguration =
+      options?.AggregateConfiguration ?? new AggregateConfiguration()
+  }
+}
+
+export class ReadAtTimeDetails {
+  @TypeArray('Date')
+  public ReqTimes: Date[] | null
+  @Type('boolean')
+  public UseSimpleBounds: boolean
+
+  constructor(options?: {
+    ReqTimes?: Date[] | null
+    UseSimpleBounds?: boolean
+  }) {
+    this.ReqTimes = options?.ReqTimes ?? null
+    this.UseSimpleBounds = options?.UseSimpleBounds ?? false
+  }
+}
+
+export class ReadAnnotationDataDetails {
+  @TypeArray('Date')
+  public ReqTimes: Date[] | null
+
+  constructor(options?: { ReqTimes?: Date[] | null }) {
+    this.ReqTimes = options?.ReqTimes ?? null
+  }
+}
+
 export class HistoryData {
   @TypeArray('DataValue')
   public DataValues: DataValue[] | null
@@ -3499,12 +5066,18 @@ export class ModificationInfo {
   }
 }
 
-export class HistoryEventFieldList {
-  @TypeArray('Variant')
-  public EventFields: Variant[] | null
+export class HistoryModifiedData {
+  @TypeArray('DataValue')
+  public DataValues: DataValue[] | null
+  @TypeArray('ModificationInfo')
+  public ModificationInfos: ModificationInfo[] | null
 
-  constructor(options?: { EventFields?: Variant[] | null }) {
-    this.EventFields = options?.EventFields ?? null
+  constructor(options?: {
+    DataValues?: DataValue[] | null
+    ModificationInfos?: ModificationInfo[] | null
+  }) {
+    this.DataValues = options?.DataValues ?? null
+    this.ModificationInfos = options?.ModificationInfos ?? null
   }
 }
 
@@ -3628,6 +5201,117 @@ export class HistoryUpdateDetails {
 
   constructor(options?: { NodeId?: NodeId }) {
     this.NodeId = options?.NodeId ?? new NodeId()
+  }
+}
+
+export class UpdateDataDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public PerformInsertReplace: PerformUpdateType
+  @TypeArray('DataValue')
+  public UpdateValues: DataValue[] | null
+
+  constructor(options?: {
+    NodeId?: NodeId
+    PerformInsertReplace?: PerformUpdateType
+    UpdateValues?: DataValue[] | null
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.PerformInsertReplace =
+      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+    this.UpdateValues = options?.UpdateValues ?? null
+  }
+}
+
+export class UpdateStructureDataDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public PerformInsertReplace: PerformUpdateType
+  @TypeArray('DataValue')
+  public UpdateValues: DataValue[] | null
+
+  constructor(options?: {
+    NodeId?: NodeId
+    PerformInsertReplace?: PerformUpdateType
+    UpdateValues?: DataValue[] | null
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.PerformInsertReplace =
+      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+    this.UpdateValues = options?.UpdateValues ?? null
+  }
+}
+
+export class UpdateEventDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('uint32')
+  public PerformInsertReplace: PerformUpdateType
+  @Type('object')
+  public Filter: EventFilter
+  @TypeArray('HistoryEventFieldList')
+  public EventData: HistoryEventFieldList[] | null
+
+  constructor(options?: {
+    NodeId?: NodeId
+    PerformInsertReplace?: PerformUpdateType
+    Filter?: EventFilter
+    EventData?: HistoryEventFieldList[] | null
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.PerformInsertReplace =
+      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+    this.Filter = options?.Filter ?? new EventFilter()
+    this.EventData = options?.EventData ?? null
+  }
+}
+
+export class DeleteRawModifiedDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @Type('boolean')
+  public IsDeleteModified: boolean
+  @Type('Date')
+  public StartTime: Date
+  @Type('Date')
+  public EndTime: Date
+
+  constructor(options?: {
+    NodeId?: NodeId
+    IsDeleteModified?: boolean
+    StartTime?: Date
+    EndTime?: Date
+  }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.IsDeleteModified = options?.IsDeleteModified ?? false
+    this.StartTime = options?.StartTime ?? new Date()
+    this.EndTime = options?.EndTime ?? new Date()
+  }
+}
+
+export class DeleteAtTimeDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @TypeArray('Date')
+  public ReqTimes: Date[] | null
+
+  constructor(options?: { NodeId?: NodeId; ReqTimes?: Date[] | null }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.ReqTimes = options?.ReqTimes ?? null
+  }
+}
+
+export class DeleteEventDetails {
+  @Type('object')
+  public NodeId: NodeId
+  @TypeArray('ByteString')
+  public EventIds: ByteString[] | null
+
+  constructor(options?: { NodeId?: NodeId; EventIds?: ByteString[] | null }) {
+    this.NodeId = options?.NodeId ?? new NodeId()
+    this.EventIds = options?.EventIds ?? null
   }
 }
 
@@ -3761,6 +5445,42 @@ export class CallResponse {
   }
 }
 
+export class MonitoringFilter {}
+
+export class DataChangeFilter {
+  @Type('uint32')
+  public Trigger: DataChangeTrigger
+  @Type('uint32')
+  public DeadbandType: uint32
+  @Type('float64')
+  public DeadbandValue: float64
+
+  constructor(options?: {
+    Trigger?: DataChangeTrigger
+    DeadbandType?: uint32
+    DeadbandValue?: float64
+  }) {
+    this.Trigger = options?.Trigger ?? DataChangeTriggerStatus
+    this.DeadbandType = options?.DeadbandType ?? 0
+    this.DeadbandValue = options?.DeadbandValue ?? 0
+  }
+}
+
+export class EventFilter {
+  @TypeArray('SimpleAttributeOperand')
+  public SelectClauses: SimpleAttributeOperand[] | null
+  @Type('object')
+  public WhereClause: ContentFilter
+
+  constructor(options?: {
+    SelectClauses?: SimpleAttributeOperand[] | null
+    WhereClause?: ContentFilter
+  }) {
+    this.SelectClauses = options?.SelectClauses ?? null
+    this.WhereClause = options?.WhereClause ?? new ContentFilter()
+  }
+}
+
 export class AggregateConfiguration {
   @Type('boolean')
   public UseServerCapabilitiesDefaults: boolean
@@ -3786,6 +5506,73 @@ export class AggregateConfiguration {
     this.PercentDataBad = options?.PercentDataBad ?? 0
     this.PercentDataGood = options?.PercentDataGood ?? 0
     this.UseSlopedExtrapolation = options?.UseSlopedExtrapolation ?? false
+  }
+}
+
+export class AggregateFilter {
+  @Type('Date')
+  public StartTime: Date
+  @Type('object')
+  public AggregateType: NodeId
+  @Type('float64')
+  public ProcessingInterval: float64
+  @Type('object')
+  public AggregateConfiguration: AggregateConfiguration
+
+  constructor(options?: {
+    StartTime?: Date
+    AggregateType?: NodeId
+    ProcessingInterval?: float64
+    AggregateConfiguration?: AggregateConfiguration
+  }) {
+    this.StartTime = options?.StartTime ?? new Date()
+    this.AggregateType = options?.AggregateType ?? new NodeId()
+    this.ProcessingInterval = options?.ProcessingInterval ?? 0
+    this.AggregateConfiguration =
+      options?.AggregateConfiguration ?? new AggregateConfiguration()
+  }
+}
+
+export class MonitoringFilterResult {}
+
+export class EventFilterResult {
+  @TypeArray('uint32')
+  public SelectClauseResults: Uint32Array | null
+  @TypeArray('DiagnosticInfo')
+  public SelectClauseDiagnosticInfos: DiagnosticInfo[] | null
+  @Type('object')
+  public WhereClauseResult: ContentFilterResult
+
+  constructor(options?: {
+    SelectClauseResults?: Uint32Array | null
+    SelectClauseDiagnosticInfos?: DiagnosticInfo[] | null
+    WhereClauseResult?: ContentFilterResult
+  }) {
+    this.SelectClauseResults = options?.SelectClauseResults ?? null
+    this.SelectClauseDiagnosticInfos =
+      options?.SelectClauseDiagnosticInfos ?? null
+    this.WhereClauseResult =
+      options?.WhereClauseResult ?? new ContentFilterResult()
+  }
+}
+
+export class AggregateFilterResult {
+  @Type('Date')
+  public RevisedStartTime: Date
+  @Type('float64')
+  public RevisedProcessingInterval: float64
+  @Type('object')
+  public RevisedAggregateConfiguration: AggregateConfiguration
+
+  constructor(options?: {
+    RevisedStartTime?: Date
+    RevisedProcessingInterval?: float64
+    RevisedAggregateConfiguration?: AggregateConfiguration
+  }) {
+    this.RevisedStartTime = options?.RevisedStartTime ?? new Date()
+    this.RevisedProcessingInterval = options?.RevisedProcessingInterval ?? 0
+    this.RevisedAggregateConfiguration =
+      options?.RevisedAggregateConfiguration ?? new AggregateConfiguration()
   }
 }
 
@@ -4299,6 +6086,23 @@ export class NotificationMessage {
   }
 }
 
+export class NotificationData {}
+
+export class DataChangeNotification {
+  @TypeArray('MonitoredItemNotification')
+  public MonitoredItems: MonitoredItemNotification[] | null
+  @TypeArray('DiagnosticInfo')
+  public DiagnosticInfos: DiagnosticInfo[] | null
+
+  constructor(options?: {
+    MonitoredItems?: MonitoredItemNotification[] | null
+    DiagnosticInfos?: DiagnosticInfo[] | null
+  }) {
+    this.MonitoredItems = options?.MonitoredItems ?? null
+    this.DiagnosticInfos = options?.DiagnosticInfos ?? null
+  }
+}
+
 export class MonitoredItemNotification {
   @Type('uint32')
   public ClientHandle: uint32
@@ -4308,6 +6112,15 @@ export class MonitoredItemNotification {
   constructor(options?: { ClientHandle?: uint32; Value?: DataValue }) {
     this.ClientHandle = options?.ClientHandle ?? 0
     this.Value = options?.Value ?? new DataValue()
+  }
+}
+
+export class EventNotificationList {
+  @TypeArray('EventFieldList')
+  public Events: EventFieldList[] | null
+
+  constructor(options?: { Events?: EventFieldList[] | null }) {
+    this.Events = options?.Events ?? null
   }
 }
 
@@ -4323,6 +6136,30 @@ export class EventFieldList {
   }) {
     this.ClientHandle = options?.ClientHandle ?? 0
     this.EventFields = options?.EventFields ?? null
+  }
+}
+
+export class HistoryEventFieldList {
+  @TypeArray('Variant')
+  public EventFields: Variant[] | null
+
+  constructor(options?: { EventFields?: Variant[] | null }) {
+    this.EventFields = options?.EventFields ?? null
+  }
+}
+
+export class StatusChangeNotification {
+  @Type('uint32')
+  public Status: StatusCode
+  @Type('object')
+  public DiagnosticInfo: DiagnosticInfo
+
+  constructor(options?: {
+    Status?: StatusCode
+    DiagnosticInfo?: DiagnosticInfo
+  }) {
+    this.Status = options?.Status ?? StatusCodeOK
+    this.DiagnosticInfo = options?.DiagnosticInfo ?? new DiagnosticInfo()
   }
 }
 
@@ -4697,18 +6534,6 @@ export class ServerStatusDataType {
   }
 }
 
-export class ServiceCounterDataType {
-  @Type('uint32')
-  public TotalCount: uint32
-  @Type('uint32')
-  public ErrorCount: uint32
-
-  constructor(options?: { TotalCount?: uint32; ErrorCount?: uint32 }) {
-    this.TotalCount = options?.TotalCount ?? 0
-    this.ErrorCount = options?.ErrorCount ?? 0
-  }
-}
-
 export class SessionDiagnosticsDataType {
   @Type('object')
   public SessionId: NodeId
@@ -4954,6 +6779,18 @@ export class SessionSecurityDiagnosticsDataType {
     this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
     this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
     this.ClientCertificate = options?.ClientCertificate ?? new Uint8Array()
+  }
+}
+
+export class ServiceCounterDataType {
+  @Type('uint32')
+  public TotalCount: uint32
+  @Type('uint32')
+  public ErrorCount: uint32
+
+  constructor(options?: { TotalCount?: uint32; ErrorCount?: uint32 }) {
+    this.TotalCount = options?.TotalCount ?? 0
+    this.ErrorCount = options?.ErrorCount ?? 0
   }
 }
 

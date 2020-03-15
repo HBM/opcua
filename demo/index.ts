@@ -10,7 +10,8 @@ import {
   CreateMonitoredItemsRequest,
   MonitoredItemCreateRequest,
   ReadValueId,
-  MonitoringModeReporting
+  MonitoringModeReporting,
+  PublishRequest
 } from '../src/ua/generated'
 import { NewTwoByteNodeId, NewStringNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
@@ -73,6 +74,13 @@ client.addEventListener('session:activate', async event => {
     ]
   })
 
-  const createMonitoredItemsResponse = sub.monitor(createMonitoredItemsRequest)
+  const createMonitoredItemsResponse = await sub.monitor(
+    createMonitoredItemsRequest
+  )
   console.log(createMonitoredItemsResponse)
+
+  const publishRequest = new PublishRequest({})
+  const publishResponse = await sub.publish(publishRequest)
+
+  console.log(publishResponse)
 })

@@ -46,6 +46,8 @@ func main() {
 	var b bytes.Buffer
 
 	b.WriteString(`
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
 export const Type = (name: string) => (
   target: object,
   key: string | symbol
@@ -84,22 +86,15 @@ export const TypeArray = (name: string) => (
 		}
 	}
 
+	baseTypes := map[string]struct{}{
+		"ua:ExtensionObject":     struct{}{},
+		"tns:DataTypeDefinition": struct{}{},
+	}
+
 	// structured types
 	for _, t := range dict.StructuredTypes {
-		// tns:DataTypeSchemaHeader
 
-		if !(t.BaseType == "ua:ExtensionObject" ||
-			t.BaseType == "tns:DataTypeDefinition" ||
-			t.BaseType == "tns:DataTypeSchemaHeader" ||
-			t.BaseType == "tns:DataTypeDescription" ||
-			t.BaseType == "tns:PubSubGroupDataType" ||
-			t.BaseType == "tns:EnumValueType" ||
-			t.BaseType == "tns:UserIdentityToken") {
-			continue
-		}
-
-		// skip structured types with no fields to prevent empty constructors
-		if len(t.Fields) == 0 {
+		if _, ok := baseTypes[t.BaseType]; !ok {
 			continue
 		}
 
@@ -135,6 +130,8 @@ export const TypeArray = (name: string) => (
 		}
 
 		t.Fields = fields
+
+		baseTypes["tns:"+t.Name] = struct{}{}
 
 		if err := tmplClass.Execute(&b, t); err != nil {
 			log.Fatal(err)
@@ -182,6 +179,7 @@ export class {{ .Name }} {
   public {{ $v.Name }}: {{ $v.GetTypeScriptType }}
 {{- end }}
 
+  {{ if .Fields }}
   constructor(options?: {
     {{ range $v := .Fields }}{{ $v.Name }}?: {{ $v.GetTypeScriptType }}
     {{ end }}
@@ -189,6 +187,7 @@ export class {{ .Name }} {
     {{ range $v := .Fields }}this.{{ $v.Name }} = options?.{{ $v.Name }} ?? {{ $v.GetZeroValue }}
     {{ end }}
   }
+  {{ end }}
 }
 `))
 
