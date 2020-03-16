@@ -11,24 +11,15 @@ const DefaultReceiveBufferSize = 0xffff
 const DefaultSendBufferSize = 0xffff
 const DefaultMaxChunkCount = 512
 
-export default class Connection extends EventTarget {
-  public acknowledge: AcknowledgeMessage
-  public socket: WebSocket
+export default class Connection {
+  public endpointUrl: string
+  public socket: WebSocket | null
+  private resolvers: Map<string, Function>
 
   constructor(endpointUrl: string) {
-    super()
-    this.socket = new WebSocket(endpointUrl)
-    this.socket.binaryType = 'arraybuffer'
-    this.acknowledge = new AcknowledgeMessage({
-      ReceiveBufferSize: DefaultReceiveBufferSize,
-      SendBufferSize: DefaultSendBufferSize,
-      MaxChunkCount: 0,
-      MaxMessageSize: 0
-    })
-
-    this.socket.addEventListener('message', this.onmessage)
-    this.socket.addEventListener('open', this.onopen)
-    this.socket.addEventListener('error', this.onerror)
+    this.endpointUrl = endpointUrl
+    this.socket = null
+    this.resolvers = new Map()
   }
 
   public onerror = (event: Event): void => {
@@ -56,8 +47,12 @@ export default class Connection extends EventTarget {
           acknowledge.MaxMessageSize = DefaultMaxMessageSize
         }
 
-        this.acknowledge = acknowledge
-        this.dispatchEvent(new Event('ack'))
+        const resolve = this.resolvers.get('hello')
+        if (resolve) {
+          resolve(acknowledge)
+          this.resolvers.delete('hello')
+        }
+
         break
       }
 
@@ -66,16 +61,40 @@ export default class Connection extends EventTarget {
     }
   }
 
-  public onopen = (): void => {
-    const hello = new HelloMessage({
-      ProtocolVersion: this.acknowledge.ProtocolVersion,
-      ReceiveBufferSize: this.acknowledge.ReceiveBufferSize,
-      SendBufferSize: this.acknowledge.SendBufferSize,
-      MaxMessageSize: this.acknowledge.MaxMessageSize,
-      MaxChunkCount: this.acknowledge.MaxChunkCount,
-      EndpointUrl: 'foo'
+  public open(): Promise<void> {
+    return new Promise(resolve => {
+      this.socket = new WebSocket(this.endpointUrl)
+      this.socket.binaryType = 'arraybuffer'
+      this.resolvers.set('open', resolve)
+
+      this.socket.addEventListener('message', this.onmessage)
+      this.socket.addEventListener('open', this.onopen)
+      this.socket.addEventListener('error', this.onerror)
     })
-    this.send('HEL', 'F', hello)
+  }
+
+  public hello(): Promise<AcknowledgeMessage> {
+    return new Promise(resolve => {
+      this.resolvers.set('hello', resolve)
+
+      const hello = new HelloMessage({
+        ProtocolVersion: 0,
+        ReceiveBufferSize: DefaultReceiveBufferSize,
+        SendBufferSize: DefaultSendBufferSize,
+        MaxMessageSize: 0,
+        MaxChunkCount: 0,
+        EndpointUrl: this.endpointUrl
+      })
+      this.send('HEL', 'F', hello)
+    })
+  }
+
+  public onopen = (): void => {
+    const resolve = this.resolvers.get('open')
+    if (resolve) {
+      resolve()
+      this.resolvers.delete('open')
+    }
   }
 
   public send = (
@@ -96,6 +115,8 @@ export default class Connection extends EventTarget {
     b.set(new Uint8Array(header))
     b.set(new Uint8Array(body), header.byteLength)
 
-    this.socket.send(b)
+    if (this.socket) {
+      this.socket.send(b)
+    }
   }
 }

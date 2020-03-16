@@ -3,7 +3,6 @@ import {
   mapNameToId,
   IdOpenSecureChannelRequestEncodingDefaultBinary,
   IdCreateSessionResponseEncodingDefaultBinary,
-  IdActivateSessionResponseEncodingDefaultBinary,
   mapIdToName
 } from '../id/id'
 import ExpandedNodeId from '../ua/ExpandedNodeId'
@@ -30,8 +29,9 @@ import {
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 import factory from '../ua/factory'
+import AcknowledgeMessage from '../uacp/AcknowledgeMessage'
 
-export default class SecureChannel extends EventTarget {
+export default class SecureChannel {
   private secureChannelId: uint32
   private sequenceNumber: uint32
   private securityTokenId: uint32
@@ -43,28 +43,50 @@ export default class SecureChannel extends EventTarget {
   private callbacks: Map<uint32, Function>
 
   constructor(endpointUrl: string) {
-    super()
     this.secureChannelId = 0
     this.sequenceNumber = 0
     this.securityTokenId = 0
     this.requestId = 0
     this.connection = new Connection(endpointUrl)
     this.authenticationToken = null
-
-    this.connection?.socket.addEventListener('message', this.onmessage)
-    this.connection?.addEventListener('ack', this.onack)
     this.callbacks = new Map()
   }
 
-  public onack = (): void => {
-    // open secure channel
-    const open = new OpenSecureChannelRequest({
-      RequestHeader: new RequestHeader(),
-      RequestType: SecurityTokenRequestTypeIssue,
-      SecurityMode: MessageSecurityModeNone,
-      RequestedLifetime: 3600000
+  public async open(): Promise<void> {
+    await this.connection.open()
+    if (this.connection.socket) {
+      this.connection.socket.addEventListener('message', this.onmessage)
+    }
+  }
+
+  public hello(): Promise<AcknowledgeMessage> {
+    return this.connection.hello()
+  }
+
+  public openSecureChannel(): Promise<OpenSecureChannelResponse> {
+    return new Promise(resolve => {
+      const open = new OpenSecureChannelRequest({
+        RequestHeader: new RequestHeader(),
+        RequestType: SecurityTokenRequestTypeIssue,
+        SecurityMode: MessageSecurityModeNone,
+        RequestedLifetime: 3600000
+      })
+      this.send(open, resolve)
     })
-    this.send(open)
+  }
+
+  public createSession(): Promise<CreateSessionResponse> {
+    return new Promise(resolve => {
+      const create = new CreateSessionRequest()
+      this.send(create, resolve)
+    })
+  }
+
+  public activateSession(): Promise<ActivateSessionResponse> {
+    return new Promise(resolve => {
+      const activate = new ActivateSessionRequest()
+      this.send(activate, resolve)
+    })
   }
 
   public send = (request: Request, resolve?: Function): void => {
@@ -116,22 +138,24 @@ export default class SecureChannel extends EventTarget {
 
     // encode and send
     const body = message.encode()
-    this.connection.socket.send(new Uint8Array(body))
+    if (this.connection.socket) {
+      this.connection.socket.send(new Uint8Array(body))
+    }
   }
 
   public onmessage = (event: MessageEvent): void => {
     const header = new ChunkHeader()
     let offset = header.decode(event.data)
 
+    const typeId = new ExpandedNodeId()
+    offset = decode({
+      bytes: event.data,
+      instance: typeId,
+      position: offset
+    })
+
     switch (header.Header.MessageType) {
       case 'OPN': {
-        const typeId = new ExpandedNodeId()
-        offset = decode({
-          bytes: event.data,
-          instance: typeId,
-          position: offset
-        })
-
         const response = new OpenSecureChannelResponse()
         offset = decode({
           bytes: event.data,
@@ -142,17 +166,29 @@ export default class SecureChannel extends EventTarget {
         this.secureChannelId = response.SecurityToken.ChannelId
         this.securityTokenId = response.SecurityToken.TokenId
 
-        // create session
-        const create = new CreateSessionRequest({})
-        this.send(create)
+        const callback = this.callbacks.get(header.SequenceHeader.RequestId)
+        if (callback) {
+          callback(response)
+        }
 
         break
       }
       case 'MSG': {
-        const typeId = new ExpandedNodeId()
-        offset = decode({
+        const callback = this.callbacks.get(header.SequenceHeader.RequestId)
+        if (!callback) {
+          return
+        }
+
+        const name = mapIdToName.get(typeId.NodeId.Identifier as number)
+
+        if (!name) {
+          return
+        }
+
+        const instance = factory(name)
+        decode({
           bytes: event.data,
-          instance: typeId,
+          instance,
           position: offset
         })
 
@@ -160,48 +196,12 @@ export default class SecureChannel extends EventTarget {
           typeId.NodeId.Identifier ===
           IdCreateSessionResponseEncodingDefaultBinary
         ) {
-          const response = new CreateSessionResponse()
-          offset = decode({
-            bytes: event.data,
-            instance: response,
-            position: offset
-          })
-          this.authenticationToken = response.AuthenticationToken
-
-          const activate = new ActivateSessionRequest({
-            RequestHeader: new RequestHeader({
-              AuthenticationToken: this.authenticationToken
-            })
-          })
-          this.send(activate)
-        } else if (
-          typeId.NodeId.Identifier ===
-          IdActivateSessionResponseEncodingDefaultBinary
-        ) {
-          const activateSessionResponse = new ActivateSessionResponse()
-          decode({
-            bytes: event.data,
-            instance: activateSessionResponse,
-            position: offset
-          })
-          this.dispatchEvent(new Event('session:activate'))
-        } else {
-          const callback = this.callbacks.get(header.SequenceHeader.RequestId)
-          if (callback) {
-            const name = mapIdToName.get(typeId.NodeId.Identifier as number)
-            if (name) {
-              const instance = factory(name)
-              decode({
-                bytes: event.data,
-                instance,
-                position: offset
-              })
-              callback(instance)
-            }
-            // remove callback from map
-            this.callbacks.delete(header.SequenceHeader.RequestId)
-          }
+          this.authenticationToken = (instance as CreateSessionResponse).AuthenticationToken
         }
+
+        callback(instance)
+        // remove callback from map
+        this.callbacks.delete(header.SequenceHeader.RequestId)
 
         break
       }

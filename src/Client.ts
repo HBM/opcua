@@ -8,23 +8,43 @@ import {
   ReadResponse,
   WriteRequest,
   CallRequest,
-  CallResponse
+  CallResponse,
+  OpenSecureChannelResponse,
+  CreateSessionResponse,
+  ActivateSessionResponse
 } from './ua/generated'
 import Subscription from './Subscription'
+import AcknowledgeMessage from './uacp/AcknowledgeMessage'
 
-export default class Client extends EventTarget {
+export default class Client {
   public endpointUrl: string
   public secureChannel: SecureChannel
   public subscriptions: Map<uint32, Subscription>
 
   constructor(endpointUrl: string) {
-    super()
     this.endpointUrl = endpointUrl
     this.secureChannel = new SecureChannel(endpointUrl)
-    this.secureChannel.addEventListener('session:activate', event => {
-      this.dispatchEvent(new Event(event.type))
-    })
     this.subscriptions = new Map()
+  }
+
+  public open(): Promise<void> {
+    return this.secureChannel.open()
+  }
+
+  public hello(): Promise<AcknowledgeMessage> {
+    return this.secureChannel.hello()
+  }
+
+  public openSecureChannel(): Promise<OpenSecureChannelResponse> {
+    return this.secureChannel.openSecureChannel()
+  }
+
+  public createSession(): Promise<CreateSessionResponse> {
+    return this.secureChannel.createSession()
+  }
+
+  public activateSession(): Promise<ActivateSessionResponse> {
+    return this.secureChannel.activateSession()
   }
 
   public browse(req: BrowseRequest): Promise<BrowseResponse> {

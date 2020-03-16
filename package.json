@@ -12,7 +12,7 @@
     "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,json,html,yml}\"",
     "eslint": "eslint \"./**/*.{js,ts}\"",
-    "webpack": "webpack --config ./demo/webpack.config.js"
+    "webpack": "webpack --watch --config ./demo/webpack.config.js"
   },
   "repository": {
     "type": "git",

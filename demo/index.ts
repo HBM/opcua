@@ -4,9 +4,9 @@ import {
   BrowseDescription,
   BrowseDirectionBoth,
   BrowseResultMaskAll,
-  CreateSubscriptionRequest,
   BrowseResult,
   ReferenceDescription,
+  CreateSubscriptionRequest,
   CreateMonitoredItemsRequest,
   MonitoredItemCreateRequest,
   ReadValueId,
@@ -17,11 +17,28 @@ import { NewTwoByteNodeId, NewStringNodeId } from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 import Subscription from '../src/Subscription'
 import { AttributeIdValue } from '../src/ua/enums'
+;(async function() {
+  const client = new Client('ws://localhost:1234')
 
-const client = new Client('ws://localhost:1234')
+  // open socket connection
+  await client.open()
+  console.log('open')
 
-client.addEventListener('session:activate', async event => {
-  console.log(event)
+  // send hello and wait for acknowledge
+  const ack = await client.hello()
+  console.log('ack', ack)
+
+  // open secure channel
+  const openSecureChannelResponse = await client.openSecureChannel()
+  console.log('open secure channel', openSecureChannelResponse)
+
+  // create session
+  const createSessionResponse = await client.createSession()
+  console.log('create session response', createSessionResponse)
+
+  // activate session
+  const activateSessionResponse = await client.activateSession()
+  console.log('activate session response', activateSessionResponse)
 
   // browse root folder
   const req = new BrowseRequest({
@@ -36,7 +53,6 @@ client.addEventListener('session:activate', async event => {
   })
 
   const res = await client.browse(req)
-
   for (const result of res.Results as BrowseResult[]) {
     for (const ref of result.References as ReferenceDescription[]) {
       console.log(ref.DisplayName.Text)
@@ -83,4 +99,4 @@ client.addEventListener('session:activate', async event => {
   const publishResponse = await sub.publish(publishRequest)
 
   console.log(publishResponse)
-})
+})()
