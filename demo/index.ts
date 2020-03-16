@@ -11,12 +11,20 @@ import {
   MonitoredItemCreateRequest,
   ReadValueId,
   MonitoringModeReporting,
-  PublishRequest
+  PublishRequest,
+  CallRequest,
+  CallMethodRequest,
+  CallMethodResult
 } from '../src/ua/generated'
-import { NewTwoByteNodeId, NewStringNodeId } from '../src/ua/NodeId'
+import {
+  NewTwoByteNodeId,
+  NewStringNodeId,
+  NewFourByteNodeId
+} from '../src/ua/NodeId'
 import { IdRootFolder } from '../src/id/id'
 import Subscription from '../src/Subscription'
-import { AttributeIdValue } from '../src/ua/enums'
+import { AttributeIdValue, TypeIdString } from '../src/ua/enums'
+import Variant from '../src/ua/Variant'
 ;(async function() {
   const client = new Client('ws://localhost:1234')
 
@@ -95,8 +103,34 @@ import { AttributeIdValue } from '../src/ua/enums'
   )
   console.log(createMonitoredItemsResponse)
 
-  const publishRequest = new PublishRequest({})
+  const publishRequest = new PublishRequest()
   const publishResponse = await sub.publish(publishRequest)
 
   console.log(publishResponse)
+
+  // call a method on an object
+  const callRequest = new CallRequest({
+    MethodsToCall: [
+      new CallMethodRequest({
+        ObjectId: NewTwoByteNodeId(85),
+        MethodId: NewFourByteNodeId(1, 62541),
+        InputArguments: [
+          new Variant({
+            EncodingMask: TypeIdString,
+            Value: '<- please prepend hello'
+          })
+        ]
+      })
+    ]
+  })
+
+  const callResponse = await client.call(callRequest)
+  console.log(callResponse)
+
+  // show the method call result
+  for (const result of callResponse.Results as CallMethodResult[]) {
+    for (const args of result.OutputArguments as Variant[]) {
+      console.log(args.Value)
+    }
+  }
 })()
