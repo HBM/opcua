@@ -113,7 +113,7 @@ import Variant from '../src/ua/Variant'
     MethodsToCall: [
       new CallMethodRequest({
         ObjectId: NewTwoByteNodeId(85),
-        MethodId: NewFourByteNodeId(1, 62541),
+        MethodId: NewFourByteNodeId(1, 62542),
         InputArguments: [
           new Variant({
             EncodingMask: TypeIdString,
