@@ -22,24 +22,41 @@ npm i opcua
 ```ts
 import Client from 'opcua'
 
-const client = new Client()
+const client = new Client('ws://localhost:1234')
 
-// wait for an active session
-client.addEventListener('session:activate', async event => {
+// open socket connection
+await client.open()
 
-  // browse the root folder
-  const req = new BrowseRequest({
-    NodesToBrowse: [
-      new BrowseDescription({
-        NodeId: NewTwoByteNodeId(IdRootFolder)
-      })
-    ]
-  })
+// send hello and wait for acknowledge
+const ack = await client.hello()
 
-  // all requests use async / await
-  const res = await client.browse(req)
-  console.log(res)
+// open secure channel
+const openSecureChannelResponse = await client.openSecureChannel()
+
+// create session
+const createSessionResponse = await client.createSession()
+
+// activate session
+const activateSessionResponse = await client.activateSession()
+
+// browse root folder
+const req = new BrowseRequest({
+  NodesToBrowse: [
+    new BrowseDescription({
+      NodeId: NewTwoByteNodeId(IdRootFolder),
+      BrowseDirection: BrowseDirectionBoth,
+      IncludeSubtypes: true,
+      ResultMask: BrowseResultMaskAll
+    })
+  ]
 })
+
+const res = await client.browse(req)
+for (const result of res.Results as BrowseResult[]) {
+  for (const ref of result.References as ReferenceDescription[]) {
+    console.log(ref.DisplayName.Text)
+  }
+}
 ```
 
 ## Subscriptions
