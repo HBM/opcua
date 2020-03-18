@@ -21,7 +21,7 @@ import {
   NewStringNodeId,
   NewFourByteNodeId
 } from '../src/ua/NodeId'
-import { IdRootFolder } from '../src/id/id'
+import { IdRootFolder, IdObjectsFolder } from '../src/id/id'
 import Subscription from '../src/Subscription'
 import { AttributeIdValue, TypeIdString } from '../src/ua/enums'
 import Variant from '../src/ua/Variant'
@@ -112,7 +112,7 @@ import Variant from '../src/ua/Variant'
   const callRequest = new CallRequest({
     MethodsToCall: [
       new CallMethodRequest({
-        ObjectId: NewTwoByteNodeId(85),
+        ObjectId: NewTwoByteNodeId(IdObjectsFolder),
         MethodId: NewFourByteNodeId(1, 62542),
         InputArguments: [
           new Variant({
