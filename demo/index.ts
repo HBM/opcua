@@ -10,20 +10,17 @@ import {
   CreateMonitoredItemsRequest,
   MonitoredItemCreateRequest,
   ReadValueId,
-  MonitoringModeReporting,
   PublishRequest,
   CallRequest,
   CallMethodRequest,
-  CallMethodResult
+  CallMethodResult,
+  MonitoringModeReporting,
+  RequestHeader
 } from '../src/ua/generated'
-import {
-  NewTwoByteNodeId,
-  NewStringNodeId,
-  NewFourByteNodeId
-} from '../src/ua/NodeId'
+import { NewTwoByteNodeId, NewFourByteNodeId } from '../src/ua/NodeId'
 import { IdRootFolder, IdObjectsFolder } from '../src/id/id'
 import Subscription from '../src/Subscription'
-import { AttributeIdValue, TypeIdString } from '../src/ua/enums'
+import { TypeIdString, AttributeIdEventNotifier } from '../src/ua/enums'
 import Variant from '../src/ua/Variant'
 ;(async function() {
   const client = new Client('ws://localhost:1234')
@@ -85,13 +82,18 @@ import Variant from '../src/ua/Variant'
     createSubscriptionResponse.SubscriptionId
   )
 
+  // send some publish requests so we get some notifications
+  // but do not wait for the response
+  sub.publish(new PublishRequest())
+  sub.publish(new PublishRequest())
+
   // create monitored items
   const createMonitoredItemsRequest = new CreateMonitoredItemsRequest({
     ItemsToCreate: [
       new MonitoredItemCreateRequest({
         ItemToMonitor: new ReadValueId({
-          NodeId: NewStringNodeId(1, 'the.answer'),
-          AttributeId: AttributeIdValue
+          NodeId: NewFourByteNodeId(0, 2253),
+          AttributeId: AttributeIdEventNotifier
         }),
         MonitoringMode: MonitoringModeReporting
       })
@@ -102,11 +104,6 @@ import Variant from '../src/ua/Variant'
     createMonitoredItemsRequest
   )
   console.log(createMonitoredItemsResponse)
-
-  const publishRequest = new PublishRequest()
-  const publishResponse = await sub.publish(publishRequest)
-
-  console.log(publishResponse)
 
   // call a method on an object
   const callRequest = new CallRequest({
@@ -133,4 +130,17 @@ import Variant from '../src/ua/Variant'
       console.log(args.Value)
     }
   }
+
+  // call a method to trigger an event
+  const trigger = new CallRequest({
+    MethodsToCall: [
+      new CallMethodRequest({
+        ObjectId: NewTwoByteNodeId(IdObjectsFolder),
+        MethodId: NewFourByteNodeId(1, 62541)
+      })
+    ]
+  })
+
+  const triggerResponse = await client.call(trigger)
+  console.log(triggerResponse)
 })()
