@@ -2,8 +2,7 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../compiled",
-    "rootDir": "./",
-    "experimentalDecorators": true
+    "rootDir": "./"
   },
   "references": [{ "path": "../src/" }]
 }
