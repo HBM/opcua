@@ -1,0 +1,34 @@
+.left {
+  grid-area: left;
+  //   border-right: 1px solid rgba(0,0,0,.1);
+}
+
+.right {
+  grid-area: right;
+}
+
+.content {
+  grid-area: content;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.wrapper {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 240px auto 120px;
+  grid-template-areas:
+    'header header header'
+    'left content right'
+    'footer footer footer';
+}
+
+.list-group > .list-group > .list-group-item {
+  padding-left: 2rem;
+}
+
+.list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 2.75rem;
+}

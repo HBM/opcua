@@ -10,8 +10,8 @@
     "test": "rm -rf ./compiled && tsc --project ./tests/tsconfig.json && jest",
     "tsc": "npm run clear && tsc --project ./src/tsconfig.json --skipLibCheck",
     "watch": "npm run clear && tsc -w --skipLibCheck",
-    "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml}\"",
-    "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml}\"",
+    "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
+    "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "eslint": "eslint \"./**/*.{js,ts,tsx}\""
   },
   "repository": {
