@@ -7,7 +7,7 @@
   "scripts": {
     "clear": "rm -fr dist coverage",
     "test:cov": "npm run clear && tsc --sourceMap && jest --coverage",
-    "test": "rm -rf ./tests/compiled && tsc --project ./tests/tsconfig.json && jest",
+    "test": "rm -rf ./compiled && tsc --project ./tests/tsconfig.json && jest",
     "tsc": "npm run clear && tsc --project ./src/tsconfig.json --skipLibCheck",
     "watch": "npm run clear && tsc -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml}\"",
