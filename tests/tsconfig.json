@@ -4,5 +4,5 @@
     "outDir": "../compiled",
     "rootDir": "./"
   },
-  "references": [{ "path": "../src/" }]
+  "references": [{ "path": "../src" }]
 }
