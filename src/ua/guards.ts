@@ -1,3 +1,5 @@
+import { Encoder, Decoder, TypedArray } from '../types'
+
 export const isEncoder = (instance: unknown): instance is Encoder =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   instance !== null && typeof (instance as any)['encode'] === 'function'

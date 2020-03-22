@@ -1,5 +1,6 @@
 import NodeId, { NewTwoByteNodeId, NewFourByteNodeId } from './NodeId'
 import Bucket from './Bucket'
+import { uint8, uint16 } from '../types'
 
 interface Options {
   NodeId?: NodeId

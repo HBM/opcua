@@ -5,6 +5,7 @@ import {
   PublishResponse
 } from './ua/generated'
 import Client from './Client'
+import { uint32 } from './types'
 
 export default class Subscription extends EventTarget {
   public client: Client

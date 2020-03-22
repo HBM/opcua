@@ -1,4 +1,5 @@
 import Bucket from './Bucket'
+import { uint8, EnDecoder } from '../types'
 
 interface Options {
   EncodingMask?: uint8

@@ -1,4 +1,5 @@
 import Bucket from '../ua/Bucket'
+import { uint32 } from '../types'
 
 interface Options {
   TokenId?: uint32

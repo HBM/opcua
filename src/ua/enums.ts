@@ -1,3 +1,5 @@
+import { AttributeId, TypeId } from '../types'
+
 // https://reference.opcfoundation.org/v104/Core/docs/Part6/A.1/
 export const AttributeIdInvalid: AttributeId = 0
 export const AttributeIdNodeId: AttributeId = 1

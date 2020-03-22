@@ -1,4 +1,5 @@
 import { Type } from './generated'
+import { uint16 } from '../types'
 
 export default class QualifiedName {
   @Type('uint16')

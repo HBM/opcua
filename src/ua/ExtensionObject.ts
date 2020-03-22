@@ -2,6 +2,7 @@ import Bucket from './Bucket'
 import factory from './factory'
 import { mapIdToName } from '../id/id'
 import ExpandedNodeId, { NewTwoByteExpandedNodeId } from './ExpandedNodeId'
+import { uint8, EnDecoder } from '../types'
 
 export const ExtensionObjectEmpty = 0
 export const ExtensionObjectBinary = 1

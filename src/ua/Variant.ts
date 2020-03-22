@@ -32,6 +32,20 @@ import {
   TypeIdVariant,
   TypeIdDiagnosticInfo
 } from './enums'
+import {
+  EnDecoder,
+  uint8,
+  int32,
+  int8,
+  int16,
+  uint16,
+  uint32,
+  int64,
+  uint64,
+  float32,
+  float64,
+  TypeId
+} from '../types'
 
 // VariantArrayDimensions flags whether the array has more than one dimension
 export const VariantArrayDimensions = 0x40

@@ -1,6 +1,18 @@
 import { isEncoder, isDecoder } from './guards'
 import { encode } from './encode'
 import decode from './decode'
+import {
+  int8,
+  uint8,
+  int16,
+  uint16,
+  int32,
+  uint32,
+  int64,
+  uint64,
+  float32,
+  float64
+} from '../types'
 
 export default class Bucket {
   public bytes: ArrayBuffer

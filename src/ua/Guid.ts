@@ -1,4 +1,5 @@
 import Bucket from './Bucket'
+import { EnDecoder, uint32, uint16 } from '../types'
 
 const parse = (s: string): number[] => {
   const out: number[] = []

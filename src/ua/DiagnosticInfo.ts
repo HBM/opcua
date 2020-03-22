@@ -1,5 +1,6 @@
 import Bucket from './Bucket'
 import { StatusCodeOK } from './StatusCode'
+import { uint8, int32, StatusCode, EnDecoder } from '../types'
 
 interface Options {
   EncodingMask?: uint8

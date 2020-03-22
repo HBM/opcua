@@ -2,5 +2,6 @@
 .vscode/
 server
 dist/
+compiled/
 node_modules/
 coverage

@@ -15,6 +15,7 @@ import {
 } from './ua/generated'
 import Subscription from './Subscription'
 import AcknowledgeMessage from './uacp/AcknowledgeMessage'
+import { uint32 } from './types'
 
 export default class Client {
   public endpointUrl: string

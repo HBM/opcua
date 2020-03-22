@@ -2,6 +2,7 @@ import Bucket from './Bucket'
 import { isDecoder, keyInObject, isNotNullObject } from './guards'
 import factory from './factory'
 import { isPrimitiveType } from './utils'
+import { TypedArray } from '../types'
 
 const NewArray = (
   subtype: string,

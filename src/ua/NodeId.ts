@@ -9,6 +9,7 @@ import {
   NodeIdTypeByteString,
   NodeIdTypeString
 } from './generated'
+import { ByteString, EnDecoder, uint16, uint32 } from '../types'
 
 interface Options {
   Type?: NodeIdType

@@ -2,17 +2,17 @@
   "name": "opcua",
   "version": "1.0.0",
   "description": "TypeScript / JavaScript OPC UA client for the browser",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clear": "rm -fr dist coverage",
     "test:cov": "npm run clear && tsc --sourceMap && jest --coverage",
-    "test": "npm run clear && tsc && jest",
-    "tsc": "npm run clear && tsc --skipLibCheck",
+    "test": "rm -rf ./tests/compiled && tsc --project ./tests/tsconfig.json && jest",
+    "tsc": "npm run clear && tsc --project ./src/tsconfig.json --skipLibCheck",
     "watch": "npm run clear && tsc -w --skipLibCheck",
-    "prettier": "prettier --write \"./**/*.{js,ts,json,html,yml}\"",
-    "prettier:ci": "prettier --list-different \"./**/*.{js,ts,json,html,yml}\"",
-    "eslint": "eslint \"./**/*.{js,ts}\"",
-    "webpack": "webpack --watch --config ./demo/webpack.config.js"
+    "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml}\"",
+    "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml}\"",
+    "eslint": "eslint \"./**/*.{js,ts,tsx}\""
   },
   "repository": {
     "type": "git",
@@ -34,10 +34,7 @@
     "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "reflect-metadata": "^0.1.13",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
+    "typescript": "^3.8.3"
   },
   "dependencies": {}
 }

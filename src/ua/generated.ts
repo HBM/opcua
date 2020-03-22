@@ -30,6 +30,19 @@ import QualifiedName from './QualifiedName'
 import Variant from './Variant'
 import DataValue from './DataValue'
 import { StatusCodeOK } from './StatusCode'
+import {
+  uint8,
+  uint32,
+  uint16,
+  ByteString,
+  int32,
+  float64,
+  int16,
+  int8,
+  int64,
+  StatusCode,
+  float32
+} from '../types'
 
 export type NodeIdType = uint8
 

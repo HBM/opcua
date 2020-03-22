@@ -30,6 +30,7 @@ import {
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 import factory from '../ua/factory'
 import AcknowledgeMessage from '../uacp/AcknowledgeMessage'
+import { uint32 } from '../types'
 
 export default class SecureChannel {
   private secureChannelId: uint32
