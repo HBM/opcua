@@ -1,4 +1,4 @@
-import Client from '../../src/Client'
+import Client from '../../dist/Client'
 import {
   BrowseRequest,
   BrowseDescription,
@@ -15,12 +15,12 @@ import {
   CallMethodRequest,
   CallMethodResult,
   MonitoringModeReporting
-} from '../../src/ua/generated'
-import { NewTwoByteNodeId, NewFourByteNodeId } from '../../src/ua/NodeId'
-import { IdRootFolder, IdObjectsFolder } from '../../src/id/id'
-import Subscription from '../../src/Subscription'
-import { TypeIdString, AttributeIdEventNotifier } from '../../src/ua/enums'
-import Variant from '../../src/ua/Variant'
+} from '../../dist/ua/generated'
+import { NewTwoByteNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
+import { IdRootFolder, IdObjectsFolder } from '../../dist/id/id'
+import Subscription from '../../dist/Subscription'
+import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
+import Variant from '../../dist/ua/Variant'
 
 import React from 'react'
 import { render } from 'react-dom'
