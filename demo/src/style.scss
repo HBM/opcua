@@ -15,6 +15,10 @@
   grid-area: footer;
 }
 
+header {
+  grid-area: header;
+}
+
 .wrapper {
   display: grid;
   grid-gap: 20px;
