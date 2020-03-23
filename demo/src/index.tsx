@@ -9,7 +9,8 @@ import {
   ReadRequest,
   ReadValueId,
   AttributeWriteMask,
-  EventNotifierType
+  EventNotifierType,
+  NodeClass
   // CreateSubscriptionRequest,
   // CreateMonitoredItemsRequest,
   // MonitoredItemCreateRequest,
@@ -229,12 +230,12 @@ const Objects = () => {
       {references.filter(filter).map((ref, i) => {
         return (
           <React.Fragment key={i}>
-            <a href="#" className="list-group-item py-2">
+            <Link
+              to={`/id/${ref.NodeId.NodeId.Identifier}`}
+              className="list-group-item py-2"
+            >
               {ref.DisplayName.Text}
-            </a>
-            {ref.NodeId.NodeId.Identifier === IdObjectsFolder ? (
-              <Objects />
-            ) : null}
+            </Link>
           </React.Fragment>
         )
       })}
@@ -324,7 +325,9 @@ const ReferenceDescriptionComponent = () => {
           </tr>
           <tr>
             <td>Node Class</td>
-            <td>{nodeClass}</td>
+            <td>
+              {NodeClass[nodeClass]} ({nodeClass})
+            </td>
           </tr>
           <tr>
             <td>Browse Name</td>
@@ -432,9 +435,6 @@ const Index = () => {
               .map((ref, i) => {
                 return (
                   <React.Fragment key={i}>
-                    {/* <a href="#" className="list-group-item py-2">
-                      {ref.DisplayName.Text}
-                    </a> */}
                     <Link
                       to={`/id/${ref.NodeId.NodeId.Identifier}`}
                       className="list-group-item py-2"
