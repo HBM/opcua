@@ -53,6 +53,6 @@ var tmpl = template.Must(template.New("").Parse(`
 import { uint32 } from "../types"
 
 export enum StatusCode {
-  {{range .}}{{index . 0}} = <uint32> {{index . 1}},
+  {{range .}}{{index . 0}} = {{index . 1}} as uint32,
   {{end}}
 }`))

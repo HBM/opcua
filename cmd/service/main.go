@@ -168,7 +168,7 @@ import { uint8, uint32, uint16, ByteString, float64, float32, int32, int64, int1
 var tmplEnum = template.Must(template.New("").Parse(`
 export enum {{ .Name }} {
   {{ range $v := .EnumeratedValues -}}
-	{{ $v.Name }} = <{{ $.GetType }}>{{ $v.Value }},
+	{{ $v.Name }} = {{ $v.Value }} as {{ $.GetType }},
   {{ end -}}
 }
 `))
