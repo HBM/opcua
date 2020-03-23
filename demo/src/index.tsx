@@ -449,43 +449,6 @@ const Index = () => {
               })}
           </div>
         </div>
-
-        <div className="list-group">
-          <a
-            href="#item-1-1"
-            className="list-group-item py-2"
-            data-toggle="collapse"
-            onClick={onClick}
-          >
-            <div className="d-flex align-items-center">
-              {isOpen ? <FolderMinus /> : <FolderPlus />}
-              <span className="ml-2">Root Folder</span>
-            </div>
-          </a>
-          <div className="list-group collapse" id="item-1-1">
-            <Link to="/id" className="list-group-item py-2">
-              Objects
-            </Link>
-            {/* <a
-              href="#objects"
-              className="list-group-item py-2"
-              data-toggle="collapse"
-            >
-              Objects
-            </a> */}
-            <div className="list-group collapse" id="objects">
-              <a href="#" className="list-group-item py-2">
-                Server
-              </a>
-            </div>
-            <a href="#" className="list-group-item py-2">
-              Types
-            </a>
-            <a href="#" className="list-group-item py-2">
-              Views
-            </a>
-          </div>
-        </div>
       </div>
       <div className="content">
         <Switch>

@@ -34,7 +34,21 @@ header {
 }
 
 .list-group > .list-group > .list-group-item {
+  // border-radius: 0;
   padding-left: 2rem;
+}
+
+.list-group + .list-group-item {
+  border-top-width: 0;
+}
+
+.list-group > .list-group > .list-group-item:first-child {
+  border-radius: 0;
+  border-top-width: 0;
+}
+
+.list-group > .list-group > .list-group-item:last-child {
+  border-radius: 0;
 }
 
 .list-group > .list-group > .list-group > .list-group-item {
