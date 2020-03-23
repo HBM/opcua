@@ -1,6 +1,7 @@
 import Variant from './Variant'
 import Bucket from './Bucket'
-import { uint8, uint16, uint32, StatusCode } from '../types'
+import { uint8, uint16, uint32 } from '../types'
+import { StatusCode } from './StatusCode'
 
 export const DataValueValue = 0x1
 export const DataValueStatusCode = 0x2

@@ -16,7 +16,7 @@ export type TypeId = uint8
 
 export type AttributeId = uint32
 
-export type StatusCode = uint32
+// export type StatusCode = uint32
 export type SecurityTokenRequestType = uint32
 export type MessageSecurityMode = uint32
 export type ApplicationType = uint32

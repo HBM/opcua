@@ -1,14 +1,6 @@
 import Bucket from './Bucket'
 import Guid from './Guid'
-import {
-  NodeIdType,
-  NodeIdTypeTwoByte,
-  NodeIdTypeFourByte,
-  NodeIdTypeNumeric,
-  NodeIdTypeGuid,
-  NodeIdTypeByteString,
-  NodeIdTypeString
-} from './generated'
+import { NodeIdType } from './generated'
 import { ByteString, EnDecoder, uint16, uint32 } from '../types'
 
 interface Options {
@@ -24,7 +16,7 @@ export default class NodeId implements EnDecoder {
   public Namespace: uint16
 
   constructor(options?: Options) {
-    this.Type = options?.Type ?? NodeIdTypeTwoByte
+    this.Type = options?.Type ?? NodeIdType.TwoByte
     this.Identifier = options?.Identifier ?? 0
     this.Namespace = options?.Namespace ?? 0
   }
@@ -34,31 +26,31 @@ export default class NodeId implements EnDecoder {
     bucket.writeUint8(this.Type)
 
     switch (this.type()) {
-      case NodeIdTypeTwoByte: {
+      case NodeIdType.TwoByte: {
         bucket.writeUint8(this.Identifier as number)
         break
       }
-      case NodeIdTypeFourByte: {
+      case NodeIdType.FourByte: {
         bucket.writeUint8(this.Namespace)
         bucket.writeUint16(this.Identifier as number)
         break
       }
-      case NodeIdTypeNumeric: {
+      case NodeIdType.Numeric: {
         bucket.writeUint16(this.Namespace)
         bucket.writeUint32(this.Identifier as number)
         break
       }
-      case NodeIdTypeGuid: {
+      case NodeIdType.Guid: {
         bucket.writeUint16(this.Namespace)
         bucket.writeStruct(this.Identifier as Guid)
         break
       }
-      case NodeIdTypeByteString: {
+      case NodeIdType.ByteString: {
         bucket.writeUint16(this.Namespace)
         bucket.writeByteString(this.Identifier as ByteString)
         break
       }
-      case NodeIdTypeString: {
+      case NodeIdType.String: {
         bucket.writeUint16(this.Namespace)
         bucket.writeString(this.Identifier as string)
         break
@@ -75,31 +67,31 @@ export default class NodeId implements EnDecoder {
     this.Type = bucket.readUint8()
 
     switch (this.type()) {
-      case NodeIdTypeTwoByte:
+      case NodeIdType.TwoByte:
         this.Identifier = bucket.readUint8()
         return bucket.position
 
-      case NodeIdTypeFourByte:
+      case NodeIdType.FourByte:
         this.Namespace = bucket.readUint8()
         this.Identifier = bucket.readUint16()
         return bucket.position
 
-      case NodeIdTypeNumeric:
+      case NodeIdType.Numeric:
         this.Namespace = bucket.readUint16()
         this.Identifier = bucket.readUint32()
         return bucket.position
 
-      case NodeIdTypeByteString:
+      case NodeIdType.ByteString:
         this.Namespace = bucket.readUint16()
         this.Identifier = bucket.readByteString()
         return bucket.position
 
-      case NodeIdTypeString:
+      case NodeIdType.String:
         this.Namespace = bucket.readUint16()
         this.Identifier = bucket.readString()
         return bucket.position
 
-      case NodeIdTypeGuid:
+      case NodeIdType.Guid:
         this.Namespace = bucket.readUint16()
         this.Identifier = new Guid()
         bucket.readStruct(this.Identifier)
@@ -125,28 +117,28 @@ export default class NodeId implements EnDecoder {
 
 export const NewTwoByteNodeId = (value: number): NodeId =>
   new NodeId({
-    Type: NodeIdTypeTwoByte,
+    Type: NodeIdType.TwoByte,
     Identifier: value,
     Namespace: 0
   })
 
 export const NewFourByteNodeId = (namespace: number, value: number): NodeId =>
   new NodeId({
-    Type: NodeIdTypeFourByte,
+    Type: NodeIdType.FourByte,
     Identifier: value,
     Namespace: namespace
   })
 
 export const NewNumericNodeID = (namespace: uint16, id: uint32): NodeId =>
   new NodeId({
-    Type: NodeIdTypeNumeric,
+    Type: NodeIdType.Numeric,
     Identifier: id,
     Namespace: namespace
   })
 
 export const NewStringNodeId = (namespace: number, value: string): NodeId =>
   new NodeId({
-    Type: NodeIdTypeString,
+    Type: NodeIdType.String,
     Identifier: value,
     Namespace: namespace
   })
@@ -156,7 +148,7 @@ export const NewByteStringNodeId = (
   id: Uint8Array
 ): NodeId =>
   new NodeId({
-    Type: NodeIdTypeByteString,
+    Type: NodeIdType.ByteString,
     Namespace: namespace,
     Identifier: id
   })

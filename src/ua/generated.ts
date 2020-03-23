@@ -29,461 +29,460 @@ import DiagnosticInfo from './DiagnosticInfo'
 import QualifiedName from './QualifiedName'
 import Variant from './Variant'
 import DataValue from './DataValue'
-import { StatusCodeOK } from './StatusCode'
+import { StatusCode } from './StatusCode'
 import {
   uint8,
   uint32,
   uint16,
   ByteString,
-  int32,
   float64,
-  int16,
-  int8,
+  float32,
+  int32,
   int64,
-  StatusCode,
-  float32
+  int16,
+  int8
 } from '../types'
 
-export type NodeIdType = uint8
-
-export const NodeIdTypeTwoByte: NodeIdType = 0
-export const NodeIdTypeFourByte: NodeIdType = 1
-export const NodeIdTypeNumeric: NodeIdType = 2
-export const NodeIdTypeString: NodeIdType = 3
-export const NodeIdTypeGuid: NodeIdType = 4
-export const NodeIdTypeByteString: NodeIdType = 5
-
-export type NamingRuleType = uint32
-
-export const NamingRuleTypeMandatory: NamingRuleType = 1
-export const NamingRuleTypeOptional: NamingRuleType = 2
-export const NamingRuleTypeConstraint: NamingRuleType = 3
-
-export type OpenFileMode = uint32
-
-export const OpenFileModeRead: OpenFileMode = 1
-export const OpenFileModeWrite: OpenFileMode = 2
-export const OpenFileModeEraseExisting: OpenFileMode = 4
-export const OpenFileModeAppend: OpenFileMode = 8
-
-export type IdentityCriteriaType = uint32
-
-export const IdentityCriteriaTypeUserName: IdentityCriteriaType = 1
-export const IdentityCriteriaTypeThumbprint: IdentityCriteriaType = 2
-export const IdentityCriteriaTypeRole: IdentityCriteriaType = 3
-export const IdentityCriteriaTypeGroupId: IdentityCriteriaType = 4
-export const IdentityCriteriaTypeAnonymous: IdentityCriteriaType = 5
-export const IdentityCriteriaTypeAuthenticatedUser: IdentityCriteriaType = 6
-
-export type TrustListMasks = uint32
-
-export const TrustListMasksNone: TrustListMasks = 0
-export const TrustListMasksTrustedCertificates: TrustListMasks = 1
-export const TrustListMasksTrustedCrls: TrustListMasks = 2
-export const TrustListMasksIssuerCertificates: TrustListMasks = 4
-export const TrustListMasksIssuerCrls: TrustListMasks = 8
-export const TrustListMasksAll: TrustListMasks = 15
-
-export type PubSubState = uint32
-
-export const PubSubStateDisabled: PubSubState = 0
-export const PubSubStatePaused: PubSubState = 1
-export const PubSubStateOperational: PubSubState = 2
-export const PubSubStateError: PubSubState = 3
-
-export type DataSetFieldFlags = uint16
-
-export const DataSetFieldFlagsNone: DataSetFieldFlags = 0
-export const DataSetFieldFlagsPromotedField: DataSetFieldFlags = 1
-
-export type DataSetFieldContentMask = uint32
-
-export const DataSetFieldContentMaskNone: DataSetFieldContentMask = 0
-export const DataSetFieldContentMaskStatusCode: DataSetFieldContentMask = 1
-export const DataSetFieldContentMaskSourceTimestamp: DataSetFieldContentMask = 2
-export const DataSetFieldContentMaskServerTimestamp: DataSetFieldContentMask = 4
-export const DataSetFieldContentMaskSourcePicoSeconds: DataSetFieldContentMask = 8
-export const DataSetFieldContentMaskServerPicoSeconds: DataSetFieldContentMask = 16
-export const DataSetFieldContentMaskRawData: DataSetFieldContentMask = 32
-
-export type OverrideValueHandling = uint32
-
-export const OverrideValueHandlingDisabled: OverrideValueHandling = 0
-export const OverrideValueHandlingLastUsableValue: OverrideValueHandling = 1
-export const OverrideValueHandlingOverrideValue: OverrideValueHandling = 2
-
-export type DataSetOrderingType = uint32
-
-export const DataSetOrderingTypeUndefined: DataSetOrderingType = 0
-export const DataSetOrderingTypeAscendingWriterId: DataSetOrderingType = 1
-export const DataSetOrderingTypeAscendingWriterIdSingle: DataSetOrderingType = 2
-
-export type UadpNetworkMessageContentMask = uint32
-
-export const UadpNetworkMessageContentMaskNone: UadpNetworkMessageContentMask = 0
-export const UadpNetworkMessageContentMaskPublisherId: UadpNetworkMessageContentMask = 1
-export const UadpNetworkMessageContentMaskGroupHeader: UadpNetworkMessageContentMask = 2
-export const UadpNetworkMessageContentMaskWriterGroupId: UadpNetworkMessageContentMask = 4
-export const UadpNetworkMessageContentMaskGroupVersion: UadpNetworkMessageContentMask = 8
-export const UadpNetworkMessageContentMaskNetworkMessageNumber: UadpNetworkMessageContentMask = 16
-export const UadpNetworkMessageContentMaskSequenceNumber: UadpNetworkMessageContentMask = 32
-export const UadpNetworkMessageContentMaskPayloadHeader: UadpNetworkMessageContentMask = 64
-export const UadpNetworkMessageContentMaskTimestamp: UadpNetworkMessageContentMask = 128
-export const UadpNetworkMessageContentMaskPicoSeconds: UadpNetworkMessageContentMask = 256
-export const UadpNetworkMessageContentMaskDataSetClassId: UadpNetworkMessageContentMask = 512
-export const UadpNetworkMessageContentMaskPromotedFields: UadpNetworkMessageContentMask = 1024
-
-export type UadpDataSetMessageContentMask = uint32
-
-export const UadpDataSetMessageContentMaskNone: UadpDataSetMessageContentMask = 0
-export const UadpDataSetMessageContentMaskTimestamp: UadpDataSetMessageContentMask = 1
-export const UadpDataSetMessageContentMaskPicoSeconds: UadpDataSetMessageContentMask = 2
-export const UadpDataSetMessageContentMaskStatus: UadpDataSetMessageContentMask = 4
-export const UadpDataSetMessageContentMaskMajorVersion: UadpDataSetMessageContentMask = 8
-export const UadpDataSetMessageContentMaskMinorVersion: UadpDataSetMessageContentMask = 16
-export const UadpDataSetMessageContentMaskSequenceNumber: UadpDataSetMessageContentMask = 32
-
-export type JsonNetworkMessageContentMask = uint32
-
-export const JsonNetworkMessageContentMaskNone: JsonNetworkMessageContentMask = 0
-export const JsonNetworkMessageContentMaskNetworkMessageHeader: JsonNetworkMessageContentMask = 1
-export const JsonNetworkMessageContentMaskDataSetMessageHeader: JsonNetworkMessageContentMask = 2
-export const JsonNetworkMessageContentMaskSingleDataSetMessage: JsonNetworkMessageContentMask = 4
-export const JsonNetworkMessageContentMaskPublisherId: JsonNetworkMessageContentMask = 8
-export const JsonNetworkMessageContentMaskDataSetClassId: JsonNetworkMessageContentMask = 16
-export const JsonNetworkMessageContentMaskReplyTo: JsonNetworkMessageContentMask = 32
-
-export type JsonDataSetMessageContentMask = uint32
-
-export const JsonDataSetMessageContentMaskNone: JsonDataSetMessageContentMask = 0
-export const JsonDataSetMessageContentMaskDataSetWriterId: JsonDataSetMessageContentMask = 1
-export const JsonDataSetMessageContentMaskMetaDataVersion: JsonDataSetMessageContentMask = 2
-export const JsonDataSetMessageContentMaskSequenceNumber: JsonDataSetMessageContentMask = 4
-export const JsonDataSetMessageContentMaskTimestamp: JsonDataSetMessageContentMask = 8
-export const JsonDataSetMessageContentMaskStatus: JsonDataSetMessageContentMask = 16
-
-export type BrokerTransportQualityOfService = uint32
-
-export const BrokerTransportQualityOfServiceNotSpecified: BrokerTransportQualityOfService = 0
-export const BrokerTransportQualityOfServiceBestEffort: BrokerTransportQualityOfService = 1
-export const BrokerTransportQualityOfServiceAtLeastOnce: BrokerTransportQualityOfService = 2
-export const BrokerTransportQualityOfServiceAtMostOnce: BrokerTransportQualityOfService = 3
-export const BrokerTransportQualityOfServiceExactlyOnce: BrokerTransportQualityOfService = 4
-
-export type DiagnosticsLevel = uint32
-
-export const DiagnosticsLevelBasic: DiagnosticsLevel = 0
-export const DiagnosticsLevelAdvanced: DiagnosticsLevel = 1
-export const DiagnosticsLevelInfo: DiagnosticsLevel = 2
-export const DiagnosticsLevelLog: DiagnosticsLevel = 3
-export const DiagnosticsLevelDebug: DiagnosticsLevel = 4
-
-export type PubSubDiagnosticsCounterClassification = uint32
-
-export const PubSubDiagnosticsCounterClassificationInformation: PubSubDiagnosticsCounterClassification = 0
-export const PubSubDiagnosticsCounterClassificationError: PubSubDiagnosticsCounterClassification = 1
-
-export type IdType = uint32
-
-export const IdTypeNumeric: IdType = 0
-export const IdTypeString: IdType = 1
-export const IdTypeGuid: IdType = 2
-export const IdTypeOpaque: IdType = 3
-
-export type NodeClass = uint32
-
-export const NodeClassUnspecified: NodeClass = 0
-export const NodeClassObject: NodeClass = 1
-export const NodeClassVariable: NodeClass = 2
-export const NodeClassMethod: NodeClass = 4
-export const NodeClassObjectType: NodeClass = 8
-export const NodeClassVariableType: NodeClass = 16
-export const NodeClassReferenceType: NodeClass = 32
-export const NodeClassDataType: NodeClass = 64
-export const NodeClassView: NodeClass = 128
-
-export type PermissionType = uint32
-
-export const PermissionTypeNone: PermissionType = 0
-export const PermissionTypeBrowse: PermissionType = 1
-export const PermissionTypeReadRolePermissions: PermissionType = 2
-export const PermissionTypeWriteAttribute: PermissionType = 4
-export const PermissionTypeWriteRolePermissions: PermissionType = 8
-export const PermissionTypeWriteHistorizing: PermissionType = 16
-export const PermissionTypeRead: PermissionType = 32
-export const PermissionTypeWrite: PermissionType = 64
-export const PermissionTypeReadHistory: PermissionType = 128
-export const PermissionTypeInsertHistory: PermissionType = 256
-export const PermissionTypeModifyHistory: PermissionType = 512
-export const PermissionTypeDeleteHistory: PermissionType = 1024
-export const PermissionTypeReceiveEvents: PermissionType = 2048
-export const PermissionTypeCall: PermissionType = 4096
-export const PermissionTypeAddReference: PermissionType = 8192
-export const PermissionTypeRemoveReference: PermissionType = 16384
-export const PermissionTypeDeleteNode: PermissionType = 32768
-export const PermissionTypeAddNode: PermissionType = 65536
-
-export type AccessLevelType = uint8
-
-export const AccessLevelTypeNone: AccessLevelType = 0
-export const AccessLevelTypeCurrentRead: AccessLevelType = 1
-export const AccessLevelTypeCurrentWrite: AccessLevelType = 2
-export const AccessLevelTypeHistoryRead: AccessLevelType = 4
-export const AccessLevelTypeHistoryWrite: AccessLevelType = 8
-export const AccessLevelTypeSemanticChange: AccessLevelType = 16
-export const AccessLevelTypeStatusWrite: AccessLevelType = 32
-export const AccessLevelTypeTimestampWrite: AccessLevelType = 64
-
-export type AccessLevelExType = uint32
-
-export const AccessLevelExTypeNone: AccessLevelExType = 0
-export const AccessLevelExTypeCurrentRead: AccessLevelExType = 1
-export const AccessLevelExTypeCurrentWrite: AccessLevelExType = 2
-export const AccessLevelExTypeHistoryRead: AccessLevelExType = 4
-export const AccessLevelExTypeHistoryWrite: AccessLevelExType = 8
-export const AccessLevelExTypeSemanticChange: AccessLevelExType = 16
-export const AccessLevelExTypeStatusWrite: AccessLevelExType = 32
-export const AccessLevelExTypeTimestampWrite: AccessLevelExType = 64
-export const AccessLevelExTypeNonatomicRead: AccessLevelExType = 256
-export const AccessLevelExTypeNonatomicWrite: AccessLevelExType = 512
-export const AccessLevelExTypeWriteFullArrayOnly: AccessLevelExType = 1024
-
-export type EventNotifierType = uint8
-
-export const EventNotifierTypeNone: EventNotifierType = 0
-export const EventNotifierTypeSubscribeToEvents: EventNotifierType = 1
-export const EventNotifierTypeHistoryRead: EventNotifierType = 4
-export const EventNotifierTypeHistoryWrite: EventNotifierType = 8
-
-export type AccessRestrictionType = uint32
-
-export const AccessRestrictionTypeNone: AccessRestrictionType = 0
-export const AccessRestrictionTypeSigningRequired: AccessRestrictionType = 1
-export const AccessRestrictionTypeEncryptionRequired: AccessRestrictionType = 2
-export const AccessRestrictionTypeSessionRequired: AccessRestrictionType = 4
-
-export type StructureType = uint32
-
-export const StructureTypeStructure: StructureType = 0
-export const StructureTypeStructureWithOptionalFields: StructureType = 1
-export const StructureTypeUnion: StructureType = 2
-
-export type ApplicationType = uint32
-
-export const ApplicationTypeServer: ApplicationType = 0
-export const ApplicationTypeClient: ApplicationType = 1
-export const ApplicationTypeClientAndServer: ApplicationType = 2
-export const ApplicationTypeDiscoveryServer: ApplicationType = 3
-
-export type MessageSecurityMode = uint32
-
-export const MessageSecurityModeInvalid: MessageSecurityMode = 0
-export const MessageSecurityModeNone: MessageSecurityMode = 1
-export const MessageSecurityModeSign: MessageSecurityMode = 2
-export const MessageSecurityModeSignAndEncrypt: MessageSecurityMode = 3
-
-export type UserTokenType = uint32
-
-export const UserTokenTypeAnonymous: UserTokenType = 0
-export const UserTokenTypeUserName: UserTokenType = 1
-export const UserTokenTypeCertificate: UserTokenType = 2
-export const UserTokenTypeIssuedToken: UserTokenType = 3
-
-export type SecurityTokenRequestType = uint32
-
-export const SecurityTokenRequestTypeIssue: SecurityTokenRequestType = 0
-export const SecurityTokenRequestTypeRenew: SecurityTokenRequestType = 1
-
-export type NodeAttributesMask = uint32
-
-export const NodeAttributesMaskNone: NodeAttributesMask = 0
-export const NodeAttributesMaskAccessLevel: NodeAttributesMask = 1
-export const NodeAttributesMaskArrayDimensions: NodeAttributesMask = 2
-export const NodeAttributesMaskBrowseName: NodeAttributesMask = 4
-export const NodeAttributesMaskContainsNoLoops: NodeAttributesMask = 8
-export const NodeAttributesMaskDataType: NodeAttributesMask = 16
-export const NodeAttributesMaskDescription: NodeAttributesMask = 32
-export const NodeAttributesMaskDisplayName: NodeAttributesMask = 64
-export const NodeAttributesMaskEventNotifier: NodeAttributesMask = 128
-export const NodeAttributesMaskExecutable: NodeAttributesMask = 256
-export const NodeAttributesMaskHistorizing: NodeAttributesMask = 512
-export const NodeAttributesMaskInverseName: NodeAttributesMask = 1024
-export const NodeAttributesMaskIsAbstract: NodeAttributesMask = 2048
-export const NodeAttributesMaskMinimumSamplingInterval: NodeAttributesMask = 4096
-export const NodeAttributesMaskNodeClass: NodeAttributesMask = 8192
-export const NodeAttributesMaskNodeId: NodeAttributesMask = 16384
-export const NodeAttributesMaskSymmetric: NodeAttributesMask = 32768
-export const NodeAttributesMaskUserAccessLevel: NodeAttributesMask = 65536
-export const NodeAttributesMaskUserExecutable: NodeAttributesMask = 131072
-export const NodeAttributesMaskUserWriteMask: NodeAttributesMask = 262144
-export const NodeAttributesMaskValueRank: NodeAttributesMask = 524288
-export const NodeAttributesMaskWriteMask: NodeAttributesMask = 1048576
-export const NodeAttributesMaskValue: NodeAttributesMask = 2097152
-export const NodeAttributesMaskDataTypeDefinition: NodeAttributesMask = 4194304
-export const NodeAttributesMaskRolePermissions: NodeAttributesMask = 8388608
-export const NodeAttributesMaskAccessRestrictions: NodeAttributesMask = 16777216
-export const NodeAttributesMaskAll: NodeAttributesMask = 33554431
-export const NodeAttributesMaskBaseNode: NodeAttributesMask = 26501220
-export const NodeAttributesMaskObject: NodeAttributesMask = 26501348
-export const NodeAttributesMaskObjectType: NodeAttributesMask = 26503268
-export const NodeAttributesMaskVariable: NodeAttributesMask = 26571383
-export const NodeAttributesMaskVariableType: NodeAttributesMask = 28600438
-export const NodeAttributesMaskMethod: NodeAttributesMask = 26632548
-export const NodeAttributesMaskReferenceType: NodeAttributesMask = 26537060
-export const NodeAttributesMaskView: NodeAttributesMask = 26501356
-
-export type AttributeWriteMask = uint32
-
-export const AttributeWriteMaskNone: AttributeWriteMask = 0
-export const AttributeWriteMaskAccessLevel: AttributeWriteMask = 1
-export const AttributeWriteMaskArrayDimensions: AttributeWriteMask = 2
-export const AttributeWriteMaskBrowseName: AttributeWriteMask = 4
-export const AttributeWriteMaskContainsNoLoops: AttributeWriteMask = 8
-export const AttributeWriteMaskDataType: AttributeWriteMask = 16
-export const AttributeWriteMaskDescription: AttributeWriteMask = 32
-export const AttributeWriteMaskDisplayName: AttributeWriteMask = 64
-export const AttributeWriteMaskEventNotifier: AttributeWriteMask = 128
-export const AttributeWriteMaskExecutable: AttributeWriteMask = 256
-export const AttributeWriteMaskHistorizing: AttributeWriteMask = 512
-export const AttributeWriteMaskInverseName: AttributeWriteMask = 1024
-export const AttributeWriteMaskIsAbstract: AttributeWriteMask = 2048
-export const AttributeWriteMaskMinimumSamplingInterval: AttributeWriteMask = 4096
-export const AttributeWriteMaskNodeClass: AttributeWriteMask = 8192
-export const AttributeWriteMaskNodeId: AttributeWriteMask = 16384
-export const AttributeWriteMaskSymmetric: AttributeWriteMask = 32768
-export const AttributeWriteMaskUserAccessLevel: AttributeWriteMask = 65536
-export const AttributeWriteMaskUserExecutable: AttributeWriteMask = 131072
-export const AttributeWriteMaskUserWriteMask: AttributeWriteMask = 262144
-export const AttributeWriteMaskValueRank: AttributeWriteMask = 524288
-export const AttributeWriteMaskWriteMask: AttributeWriteMask = 1048576
-export const AttributeWriteMaskValueForVariableType: AttributeWriteMask = 2097152
-export const AttributeWriteMaskDataTypeDefinition: AttributeWriteMask = 4194304
-export const AttributeWriteMaskRolePermissions: AttributeWriteMask = 8388608
-export const AttributeWriteMaskAccessRestrictions: AttributeWriteMask = 16777216
-export const AttributeWriteMaskAccessLevelEx: AttributeWriteMask = 33554432
-
-export type BrowseDirection = uint32
-
-export const BrowseDirectionForward: BrowseDirection = 0
-export const BrowseDirectionInverse: BrowseDirection = 1
-export const BrowseDirectionBoth: BrowseDirection = 2
-export const BrowseDirectionInvalid: BrowseDirection = 3
-
-export type BrowseResultMask = uint32
-
-export const BrowseResultMaskNone: BrowseResultMask = 0
-export const BrowseResultMaskReferenceTypeId: BrowseResultMask = 1
-export const BrowseResultMaskIsForward: BrowseResultMask = 2
-export const BrowseResultMaskNodeClass: BrowseResultMask = 4
-export const BrowseResultMaskBrowseName: BrowseResultMask = 8
-export const BrowseResultMaskDisplayName: BrowseResultMask = 16
-export const BrowseResultMaskTypeDefinition: BrowseResultMask = 32
-export const BrowseResultMaskAll: BrowseResultMask = 63
-export const BrowseResultMaskReferenceTypeInfo: BrowseResultMask = 3
-export const BrowseResultMaskTargetInfo: BrowseResultMask = 60
-
-export type FilterOperator = uint32
-
-export const FilterOperatorEquals: FilterOperator = 0
-export const FilterOperatorIsNull: FilterOperator = 1
-export const FilterOperatorGreaterThan: FilterOperator = 2
-export const FilterOperatorLessThan: FilterOperator = 3
-export const FilterOperatorGreaterThanOrEqual: FilterOperator = 4
-export const FilterOperatorLessThanOrEqual: FilterOperator = 5
-export const FilterOperatorLike: FilterOperator = 6
-export const FilterOperatorNot: FilterOperator = 7
-export const FilterOperatorBetween: FilterOperator = 8
-export const FilterOperatorInList: FilterOperator = 9
-export const FilterOperatorAnd: FilterOperator = 10
-export const FilterOperatorOr: FilterOperator = 11
-export const FilterOperatorCast: FilterOperator = 12
-export const FilterOperatorInView: FilterOperator = 13
-export const FilterOperatorOfType: FilterOperator = 14
-export const FilterOperatorRelatedTo: FilterOperator = 15
-export const FilterOperatorBitwiseAnd: FilterOperator = 16
-export const FilterOperatorBitwiseOr: FilterOperator = 17
-
-export type TimestampsToReturn = uint32
-
-export const TimestampsToReturnSource: TimestampsToReturn = 0
-export const TimestampsToReturnServer: TimestampsToReturn = 1
-export const TimestampsToReturnBoth: TimestampsToReturn = 2
-export const TimestampsToReturnNeither: TimestampsToReturn = 3
-export const TimestampsToReturnInvalid: TimestampsToReturn = 4
-
-export type HistoryUpdateType = uint32
-
-export const HistoryUpdateTypeInsert: HistoryUpdateType = 1
-export const HistoryUpdateTypeReplace: HistoryUpdateType = 2
-export const HistoryUpdateTypeUpdate: HistoryUpdateType = 3
-export const HistoryUpdateTypeDelete: HistoryUpdateType = 4
-
-export type PerformUpdateType = uint32
-
-export const PerformUpdateTypeInsert: PerformUpdateType = 1
-export const PerformUpdateTypeReplace: PerformUpdateType = 2
-export const PerformUpdateTypeUpdate: PerformUpdateType = 3
-export const PerformUpdateTypeRemove: PerformUpdateType = 4
-
-export type MonitoringMode = uint32
-
-export const MonitoringModeDisabled: MonitoringMode = 0
-export const MonitoringModeSampling: MonitoringMode = 1
-export const MonitoringModeReporting: MonitoringMode = 2
-
-export type DataChangeTrigger = uint32
-
-export const DataChangeTriggerStatus: DataChangeTrigger = 0
-export const DataChangeTriggerStatusValue: DataChangeTrigger = 1
-export const DataChangeTriggerStatusValueTimestamp: DataChangeTrigger = 2
-
-export type DeadbandType = uint32
-
-export const DeadbandTypeNone: DeadbandType = 0
-export const DeadbandTypeAbsolute: DeadbandType = 1
-export const DeadbandTypePercent: DeadbandType = 2
-
-export type RedundancySupport = uint32
-
-export const RedundancySupportNone: RedundancySupport = 0
-export const RedundancySupportCold: RedundancySupport = 1
-export const RedundancySupportWarm: RedundancySupport = 2
-export const RedundancySupportHot: RedundancySupport = 3
-export const RedundancySupportTransparent: RedundancySupport = 4
-export const RedundancySupportHotAndMirrored: RedundancySupport = 5
-
-export type ServerState = uint32
-
-export const ServerStateRunning: ServerState = 0
-export const ServerStateFailed: ServerState = 1
-export const ServerStateNoConfiguration: ServerState = 2
-export const ServerStateSuspended: ServerState = 3
-export const ServerStateShutdown: ServerState = 4
-export const ServerStateTest: ServerState = 5
-export const ServerStateCommunicationFault: ServerState = 6
-export const ServerStateUnknown: ServerState = 7
-
-export type ModelChangeStructureVerbMask = uint32
-
-export const ModelChangeStructureVerbMaskNodeAdded: ModelChangeStructureVerbMask = 1
-export const ModelChangeStructureVerbMaskNodeDeleted: ModelChangeStructureVerbMask = 2
-export const ModelChangeStructureVerbMaskReferenceAdded: ModelChangeStructureVerbMask = 4
-export const ModelChangeStructureVerbMaskReferenceDeleted: ModelChangeStructureVerbMask = 8
-export const ModelChangeStructureVerbMaskDataTypeChanged: ModelChangeStructureVerbMask = 16
-
-export type AxisScaleEnumeration = uint32
-
-export const AxisScaleEnumerationLinear: AxisScaleEnumeration = 0
-export const AxisScaleEnumerationLog: AxisScaleEnumeration = 1
-export const AxisScaleEnumerationLn: AxisScaleEnumeration = 2
-
-export type ExceptionDeviationFormat = uint32
-
-export const ExceptionDeviationFormatAbsoluteValue: ExceptionDeviationFormat = 0
-export const ExceptionDeviationFormatPercentOfValue: ExceptionDeviationFormat = 1
-export const ExceptionDeviationFormatPercentOfRange: ExceptionDeviationFormat = 2
-export const ExceptionDeviationFormatPercentOfEURange: ExceptionDeviationFormat = 3
-export const ExceptionDeviationFormatUnknown: ExceptionDeviationFormat = 4
+export enum NodeIdType {
+  TwoByte = <uint8>0,
+  FourByte = <uint8>1,
+  Numeric = <uint8>2,
+  String = <uint8>3,
+  Guid = <uint8>4,
+  ByteString = <uint8>5
+}
+
+export enum NamingRuleType {
+  Mandatory = <uint32>1,
+  Optional = <uint32>2,
+  Constraint = <uint32>3
+}
+
+export enum OpenFileMode {
+  Read = <uint32>1,
+  Write = <uint32>2,
+  EraseExisting = <uint32>4,
+  Append = <uint32>8
+}
+
+export enum IdentityCriteriaType {
+  UserName = <uint32>1,
+  Thumbprint = <uint32>2,
+  Role = <uint32>3,
+  GroupId = <uint32>4,
+  Anonymous = <uint32>5,
+  AuthenticatedUser = <uint32>6
+}
+
+export enum TrustListMasks {
+  None = <uint32>0,
+  TrustedCertificates = <uint32>1,
+  TrustedCrls = <uint32>2,
+  IssuerCertificates = <uint32>4,
+  IssuerCrls = <uint32>8,
+  All = <uint32>15
+}
+
+export enum PubSubState {
+  Disabled = <uint32>0,
+  Paused = <uint32>1,
+  Operational = <uint32>2,
+  Error = <uint32>3
+}
+
+export enum DataSetFieldFlags {
+  None = <uint16>0,
+  PromotedField = <uint16>1
+}
+
+export enum DataSetFieldContentMask {
+  None = <uint32>0,
+  StatusCode = <uint32>1,
+  SourceTimestamp = <uint32>2,
+  ServerTimestamp = <uint32>4,
+  SourcePicoSeconds = <uint32>8,
+  ServerPicoSeconds = <uint32>16,
+  RawData = <uint32>32
+}
+
+export enum OverrideValueHandling {
+  Disabled = <uint32>0,
+  LastUsableValue = <uint32>1,
+  OverrideValue = <uint32>2
+}
+
+export enum DataSetOrderingType {
+  Undefined = <uint32>0,
+  AscendingWriterId = <uint32>1,
+  AscendingWriterIdSingle = <uint32>2
+}
+
+export enum UadpNetworkMessageContentMask {
+  None = <uint32>0,
+  PublisherId = <uint32>1,
+  GroupHeader = <uint32>2,
+  WriterGroupId = <uint32>4,
+  GroupVersion = <uint32>8,
+  NetworkMessageNumber = <uint32>16,
+  SequenceNumber = <uint32>32,
+  PayloadHeader = <uint32>64,
+  Timestamp = <uint32>128,
+  PicoSeconds = <uint32>256,
+  DataSetClassId = <uint32>512,
+  PromotedFields = <uint32>1024
+}
+
+export enum UadpDataSetMessageContentMask {
+  None = <uint32>0,
+  Timestamp = <uint32>1,
+  PicoSeconds = <uint32>2,
+  Status = <uint32>4,
+  MajorVersion = <uint32>8,
+  MinorVersion = <uint32>16,
+  SequenceNumber = <uint32>32
+}
+
+export enum JsonNetworkMessageContentMask {
+  None = <uint32>0,
+  NetworkMessageHeader = <uint32>1,
+  DataSetMessageHeader = <uint32>2,
+  SingleDataSetMessage = <uint32>4,
+  PublisherId = <uint32>8,
+  DataSetClassId = <uint32>16,
+  ReplyTo = <uint32>32
+}
+
+export enum JsonDataSetMessageContentMask {
+  None = <uint32>0,
+  DataSetWriterId = <uint32>1,
+  MetaDataVersion = <uint32>2,
+  SequenceNumber = <uint32>4,
+  Timestamp = <uint32>8,
+  Status = <uint32>16
+}
+
+export enum BrokerTransportQualityOfService {
+  NotSpecified = <uint32>0,
+  BestEffort = <uint32>1,
+  AtLeastOnce = <uint32>2,
+  AtMostOnce = <uint32>3,
+  ExactlyOnce = <uint32>4
+}
+
+export enum DiagnosticsLevel {
+  Basic = <uint32>0,
+  Advanced = <uint32>1,
+  Info = <uint32>2,
+  Log = <uint32>3,
+  Debug = <uint32>4
+}
+
+export enum PubSubDiagnosticsCounterClassification {
+  Information = <uint32>0,
+  Error = <uint32>1
+}
+
+export enum IdType {
+  Numeric = <uint32>0,
+  String = <uint32>1,
+  Guid = <uint32>2,
+  Opaque = <uint32>3
+}
+
+export enum NodeClass {
+  Unspecified = <uint32>0,
+  Object = <uint32>1,
+  Variable = <uint32>2,
+  Method = <uint32>4,
+  ObjectType = <uint32>8,
+  VariableType = <uint32>16,
+  ReferenceType = <uint32>32,
+  DataType = <uint32>64,
+  View = <uint32>128
+}
+
+export enum PermissionType {
+  None = <uint32>0,
+  Browse = <uint32>1,
+  ReadRolePermissions = <uint32>2,
+  WriteAttribute = <uint32>4,
+  WriteRolePermissions = <uint32>8,
+  WriteHistorizing = <uint32>16,
+  Read = <uint32>32,
+  Write = <uint32>64,
+  ReadHistory = <uint32>128,
+  InsertHistory = <uint32>256,
+  ModifyHistory = <uint32>512,
+  DeleteHistory = <uint32>1024,
+  ReceiveEvents = <uint32>2048,
+  Call = <uint32>4096,
+  AddReference = <uint32>8192,
+  RemoveReference = <uint32>16384,
+  DeleteNode = <uint32>32768,
+  AddNode = <uint32>65536
+}
+
+export enum AccessLevelType {
+  None = <uint8>0,
+  CurrentRead = <uint8>1,
+  CurrentWrite = <uint8>2,
+  HistoryRead = <uint8>4,
+  HistoryWrite = <uint8>8,
+  SemanticChange = <uint8>16,
+  StatusWrite = <uint8>32,
+  TimestampWrite = <uint8>64
+}
+
+export enum AccessLevelExType {
+  None = <uint32>0,
+  CurrentRead = <uint32>1,
+  CurrentWrite = <uint32>2,
+  HistoryRead = <uint32>4,
+  HistoryWrite = <uint32>8,
+  SemanticChange = <uint32>16,
+  StatusWrite = <uint32>32,
+  TimestampWrite = <uint32>64,
+  NonatomicRead = <uint32>256,
+  NonatomicWrite = <uint32>512,
+  WriteFullArrayOnly = <uint32>1024
+}
+
+export enum EventNotifierType {
+  None = <uint8>0,
+  SubscribeToEvents = <uint8>1,
+  HistoryRead = <uint8>4,
+  HistoryWrite = <uint8>8
+}
+
+export enum AccessRestrictionType {
+  None = <uint32>0,
+  SigningRequired = <uint32>1,
+  EncryptionRequired = <uint32>2,
+  SessionRequired = <uint32>4
+}
+
+export enum StructureType {
+  Structure = <uint32>0,
+  StructureWithOptionalFields = <uint32>1,
+  Union = <uint32>2
+}
+
+export enum ApplicationType {
+  Server = <uint32>0,
+  Client = <uint32>1,
+  ClientAndServer = <uint32>2,
+  DiscoveryServer = <uint32>3
+}
+
+export enum MessageSecurityMode {
+  Invalid = <uint32>0,
+  None = <uint32>1,
+  Sign = <uint32>2,
+  SignAndEncrypt = <uint32>3
+}
+
+export enum UserTokenType {
+  Anonymous = <uint32>0,
+  UserName = <uint32>1,
+  Certificate = <uint32>2,
+  IssuedToken = <uint32>3
+}
+
+export enum SecurityTokenRequestType {
+  Issue = <uint32>0,
+  Renew = <uint32>1
+}
+
+export enum NodeAttributesMask {
+  None = <uint32>0,
+  AccessLevel = <uint32>1,
+  ArrayDimensions = <uint32>2,
+  BrowseName = <uint32>4,
+  ContainsNoLoops = <uint32>8,
+  DataType = <uint32>16,
+  Description = <uint32>32,
+  DisplayName = <uint32>64,
+  EventNotifier = <uint32>128,
+  Executable = <uint32>256,
+  Historizing = <uint32>512,
+  InverseName = <uint32>1024,
+  IsAbstract = <uint32>2048,
+  MinimumSamplingInterval = <uint32>4096,
+  NodeClass = <uint32>8192,
+  NodeId = <uint32>16384,
+  Symmetric = <uint32>32768,
+  UserAccessLevel = <uint32>65536,
+  UserExecutable = <uint32>131072,
+  UserWriteMask = <uint32>262144,
+  ValueRank = <uint32>524288,
+  WriteMask = <uint32>1048576,
+  Value = <uint32>2097152,
+  DataTypeDefinition = <uint32>4194304,
+  RolePermissions = <uint32>8388608,
+  AccessRestrictions = <uint32>16777216,
+  All = <uint32>33554431,
+  BaseNode = <uint32>26501220,
+  Object = <uint32>26501348,
+  ObjectType = <uint32>26503268,
+  Variable = <uint32>26571383,
+  VariableType = <uint32>28600438,
+  Method = <uint32>26632548,
+  ReferenceType = <uint32>26537060,
+  View = <uint32>26501356
+}
+
+export enum AttributeWriteMask {
+  None = <uint32>0,
+  AccessLevel = <uint32>1,
+  ArrayDimensions = <uint32>2,
+  BrowseName = <uint32>4,
+  ContainsNoLoops = <uint32>8,
+  DataType = <uint32>16,
+  Description = <uint32>32,
+  DisplayName = <uint32>64,
+  EventNotifier = <uint32>128,
+  Executable = <uint32>256,
+  Historizing = <uint32>512,
+  InverseName = <uint32>1024,
+  IsAbstract = <uint32>2048,
+  MinimumSamplingInterval = <uint32>4096,
+  NodeClass = <uint32>8192,
+  NodeId = <uint32>16384,
+  Symmetric = <uint32>32768,
+  UserAccessLevel = <uint32>65536,
+  UserExecutable = <uint32>131072,
+  UserWriteMask = <uint32>262144,
+  ValueRank = <uint32>524288,
+  WriteMask = <uint32>1048576,
+  ValueForVariableType = <uint32>2097152,
+  DataTypeDefinition = <uint32>4194304,
+  RolePermissions = <uint32>8388608,
+  AccessRestrictions = <uint32>16777216,
+  AccessLevelEx = <uint32>33554432
+}
+
+export enum BrowseDirection {
+  Forward = <uint32>0,
+  Inverse = <uint32>1,
+  Both = <uint32>2,
+  Invalid = <uint32>3
+}
+
+export enum BrowseResultMask {
+  None = <uint32>0,
+  ReferenceTypeId = <uint32>1,
+  IsForward = <uint32>2,
+  NodeClass = <uint32>4,
+  BrowseName = <uint32>8,
+  DisplayName = <uint32>16,
+  TypeDefinition = <uint32>32,
+  All = <uint32>63,
+  ReferenceTypeInfo = <uint32>3,
+  TargetInfo = <uint32>60
+}
+
+export enum FilterOperator {
+  Equals = <uint32>0,
+  IsNull = <uint32>1,
+  GreaterThan = <uint32>2,
+  LessThan = <uint32>3,
+  GreaterThanOrEqual = <uint32>4,
+  LessThanOrEqual = <uint32>5,
+  Like = <uint32>6,
+  Not = <uint32>7,
+  Between = <uint32>8,
+  InList = <uint32>9,
+  And = <uint32>10,
+  Or = <uint32>11,
+  Cast = <uint32>12,
+  InView = <uint32>13,
+  OfType = <uint32>14,
+  RelatedTo = <uint32>15,
+  BitwiseAnd = <uint32>16,
+  BitwiseOr = <uint32>17
+}
+
+export enum TimestampsToReturn {
+  Source = <uint32>0,
+  Server = <uint32>1,
+  Both = <uint32>2,
+  Neither = <uint32>3,
+  Invalid = <uint32>4
+}
+
+export enum HistoryUpdateType {
+  Insert = <uint32>1,
+  Replace = <uint32>2,
+  Update = <uint32>3,
+  Delete = <uint32>4
+}
+
+export enum PerformUpdateType {
+  Insert = <uint32>1,
+  Replace = <uint32>2,
+  Update = <uint32>3,
+  Remove = <uint32>4
+}
+
+export enum MonitoringMode {
+  Disabled = <uint32>0,
+  Sampling = <uint32>1,
+  Reporting = <uint32>2
+}
+
+export enum DataChangeTrigger {
+  Status = <uint32>0,
+  StatusValue = <uint32>1,
+  StatusValueTimestamp = <uint32>2
+}
+
+export enum DeadbandType {
+  None = <uint32>0,
+  Absolute = <uint32>1,
+  Percent = <uint32>2
+}
+
+export enum RedundancySupport {
+  None = <uint32>0,
+  Cold = <uint32>1,
+  Warm = <uint32>2,
+  Hot = <uint32>3,
+  Transparent = <uint32>4,
+  HotAndMirrored = <uint32>5
+}
+
+export enum ServerState {
+  Running = <uint32>0,
+  Failed = <uint32>1,
+  NoConfiguration = <uint32>2,
+  Suspended = <uint32>3,
+  Shutdown = <uint32>4,
+  Test = <uint32>5,
+  CommunicationFault = <uint32>6,
+  Unknown = <uint32>7
+}
+
+export enum ModelChangeStructureVerbMask {
+  NodeAdded = <uint32>1,
+  NodeDeleted = <uint32>2,
+  ReferenceAdded = <uint32>4,
+  ReferenceDeleted = <uint32>8,
+  DataTypeChanged = <uint32>16
+}
+
+export enum AxisScaleEnumeration {
+  Linear = <uint32>0,
+  Log = <uint32>1,
+  Ln = <uint32>2
+}
+
+export enum ExceptionDeviationFormat {
+  AbsoluteValue = <uint32>0,
+  PercentOfValue = <uint32>1,
+  PercentOfRange = <uint32>2,
+  PercentOfEURange = <uint32>3,
+  Unknown = <uint32>4
+}
 
 export class KeyValuePair {
   @Type('object')
@@ -535,7 +534,7 @@ export class EndpointType {
     TransportProfileUri?: string
   }) {
     this.EndpointUrl = options?.EndpointUrl ?? ''
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
     this.TransportProfileUri = options?.TransportProfileUri ?? ''
   }
@@ -632,7 +631,7 @@ export class IdentityMappingRuleType {
     CriteriaType?: IdentityCriteriaType
     Criteria?: string
   }) {
-    this.CriteriaType = options?.CriteriaType ?? IdentityCriteriaTypeUserName
+    this.CriteriaType = options?.CriteriaType ?? IdentityCriteriaType.UserName
     this.Criteria = options?.Criteria ?? ''
   }
 }
@@ -915,7 +914,7 @@ export class FieldMetaData {
   }) {
     this.Name = options?.Name ?? ''
     this.Description = options?.Description ?? new LocalizedText()
-    this.FieldFlags = options?.FieldFlags ?? DataSetFieldFlagsNone
+    this.FieldFlags = options?.FieldFlags ?? DataSetFieldFlags.None
     this.BuiltInType = options?.BuiltInType ?? 0
     this.DataType = options?.DataType ?? new NodeId()
     this.ValueRank = options?.ValueRank ?? 0
@@ -1071,7 +1070,7 @@ export class DataSetWriterDataType {
     this.Enabled = options?.Enabled ?? false
     this.DataSetWriterId = options?.DataSetWriterId ?? 0
     this.DataSetFieldContentMask =
-      options?.DataSetFieldContentMask ?? DataSetFieldContentMaskNone
+      options?.DataSetFieldContentMask ?? DataSetFieldContentMask.None
     this.KeyFrameCount = options?.KeyFrameCount ?? 0
     this.DataSetName = options?.DataSetName ?? ''
     this.DataSetWriterProperties = options?.DataSetWriterProperties ?? null
@@ -1111,7 +1110,7 @@ export class PubSubGroupDataType {
   }) {
     this.Name = options?.Name ?? ''
     this.Enabled = options?.Enabled ?? false
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityGroupId = options?.SecurityGroupId ?? ''
     this.SecurityKeyServices = options?.SecurityKeyServices ?? null
     this.MaxNetworkMessageSize = options?.MaxNetworkMessageSize ?? 0
@@ -1173,7 +1172,7 @@ export class WriterGroupDataType {
   }) {
     this.Name = options?.Name ?? ''
     this.Enabled = options?.Enabled ?? false
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityGroupId = options?.SecurityGroupId ?? ''
     this.SecurityKeyServices = options?.SecurityKeyServices ?? null
     this.MaxNetworkMessageSize = options?.MaxNetworkMessageSize ?? 0
@@ -1296,7 +1295,7 @@ export class ReaderGroupDataType {
   }) {
     this.Name = options?.Name ?? ''
     this.Enabled = options?.Enabled ?? false
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityGroupId = options?.SecurityGroupId ?? ''
     this.SecurityKeyServices = options?.SecurityKeyServices ?? null
     this.MaxNetworkMessageSize = options?.MaxNetworkMessageSize ?? 0
@@ -1373,11 +1372,11 @@ export class DataSetReaderDataType {
     this.DataSetWriterId = options?.DataSetWriterId ?? 0
     this.DataSetMetaData = options?.DataSetMetaData ?? new DataSetMetaDataType()
     this.DataSetFieldContentMask =
-      options?.DataSetFieldContentMask ?? DataSetFieldContentMaskNone
+      options?.DataSetFieldContentMask ?? DataSetFieldContentMask.None
     this.MessageReceiveTimeout = options?.MessageReceiveTimeout ?? 0
     this.KeyFrameCount = options?.KeyFrameCount ?? 0
     this.HeaderLayoutUri = options?.HeaderLayoutUri ?? ''
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityGroupId = options?.SecurityGroupId ?? ''
     this.SecurityKeyServices = options?.SecurityKeyServices ?? null
     this.DataSetReaderProperties = options?.DataSetReaderProperties ?? null
@@ -1433,7 +1432,7 @@ export class FieldTargetDataType {
     this.AttributeId = options?.AttributeId ?? 0
     this.WriteIndexRange = options?.WriteIndexRange ?? ''
     this.OverrideValueHandling =
-      options?.OverrideValueHandling ?? OverrideValueHandlingDisabled
+      options?.OverrideValueHandling ?? OverrideValueHandling.Disabled
     this.OverrideValue = options?.OverrideValue ?? new Variant()
   }
 }
@@ -1493,9 +1492,9 @@ export class UadpWriterGroupMessageDataType {
   }) {
     this.GroupVersion = options?.GroupVersion ?? 0
     this.DataSetOrdering =
-      options?.DataSetOrdering ?? DataSetOrderingTypeUndefined
+      options?.DataSetOrdering ?? DataSetOrderingType.Undefined
     this.NetworkMessageContentMask =
-      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMaskNone
+      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMask.None
     this.SamplingOffset = options?.SamplingOffset ?? 0
     this.PublishingOffset = options?.PublishingOffset ?? null
   }
@@ -1518,7 +1517,7 @@ export class UadpDataSetWriterMessageDataType {
     DataSetOffset?: uint16
   }) {
     this.DataSetMessageContentMask =
-      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMaskNone
+      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMask.None
     this.ConfiguredSize = options?.ConfiguredSize ?? 0
     this.NetworkMessageNumber = options?.NetworkMessageNumber ?? 0
     this.DataSetOffset = options?.DataSetOffset ?? 0
@@ -1561,9 +1560,9 @@ export class UadpDataSetReaderMessageDataType {
     this.DataSetOffset = options?.DataSetOffset ?? 0
     this.DataSetClassId = options?.DataSetClassId ?? new Guid()
     this.NetworkMessageContentMask =
-      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMaskNone
+      options?.NetworkMessageContentMask ?? UadpNetworkMessageContentMask.None
     this.DataSetMessageContentMask =
-      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMaskNone
+      options?.DataSetMessageContentMask ?? UadpDataSetMessageContentMask.None
     this.PublishingInterval = options?.PublishingInterval ?? 0
     this.ReceiveOffset = options?.ReceiveOffset ?? 0
     this.ProcessingOffset = options?.ProcessingOffset ?? 0
@@ -1578,7 +1577,7 @@ export class JsonWriterGroupMessageDataType {
     NetworkMessageContentMask?: JsonNetworkMessageContentMask
   }) {
     this.NetworkMessageContentMask =
-      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMaskNone
+      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMask.None
   }
 }
 
@@ -1590,7 +1589,7 @@ export class JsonDataSetWriterMessageDataType {
     DataSetMessageContentMask?: JsonDataSetMessageContentMask
   }) {
     this.DataSetMessageContentMask =
-      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMaskNone
+      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMask.None
   }
 }
 
@@ -1605,9 +1604,9 @@ export class JsonDataSetReaderMessageDataType {
     DataSetMessageContentMask?: JsonDataSetMessageContentMask
   }) {
     this.NetworkMessageContentMask =
-      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMaskNone
+      options?.NetworkMessageContentMask ?? JsonNetworkMessageContentMask.None
     this.DataSetMessageContentMask =
-      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMaskNone
+      options?.DataSetMessageContentMask ?? JsonDataSetMessageContentMask.None
   }
 }
 
@@ -1671,7 +1670,7 @@ export class BrokerWriterGroupTransportDataType {
     this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
     this.RequestedDeliveryGuarantee =
       options?.RequestedDeliveryGuarantee ??
-      BrokerTransportQualityOfServiceNotSpecified
+      BrokerTransportQualityOfService.NotSpecified
   }
 }
 
@@ -1702,7 +1701,7 @@ export class BrokerDataSetWriterTransportDataType {
     this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
     this.RequestedDeliveryGuarantee =
       options?.RequestedDeliveryGuarantee ??
-      BrokerTransportQualityOfServiceNotSpecified
+      BrokerTransportQualityOfService.NotSpecified
     this.MetaDataQueueName = options?.MetaDataQueueName ?? ''
     this.MetaDataUpdateTime = options?.MetaDataUpdateTime ?? 0
   }
@@ -1732,7 +1731,7 @@ export class BrokerDataSetReaderTransportDataType {
     this.AuthenticationProfileUri = options?.AuthenticationProfileUri ?? ''
     this.RequestedDeliveryGuarantee =
       options?.RequestedDeliveryGuarantee ??
-      BrokerTransportQualityOfServiceNotSpecified
+      BrokerTransportQualityOfService.NotSpecified
     this.MetaDataQueueName = options?.MetaDataQueueName ?? ''
   }
 }
@@ -1760,7 +1759,7 @@ export class RolePermissionType {
 
   constructor(options?: { RoleId?: NodeId; Permissions?: PermissionType }) {
     this.RoleId = options?.RoleId ?? new NodeId()
-    this.Permissions = options?.Permissions ?? PermissionTypeNone
+    this.Permissions = options?.Permissions ?? PermissionType.None
   }
 }
 
@@ -1817,7 +1816,7 @@ export class StructureDefinition {
   }) {
     this.DefaultEncodingId = options?.DefaultEncodingId ?? new NodeId()
     this.BaseDataType = options?.BaseDataType ?? new NodeId()
-    this.StructureType = options?.StructureType ?? StructureTypeStructure
+    this.StructureType = options?.StructureType ?? StructureType.Structure
     this.Fields = options?.Fields ?? null
   }
 }
@@ -1869,7 +1868,7 @@ export class Node {
     References?: ReferenceNode[] | null
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -1920,7 +1919,7 @@ export class InstanceNode {
     References?: ReferenceNode[] | null
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -1971,7 +1970,7 @@ export class TypeNode {
     References?: ReferenceNode[] | null
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2025,7 +2024,7 @@ export class ObjectNode {
     EventNotifier?: uint8
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2080,7 +2079,7 @@ export class ObjectTypeNode {
     IsAbstract?: boolean
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2159,7 +2158,7 @@ export class VariableNode {
     AccessLevelEx?: uint32
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2234,7 +2233,7 @@ export class VariableTypeNode {
     IsAbstract?: boolean
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2299,7 +2298,7 @@ export class ReferenceTypeNode {
     InverseName?: LocalizedText
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2359,7 +2358,7 @@ export class MethodNode {
     UserExecutable?: boolean
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2418,7 +2417,7 @@ export class ViewNode {
     EventNotifier?: uint8
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2477,7 +2476,7 @@ export class DataTypeNode {
     DataTypeDefinition?: ExtensionObject
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
     this.Description = options?.Description ?? new LocalizedText()
@@ -2635,7 +2634,7 @@ export class ApplicationDescription {
     this.ApplicationUri = options?.ApplicationUri ?? ''
     this.ProductUri = options?.ProductUri ?? ''
     this.ApplicationName = options?.ApplicationName ?? new LocalizedText()
-    this.ApplicationType = options?.ApplicationType ?? ApplicationTypeServer
+    this.ApplicationType = options?.ApplicationType ?? ApplicationType.Server
     this.GatewayServerUri = options?.GatewayServerUri ?? ''
     this.DiscoveryProfileUri = options?.DiscoveryProfileUri ?? ''
     this.DiscoveryUrls = options?.DiscoveryUrls ?? null
@@ -2701,7 +2700,7 @@ export class ResponseHeader {
   }) {
     this.Timestamp = options?.Timestamp ?? new Date()
     this.RequestHandle = options?.RequestHandle ?? 0
-    this.ServiceResult = options?.ServiceResult ?? StatusCodeOK
+    this.ServiceResult = options?.ServiceResult ?? StatusCode.OK
     this.ServiceDiagnostics =
       options?.ServiceDiagnostics ?? new DiagnosticInfo()
     this.StringTable = options?.StringTable ?? null
@@ -2887,7 +2886,7 @@ export class UserTokenPolicy {
     SecurityPolicyUri?: string
   }) {
     this.PolicyId = options?.PolicyId ?? ''
-    this.TokenType = options?.TokenType ?? UserTokenTypeAnonymous
+    this.TokenType = options?.TokenType ?? UserTokenType.Anonymous
     this.IssuedTokenType = options?.IssuedTokenType ?? ''
     this.IssuerEndpointUrl = options?.IssuerEndpointUrl ?? ''
     this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
@@ -2925,7 +2924,7 @@ export class EndpointDescription {
     this.EndpointUrl = options?.EndpointUrl ?? ''
     this.Server = options?.Server ?? new ApplicationDescription()
     this.ServerCertificate = options?.ServerCertificate ?? new Uint8Array()
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
     this.UserIdentityTokens = options?.UserIdentityTokens ?? null
     this.TransportProfileUri = options?.TransportProfileUri ?? ''
@@ -3002,7 +3001,7 @@ export class RegisteredServer {
     this.ServerUri = options?.ServerUri ?? ''
     this.ProductUri = options?.ProductUri ?? ''
     this.ServerNames = options?.ServerNames ?? null
-    this.ServerType = options?.ServerType ?? ApplicationTypeServer
+    this.ServerType = options?.ServerType ?? ApplicationType.Server
     this.GatewayServerUri = options?.GatewayServerUri ?? ''
     this.DiscoveryUrls = options?.DiscoveryUrls ?? null
     this.SemaphoreFilePath = options?.SemaphoreFilePath ?? ''
@@ -3136,8 +3135,8 @@ export class OpenSecureChannelRequest {
   }) {
     this.RequestHeader = options?.RequestHeader ?? new RequestHeader()
     this.ClientProtocolVersion = options?.ClientProtocolVersion ?? 0
-    this.RequestType = options?.RequestType ?? SecurityTokenRequestTypeIssue
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.RequestType = options?.RequestType ?? SecurityTokenRequestType.Issue
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.ClientNonce = options?.ClientNonce ?? new Uint8Array()
     this.RequestedLifetime = options?.RequestedLifetime ?? 0
   }
@@ -3892,7 +3891,7 @@ export class AddNodesItem {
     this.RequestedNewNodeId =
       options?.RequestedNewNodeId ?? new ExpandedNodeId()
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.NodeAttributes = options?.NodeAttributes ?? new ExtensionObject()
     this.TypeDefinition = options?.TypeDefinition ?? new ExpandedNodeId()
   }
@@ -3905,7 +3904,7 @@ export class AddNodesResult {
   public AddedNodeId: NodeId
 
   constructor(options?: { StatusCode?: StatusCode; AddedNodeId?: NodeId }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.AddedNodeId = options?.AddedNodeId ?? new NodeId()
   }
 }
@@ -3971,7 +3970,7 @@ export class AddReferencesItem {
     this.IsForward = options?.IsForward ?? false
     this.TargetServerUri = options?.TargetServerUri ?? ''
     this.TargetNodeId = options?.TargetNodeId ?? new ExpandedNodeId()
-    this.TargetNodeClass = options?.TargetNodeClass ?? NodeClassUnspecified
+    this.TargetNodeClass = options?.TargetNodeClass ?? NodeClass.Unspecified
   }
 }
 
@@ -4158,7 +4157,7 @@ export class BrowseDescription {
     ResultMask?: uint32
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
-    this.BrowseDirection = options?.BrowseDirection ?? BrowseDirectionForward
+    this.BrowseDirection = options?.BrowseDirection ?? BrowseDirection.Forward
     this.ReferenceTypeId = options?.ReferenceTypeId ?? new NodeId()
     this.IncludeSubtypes = options?.IncludeSubtypes ?? false
     this.NodeClassMask = options?.NodeClassMask ?? 0
@@ -4196,7 +4195,7 @@ export class ReferenceDescription {
     this.NodeId = options?.NodeId ?? new ExpandedNodeId()
     this.BrowseName = options?.BrowseName ?? new QualifiedName()
     this.DisplayName = options?.DisplayName ?? new LocalizedText()
-    this.NodeClass = options?.NodeClass ?? NodeClassUnspecified
+    this.NodeClass = options?.NodeClass ?? NodeClass.Unspecified
     this.TypeDefinition = options?.TypeDefinition ?? new ExpandedNodeId()
   }
 }
@@ -4214,7 +4213,7 @@ export class BrowseResult {
     ContinuationPoint?: ByteString
     References?: ReferenceDescription[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.ContinuationPoint = options?.ContinuationPoint ?? new Uint8Array()
     this.References = options?.References ?? null
   }
@@ -4373,7 +4372,7 @@ export class BrowsePathResult {
     StatusCode?: StatusCode
     Targets?: BrowsePathTarget[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.Targets = options?.Targets ?? null
   }
 }
@@ -4601,7 +4600,7 @@ export class ContentFilterElement {
     FilterOperator?: FilterOperator
     FilterOperands?: ExtensionObject[] | null
   }) {
-    this.FilterOperator = options?.FilterOperator ?? FilterOperatorEquals
+    this.FilterOperator = options?.FilterOperator ?? FilterOperator.Equals
     this.FilterOperands = options?.FilterOperands ?? null
   }
 }
@@ -4698,7 +4697,7 @@ export class ContentFilterElementResult {
     OperandStatusCodes?: Uint32Array | null
     OperandDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.OperandStatusCodes = options?.OperandStatusCodes ?? null
     this.OperandDiagnosticInfos = options?.OperandDiagnosticInfos ?? null
   }
@@ -4732,7 +4731,7 @@ export class ParsingResult {
     DataStatusCodes?: Uint32Array | null
     DataDiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.DataStatusCodes = options?.DataStatusCodes ?? null
     this.DataDiagnosticInfos = options?.DataDiagnosticInfos ?? null
   }
@@ -4881,7 +4880,7 @@ export class ReadRequest {
     this.RequestHeader = options?.RequestHeader ?? new RequestHeader()
     this.MaxAge = options?.MaxAge ?? 0
     this.TimestampsToReturn =
-      options?.TimestampsToReturn ?? TimestampsToReturnSource
+      options?.TimestampsToReturn ?? TimestampsToReturn.Source
     this.NodesToRead = options?.NodesToRead ?? null
   }
 }
@@ -4941,7 +4940,7 @@ export class HistoryReadResult {
     ContinuationPoint?: ByteString
     HistoryData?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.ContinuationPoint = options?.ContinuationPoint ?? new Uint8Array()
     this.HistoryData = options?.HistoryData ?? new ExtensionObject()
   }
@@ -5074,7 +5073,7 @@ export class ModificationInfo {
     UserName?: string
   }) {
     this.ModificationTime = options?.ModificationTime ?? new Date()
-    this.UpdateType = options?.UpdateType ?? HistoryUpdateTypeInsert
+    this.UpdateType = options?.UpdateType ?? HistoryUpdateType.Insert
     this.UserName = options?.UserName ?? ''
   }
 }
@@ -5126,7 +5125,7 @@ export class HistoryReadRequest {
     this.HistoryReadDetails =
       options?.HistoryReadDetails ?? new ExtensionObject()
     this.TimestampsToReturn =
-      options?.TimestampsToReturn ?? TimestampsToReturnSource
+      options?.TimestampsToReturn ?? TimestampsToReturn.Source
     this.ReleaseContinuationPoints = options?.ReleaseContinuationPoints ?? false
     this.NodesToRead = options?.NodesToRead ?? null
   }
@@ -5232,7 +5231,7 @@ export class UpdateDataDetails {
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
     this.PerformInsertReplace =
-      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+      options?.PerformInsertReplace ?? PerformUpdateType.Insert
     this.UpdateValues = options?.UpdateValues ?? null
   }
 }
@@ -5252,7 +5251,7 @@ export class UpdateStructureDataDetails {
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
     this.PerformInsertReplace =
-      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+      options?.PerformInsertReplace ?? PerformUpdateType.Insert
     this.UpdateValues = options?.UpdateValues ?? null
   }
 }
@@ -5275,7 +5274,7 @@ export class UpdateEventDetails {
   }) {
     this.NodeId = options?.NodeId ?? new NodeId()
     this.PerformInsertReplace =
-      options?.PerformInsertReplace ?? PerformUpdateTypeInsert
+      options?.PerformInsertReplace ?? PerformUpdateType.Insert
     this.Filter = options?.Filter ?? new EventFilter()
     this.EventData = options?.EventData ?? null
   }
@@ -5341,7 +5340,7 @@ export class HistoryUpdateResult {
     OperationResults?: Uint32Array | null
     DiagnosticInfos?: DiagnosticInfo[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.OperationResults = options?.OperationResults ?? null
     this.DiagnosticInfos = options?.DiagnosticInfos ?? null
   }
@@ -5416,7 +5415,7 @@ export class CallMethodResult {
     InputArgumentDiagnosticInfos?: DiagnosticInfo[] | null
     OutputArguments?: Variant[] | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.InputArgumentResults = options?.InputArgumentResults ?? null
     this.InputArgumentDiagnosticInfos =
       options?.InputArgumentDiagnosticInfos ?? null
@@ -5473,7 +5472,7 @@ export class DataChangeFilter {
     DeadbandType?: uint32
     DeadbandValue?: float64
   }) {
-    this.Trigger = options?.Trigger ?? DataChangeTriggerStatus
+    this.Trigger = options?.Trigger ?? DataChangeTrigger.Status
     this.DeadbandType = options?.DeadbandType ?? 0
     this.DeadbandValue = options?.DeadbandValue ?? 0
   }
@@ -5630,7 +5629,7 @@ export class MonitoredItemCreateRequest {
     RequestedParameters?: MonitoringParameters
   }) {
     this.ItemToMonitor = options?.ItemToMonitor ?? new ReadValueId()
-    this.MonitoringMode = options?.MonitoringMode ?? MonitoringModeDisabled
+    this.MonitoringMode = options?.MonitoringMode ?? MonitoringMode.Disabled
     this.RequestedParameters =
       options?.RequestedParameters ?? new MonitoringParameters()
   }
@@ -5655,7 +5654,7 @@ export class MonitoredItemCreateResult {
     RevisedQueueSize?: uint32
     FilterResult?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.MonitoredItemId = options?.MonitoredItemId ?? 0
     this.RevisedSamplingInterval = options?.RevisedSamplingInterval ?? 0
     this.RevisedQueueSize = options?.RevisedQueueSize ?? 0
@@ -5682,7 +5681,7 @@ export class CreateMonitoredItemsRequest {
     this.RequestHeader = options?.RequestHeader ?? new RequestHeader()
     this.SubscriptionId = options?.SubscriptionId ?? 0
     this.TimestampsToReturn =
-      options?.TimestampsToReturn ?? TimestampsToReturnSource
+      options?.TimestampsToReturn ?? TimestampsToReturn.Source
     this.ItemsToCreate = options?.ItemsToCreate ?? null
   }
 }
@@ -5738,7 +5737,7 @@ export class MonitoredItemModifyResult {
     RevisedQueueSize?: uint32
     FilterResult?: ExtensionObject
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.RevisedSamplingInterval = options?.RevisedSamplingInterval ?? 0
     this.RevisedQueueSize = options?.RevisedQueueSize ?? 0
     this.FilterResult = options?.FilterResult ?? new ExtensionObject()
@@ -5764,7 +5763,7 @@ export class ModifyMonitoredItemsRequest {
     this.RequestHeader = options?.RequestHeader ?? new RequestHeader()
     this.SubscriptionId = options?.SubscriptionId ?? 0
     this.TimestampsToReturn =
-      options?.TimestampsToReturn ?? TimestampsToReturnSource
+      options?.TimestampsToReturn ?? TimestampsToReturn.Source
     this.ItemsToModify = options?.ItemsToModify ?? null
   }
 }
@@ -5806,7 +5805,7 @@ export class SetMonitoringModeRequest {
   }) {
     this.RequestHeader = options?.RequestHeader ?? new RequestHeader()
     this.SubscriptionId = options?.SubscriptionId ?? 0
-    this.MonitoringMode = options?.MonitoringMode ?? MonitoringModeDisabled
+    this.MonitoringMode = options?.MonitoringMode ?? MonitoringMode.Disabled
     this.MonitoredItemIds = options?.MonitoredItemIds ?? null
   }
 }
@@ -6171,7 +6170,7 @@ export class StatusChangeNotification {
     Status?: StatusCode
     DiagnosticInfo?: DiagnosticInfo
   }) {
-    this.Status = options?.Status ?? StatusCodeOK
+    this.Status = options?.Status ?? StatusCode.OK
     this.DiagnosticInfo = options?.DiagnosticInfo ?? new DiagnosticInfo()
   }
 }
@@ -6285,7 +6284,7 @@ export class TransferResult {
     StatusCode?: StatusCode
     AvailableSequenceNumbers?: Uint32Array | null
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.AvailableSequenceNumbers = options?.AvailableSequenceNumbers ?? null
   }
 }
@@ -6408,7 +6407,7 @@ export class RedundantServerDataType {
   }) {
     this.ServerId = options?.ServerId ?? ''
     this.ServiceLevel = options?.ServiceLevel ?? 0
-    this.ServerState = options?.ServerState ?? ServerStateRunning
+    this.ServerState = options?.ServerState ?? ServerState.Running
   }
 }
 
@@ -6540,7 +6539,7 @@ export class ServerStatusDataType {
   }) {
     this.StartTime = options?.StartTime ?? new Date()
     this.CurrentTime = options?.CurrentTime ?? new Date()
-    this.State = options?.State ?? ServerStateRunning
+    this.State = options?.State ?? ServerState.Running
     this.BuildInfo = options?.BuildInfo ?? new BuildInfo()
     this.SecondsTillShutdown = options?.SecondsTillShutdown ?? 0
     this.ShutdownReason = options?.ShutdownReason ?? new LocalizedText()
@@ -6789,7 +6788,7 @@ export class SessionSecurityDiagnosticsDataType {
     this.AuthenticationMechanism = options?.AuthenticationMechanism ?? ''
     this.Encoding = options?.Encoding ?? ''
     this.TransportProtocol = options?.TransportProtocol ?? ''
-    this.SecurityMode = options?.SecurityMode ?? MessageSecurityModeInvalid
+    this.SecurityMode = options?.SecurityMode ?? MessageSecurityMode.Invalid
     this.SecurityPolicyUri = options?.SecurityPolicyUri ?? ''
     this.ClientCertificate = options?.ClientCertificate ?? new Uint8Array()
   }
@@ -6817,7 +6816,7 @@ export class StatusResult {
     StatusCode?: StatusCode
     DiagnosticInfo?: DiagnosticInfo
   }) {
-    this.StatusCode = options?.StatusCode ?? StatusCodeOK
+    this.StatusCode = options?.StatusCode ?? StatusCode.OK
     this.DiagnosticInfo = options?.DiagnosticInfo ?? new DiagnosticInfo()
   }
 }
@@ -7069,7 +7068,7 @@ export class AxisInformation {
     this.EngineeringUnits = options?.EngineeringUnits ?? new EUInformation()
     this.EURange = options?.EURange ?? new Range()
     this.Title = options?.Title ?? new LocalizedText()
-    this.AxisScaleType = options?.AxisScaleType ?? AxisScaleEnumerationLinear
+    this.AxisScaleType = options?.AxisScaleType ?? AxisScaleEnumeration.Linear
     this.AxisSteps = options?.AxisSteps ?? null
   }
 }

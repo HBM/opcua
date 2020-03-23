@@ -161,15 +161,16 @@ import DiagnosticInfo from './DiagnosticInfo'
 import QualifiedName from './QualifiedName'
 import Variant from './Variant'
 import DataValue from './DataValue'
-import { StatusCodeOK } from './StatusCode'
+import { StatusCode } from './StatusCode'
+import { uint8, uint32, uint16, ByteString, float64, float32, int32, int64, int16, int8 } from '../types'
 `))
 
 var tmplEnum = template.Must(template.New("").Parse(`
-export type {{ .Name }} = {{ .GetType }}
-{{ $Name := .Name }}
-{{ range $v := .EnumeratedValues -}}
-	export const {{ $Name }}{{ $v.Name }}: {{ $Name }} = {{ $v.Value }}
-{{ end -}}
+export enum {{ .Name }} {
+  {{ range $v := .EnumeratedValues -}}
+	{{ $v.Name }} = <{{ $.GetType }}>{{ $v.Value }},
+  {{ end -}}
+}
 `))
 
 var tmplClass = template.Must(template.New("").Parse(`
@@ -264,7 +265,7 @@ func (f *field) GetZeroValue() string {
 
 	// check for enumeration type
 	if f.ZeroValue != "" {
-		return t + f.ZeroValue
+		return t + "." + f.ZeroValue
 	}
 
 	switch t {

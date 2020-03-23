@@ -24,7 +24,7 @@ import {
   CreateSessionResponse,
   ActivateSessionRequest,
   ActivateSessionResponse,
-  MessageSecurityModeNone,
+  MessageSecurityMode,
   Request
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
@@ -69,7 +69,7 @@ export default class SecureChannel {
       const open = new OpenSecureChannelRequest({
         RequestHeader: new RequestHeader(),
         RequestType: SecurityTokenRequestTypeIssue,
-        SecurityMode: MessageSecurityModeNone,
+        SecurityMode: MessageSecurityMode.None,
         RequestedLifetime: 3600000
       })
       this.send(open, resolve)

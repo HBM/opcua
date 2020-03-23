@@ -31,6 +31,13 @@ func main() {
 		rows[i][0] = strings.ReplaceAll(rows[i][0], "_", "")
 	}
 
+	// prepend fixed values
+	rows = append([][]string{
+		{"OK", "0x0", ""},
+		{"Uncertain", "0x40000000", ""},
+		{"Bad", "0x80000000", ""},
+	}, rows...)
+
 	var b bytes.Buffer
 	if err := tmpl.Execute(&b, rows); err != nil {
 		panic(err)
@@ -43,9 +50,9 @@ func main() {
 }
 
 var tmpl = template.Must(template.New("").Parse(`
-export const StatusCodeOK: StatusCode = 0x0
-export const StatusCodeUncertain: StatusCode = 0x40000000
-export const StatusCodeBad: StatusCode = 0x80000000
+import { uint32 } from "../types"
 
-{{range .}}export const StatusCode{{index . 0}}: StatusCode = {{index . 1}}
-{{end}}`))
+export enum StatusCode {
+  {{range .}}{{index . 0}} = <uint32> {{index . 1}},
+  {{end}}
+}`))
