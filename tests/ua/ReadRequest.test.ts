@@ -2,7 +2,7 @@ import run from './run'
 import {
   ReadRequest,
   RequestHeader,
-  TimestampsToReturnBoth,
+  TimestampsToReturn,
   ReadValueId
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
@@ -26,7 +26,7 @@ describe('ReadRequest', () => {
           AdditionalHeader: new ExtensionObject()
         }),
         MaxAge: 0,
-        TimestampsToReturn: TimestampsToReturnBoth,
+        TimestampsToReturn: TimestampsToReturn.Both,
         NodesToRead: [
           new ReadValueId({
             NodeId: NewFourByteNodeId(0, 2256),

@@ -3,7 +3,7 @@ import {
   CreateSessionRequest,
   RequestHeader,
   ApplicationDescription,
-  ApplicationTypeClient
+  ApplicationType
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId } from '../../dist/ua/NodeId'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
@@ -32,7 +32,7 @@ describe('CreateSessionRequest', () => {
             EncodingMask: LocalizedTextText,
             Text: 'app-name'
           }),
-          ApplicationType: ApplicationTypeClient,
+          ApplicationType: ApplicationType.Client,
           GatewayServerUri: 'gw-uri',
           DiscoveryProfileUri: 'profile-uri',
           DiscoveryUrls: ['1', '2']

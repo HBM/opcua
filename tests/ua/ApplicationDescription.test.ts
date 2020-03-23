@@ -1,7 +1,7 @@
 import run from './run'
 import {
   ApplicationDescription,
-  ApplicationTypeServer
+  ApplicationType
 } from '../../dist/ua/generated'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
 
@@ -16,7 +16,7 @@ describe('ApplicationDescription', () => {
           EncodingMask: LocalizedTextText,
           Text: 'app-name'
         }),
-        ApplicationType: ApplicationTypeServer,
+        ApplicationType: ApplicationType.Server,
         GatewayServerUri: 'gw-uri',
         DiscoveryProfileUri: 'prof-uri',
         DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']

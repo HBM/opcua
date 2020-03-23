@@ -5,10 +5,10 @@ import {
   SignatureData,
   EndpointDescription,
   ApplicationDescription,
-  ApplicationTypeServer,
-  MessageSecurityModeNone,
+  ApplicationType,
+  MessageSecurityMode,
   UserTokenPolicy,
-  UserTokenTypeAnonymous
+  UserTokenType
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -48,24 +48,24 @@ describe('CreateSessionResponse', () => {
                 EncodingMask: LocalizedTextText,
                 Text: 'app-name'
               }),
-              ApplicationType: ApplicationTypeServer,
+              ApplicationType: ApplicationType.Server,
               GatewayServerUri: 'gw-uri',
               DiscoveryProfileUri: 'prof-uri',
               DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
             }),
-            SecurityMode: MessageSecurityModeNone,
+            SecurityMode: MessageSecurityMode.None,
             SecurityPolicyUri: 'sec-uri',
             UserIdentityTokens: [
               new UserTokenPolicy({
                 PolicyId: '1',
-                TokenType: UserTokenTypeAnonymous,
+                TokenType: UserTokenType.Anonymous,
                 IssuedTokenType: 'issued-token',
                 IssuerEndpointUrl: 'issuer-uri',
                 SecurityPolicyUri: 'sec-uri'
               }),
               new UserTokenPolicy({
                 PolicyId: '1',
-                TokenType: UserTokenTypeAnonymous,
+                TokenType: UserTokenType.Anonymous,
                 IssuedTokenType: 'issued-token',
                 IssuerEndpointUrl: 'issuer-uri',
                 SecurityPolicyUri: 'sec-uri'
@@ -82,24 +82,24 @@ describe('CreateSessionResponse', () => {
                 EncodingMask: LocalizedTextText,
                 Text: 'app-name'
               }),
-              ApplicationType: ApplicationTypeServer,
+              ApplicationType: ApplicationType.Server,
               GatewayServerUri: 'gw-uri',
               DiscoveryProfileUri: 'prof-uri',
               DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
             }),
-            SecurityMode: MessageSecurityModeNone,
+            SecurityMode: MessageSecurityMode.None,
             SecurityPolicyUri: 'sec-uri',
             UserIdentityTokens: [
               new UserTokenPolicy({
                 PolicyId: '1',
-                TokenType: UserTokenTypeAnonymous,
+                TokenType: UserTokenType.Anonymous,
                 IssuedTokenType: 'issued-token',
                 IssuerEndpointUrl: 'issuer-uri',
                 SecurityPolicyUri: 'sec-uri'
               }),
               new UserTokenPolicy({
                 PolicyId: '1',
-                TokenType: UserTokenTypeAnonymous,
+                TokenType: UserTokenType.Anonymous,
                 IssuedTokenType: 'issued-token',
                 IssuerEndpointUrl: 'issuer-uri',
                 SecurityPolicyUri: 'sec-uri'

@@ -3,8 +3,7 @@ import { WriteResponse, ResponseHeader } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
 import {
-  StatusCodeOK,
-  StatusCodeBadUserAccessDenied
+  StatusCode
 } from '../../dist/ua/StatusCode'
 
 describe('WriteResponse', () => {
@@ -19,7 +18,7 @@ describe('WriteResponse', () => {
           StringTable: [],
           AdditionalHeader: new ExtensionObject()
         }),
-        Results: new Uint32Array([StatusCodeOK])
+        Results: new Uint32Array([StatusCode.OK])
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -40,7 +39,7 @@ describe('WriteResponse', () => {
           StringTable: [],
           AdditionalHeader: new ExtensionObject()
         }),
-        Results: new Uint32Array([StatusCodeOK, StatusCodeBadUserAccessDenied])
+        Results: new Uint32Array([StatusCode.OK, StatusCode.BadUserAccessDenied])
       }),
       // prettier-ignore
       bytes: new Uint8Array([

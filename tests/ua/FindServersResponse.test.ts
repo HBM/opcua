@@ -3,7 +3,7 @@ import {
   FindServersResponse,
   ResponseHeader,
   ApplicationDescription,
-  ApplicationTypeServer
+  ApplicationType
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -29,7 +29,7 @@ describe('FindServersResponse', () => {
               EncodingMask: LocalizedTextText,
               Text: 'app-name'
             }),
-            ApplicationType: ApplicationTypeServer,
+            ApplicationType: ApplicationType.Server,
             GatewayServerUri: 'gw-uri',
             DiscoveryProfileUri: 'prof-uri',
             DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
@@ -41,7 +41,7 @@ describe('FindServersResponse', () => {
               EncodingMask: LocalizedTextText,
               Text: 'app-name'
             }),
-            ApplicationType: ApplicationTypeServer,
+            ApplicationType: ApplicationType.Server,
             GatewayServerUri: 'gw-uri',
             DiscoveryProfileUri: 'prof-uri',
             DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']

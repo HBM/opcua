@@ -1,6 +1,6 @@
 import run from './run'
 import {
-  UserTokenTypeAnonymous,
+  UserTokenType,
   UserTokenPolicy
 } from '../../dist/ua/generated'
 
@@ -10,7 +10,7 @@ describe('UserTokenPolicy', () => {
       name: 'normal',
       instance: new UserTokenPolicy({
         PolicyId: '1',
-        TokenType: UserTokenTypeAnonymous,
+        TokenType: UserTokenType.Anonymous,
         IssuedTokenType: 'issued-token',
         IssuerEndpointUrl: 'issuer-uri',
         SecurityPolicyUri: 'sec-uri'
