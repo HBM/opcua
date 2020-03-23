@@ -1,8 +1,5 @@
 import run from './run'
-import {
-  UserTokenType,
-  UserTokenPolicy
-} from '../../dist/ua/generated'
+import { UserTokenType, UserTokenPolicy } from '../../dist/ua/generated'
 
 describe('UserTokenPolicy', () => {
   run([

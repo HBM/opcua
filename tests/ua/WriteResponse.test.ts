@@ -2,9 +2,7 @@ import run from './run'
 import { WriteResponse, ResponseHeader } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
-import {
-  StatusCode
-} from '../../dist/ua/StatusCode'
+import { StatusCode } from '../../dist/ua/StatusCode'
 
 describe('WriteResponse', () => {
   run([
@@ -39,7 +37,10 @@ describe('WriteResponse', () => {
           StringTable: [],
           AdditionalHeader: new ExtensionObject()
         }),
-        Results: new Uint32Array([StatusCode.OK, StatusCode.BadUserAccessDenied])
+        Results: new Uint32Array([
+          StatusCode.OK,
+          StatusCode.BadUserAccessDenied
+        ])
       }),
       // prettier-ignore
       bytes: new Uint8Array([
