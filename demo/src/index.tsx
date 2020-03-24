@@ -21,7 +21,7 @@ import {
   // CallMethodResult,
   // MonitoringModeReporting
 } from '../../dist/ua/generated'
-import { NewTwoByteNodeId } from '../../dist/ua/NodeId'
+import { NewTwoByteNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
 import { Id } from '../../dist/id/id'
 // import Subscription from '../../dist/Subscription'
 // import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
@@ -233,6 +233,34 @@ const Objects = () => {
 }
 
 const ReferencesComponet = () => {
+  const ctx = useContext(OPCUAContext)
+  let { id } = useParams()
+  const [references, setReferences] = useState<ReferenceDescription[]>([])
+
+  const read = async () => {
+    const response = await ctx.client.browse(
+      new BrowseRequest({
+        NodesToBrowse: [
+          new BrowseDescription({
+            NodeId: NewFourByteNodeId(1, 62542),
+            BrowseDirection: BrowseDirection.Forward,
+            ReferenceTypeId: NewTwoByteNodeId(Id.References),
+            IncludeSubtypes: true,
+            ResultMask: BrowseResultMask.All
+          })
+        ]
+      })
+    )
+
+    if (response.Results) {
+      setReferences(response.Results[0].References as ReferenceDescription[])
+    }
+  }
+
+  useEffect(() => {
+    read()
+  }, [id])
+
   return (
     <div className="card">
       <div className="card-header border-0">References</div>
@@ -244,10 +272,17 @@ const ReferencesComponet = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>foo</td>
-            <td>var</td>
-          </tr>
+          {references.map((ref, i) => {
+            return (
+              <tr key={i}>
+                <td>
+                  {Id[ref.ReferenceTypeId.Identifier as number]} (
+                  {ref.ReferenceTypeId.Identifier})
+                </td>
+                <td>{ref.DisplayName.Text}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>
