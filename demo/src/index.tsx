@@ -22,12 +22,7 @@ import {
   // MonitoringModeReporting
 } from '../../dist/ua/generated'
 import { NewTwoByteNodeId } from '../../dist/ua/NodeId'
-import {
-  IdRootFolder,
-  IdOrganizes,
-  IdObjectsFolder,
-  IdHasTypeDefinition
-} from '../../dist/id/id'
+import { Id } from '../../dist/id/id'
 // import Subscription from '../../dist/Subscription'
 // import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
 // import Variant from '../../dist/ua/Variant'
@@ -182,7 +177,9 @@ const App = () => {
 }
 
 const filter = (ref: ReferenceDescription) => {
-  return ref.IsForward && ref.ReferenceTypeId.Identifier !== IdHasTypeDefinition
+  return (
+    ref.IsForward && ref.ReferenceTypeId.Identifier !== Id.HasTypeDefinition
+  )
 }
 
 const Objects = () => {
@@ -195,7 +192,7 @@ const Objects = () => {
       new BrowseRequest({
         NodesToBrowse: [
           new BrowseDescription({
-            NodeId: NewTwoByteNodeId(IdObjectsFolder),
+            NodeId: NewTwoByteNodeId(Id.ObjectsFolder),
             BrowseDirection: BrowseDirection.Both,
             IncludeSubtypes: true,
             ResultMask: BrowseResultMask.All
@@ -373,7 +370,7 @@ const Index = () => {
     const req = new BrowseRequest({
       NodesToBrowse: [
         new BrowseDescription({
-          NodeId: NewTwoByteNodeId(IdRootFolder),
+          NodeId: NewTwoByteNodeId(Id.RootFolder),
           BrowseDirection: BrowseDirection.Both,
           IncludeSubtypes: true,
           ResultMask: BrowseResultMask.All
@@ -423,7 +420,7 @@ const Index = () => {
           </a>
           <div className="list-group collapse" id="item-1-1">
             {references
-              .filter(ref => ref.ReferenceTypeId.Identifier === IdOrganizes)
+              .filter(ref => ref.ReferenceTypeId.Identifier === Id.Organizes)
               .map((ref, i) => {
                 return (
                   <React.Fragment key={i}>
@@ -433,7 +430,7 @@ const Index = () => {
                     >
                       {ref.DisplayName.Text}
                     </Link>
-                    {ref.NodeId.NodeId.Identifier === IdObjectsFolder ? (
+                    {ref.NodeId.NodeId.Identifier === Id.ObjectsFolder ? (
                       <Objects />
                     ) : null}
                   </React.Fragment>

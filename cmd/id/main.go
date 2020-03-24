@@ -12,11 +12,6 @@ import (
 	"strings"
 )
 
-// export enum SecurityTokenRequestType {
-// 	Issue = 0 as uint32,
-// 	Renew = 1 as uint32
-//   }
-
 func main() {
 	f, err := os.Open(filepath.Join("..", "..", "schema", "NodeIds.csv"))
 	if err != nil {
@@ -34,9 +29,6 @@ func main() {
 		}
 		if err != nil {
 			panic(err)
-		}
-		if record[1] == "2000" {
-			break
 		}
 		record[0] = strings.ReplaceAll(record[0], "_", "")
 		rows = append(rows, record)
