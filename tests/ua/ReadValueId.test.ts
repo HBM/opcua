@@ -1,7 +1,7 @@
 import run from './run'
 import { ReadValueId } from '../../dist/ua/generated'
 import { NewFourByteNodeId } from '../../dist/ua/NodeId'
-import { AttributeIdValue } from '../../dist/ua/enums'
+import { AttributeId } from '../../dist/ua/enums'
 import QualifiedName from '../../dist/ua/QualifiedName'
 
 describe('ReadValueId', () => {
@@ -10,7 +10,7 @@ describe('ReadValueId', () => {
       name: 'normal',
       instance: new ReadValueId({
         NodeId: NewFourByteNodeId(0, 2256),
-        AttributeId: AttributeIdValue,
+        AttributeId: AttributeId.Value,
         DataEncoding: new QualifiedName()
       }),
       // prettier-ignore

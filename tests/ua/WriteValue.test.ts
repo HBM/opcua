@@ -1,7 +1,7 @@
 import run from './run'
 import { WriteValue } from '../../dist/ua/generated'
 import { NewFourByteNodeId } from '../../dist/ua/NodeId'
-import { AttributeIdValue, TypeIdFloat } from '../../dist/ua/enums'
+import { AttributeId, TypeId } from '../../dist/ua/enums'
 import DataValue, {
   DataValueValue,
   DataValueSourceTimestamp,
@@ -15,14 +15,14 @@ describe('WriteValue', () => {
       name: 'normal',
       instance: new WriteValue({
         NodeId: NewFourByteNodeId(0, 2256),
-        AttributeId: AttributeIdValue,
+        AttributeId: AttributeId.Value,
         Value: new DataValue({
           EncodingMask:
             DataValueValue |
             DataValueSourceTimestamp |
             DataValueServerTimestamp,
           Value: new Variant({
-            EncodingMask: TypeIdFloat,
+            EncodingMask: TypeId.Float,
             Value: 2.5001699924468994
           }),
           SourceTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),

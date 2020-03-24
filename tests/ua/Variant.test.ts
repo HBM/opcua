@@ -1,22 +1,6 @@
 import run from './run'
 import Variant from '../../dist/ua/Variant'
-import {
-  TypeIdBoolean,
-  TypeIdSByte,
-  TypeIdByte,
-  TypeIdInt16,
-  TypeIdUint16,
-  TypeIdInt32,
-  TypeIdUint32,
-  TypeIdInt64,
-  TypeIdUint64,
-  TypeIdFloat,
-  TypeIdDouble,
-  TypeIdString,
-  TypeIdDateTime,
-  TypeIdGUID,
-  TypeIdByteString
-} from '../../dist/ua/enums'
+import { TypeId } from '../../dist/ua/enums'
 import Guid from '../../dist/ua/Guid'
 
 describe('Variant', () => {
@@ -24,7 +8,7 @@ describe('Variant', () => {
     {
       name: 'boolean',
       instance: new Variant({
-        EncodingMask: TypeIdBoolean,
+        EncodingMask: TypeId.Boolean,
         Value: false
       }),
       bytes: new Uint8Array([0x01, 0x00])
@@ -32,7 +16,7 @@ describe('Variant', () => {
     {
       name: 'int8',
       instance: new Variant({
-        EncodingMask: TypeIdSByte,
+        EncodingMask: TypeId.SByte,
         Value: -5
       }),
       bytes: new Uint8Array([0x02, 0xfb])
@@ -40,7 +24,7 @@ describe('Variant', () => {
     {
       name: 'uint8',
       instance: new Variant({
-        EncodingMask: TypeIdByte,
+        EncodingMask: TypeId.Byte,
         Value: 5
       }),
       bytes: new Uint8Array([0x03, 0x05])
@@ -48,7 +32,7 @@ describe('Variant', () => {
     {
       name: 'int16',
       instance: new Variant({
-        EncodingMask: TypeIdInt16,
+        EncodingMask: TypeId.Int16,
         Value: -5
       }),
       bytes: new Uint8Array([0x04, 0xfb, 0xff])
@@ -56,7 +40,7 @@ describe('Variant', () => {
     {
       name: 'uint16',
       instance: new Variant({
-        EncodingMask: TypeIdUint16,
+        EncodingMask: TypeId.Uint16,
         Value: 5
       }),
       bytes: new Uint8Array([0x05, 0x05, 0x00])
@@ -64,7 +48,7 @@ describe('Variant', () => {
     {
       name: 'int32',
       instance: new Variant({
-        EncodingMask: TypeIdInt32,
+        EncodingMask: TypeId.Int32,
         Value: -5
       }),
       bytes: new Uint8Array([0x06, 0xfb, 0xff, 0xff, 0xff])
@@ -72,7 +56,7 @@ describe('Variant', () => {
     {
       name: 'uint32',
       instance: new Variant({
-        EncodingMask: TypeIdUint32,
+        EncodingMask: TypeId.Uint32,
         Value: 5
       }),
       bytes: new Uint8Array([0x07, 0x05, 0x00, 0x00, 0x00])
@@ -80,7 +64,7 @@ describe('Variant', () => {
     {
       name: 'int64',
       instance: new Variant({
-        EncodingMask: TypeIdInt64,
+        EncodingMask: TypeId.Int64,
         Value: BigInt(-5)
       }),
       // prettier-ignore
@@ -92,7 +76,7 @@ describe('Variant', () => {
     {
       name: 'uint64',
       instance: new Variant({
-        EncodingMask: TypeIdUint64,
+        EncodingMask: TypeId.Uint64,
         Value: BigInt(5)
       }),
       // prettier-ignore
@@ -104,7 +88,7 @@ describe('Variant', () => {
     {
       name: 'float32',
       instance: new Variant({
-        EncodingMask: TypeIdFloat,
+        EncodingMask: TypeId.Float,
         Value: 4.000669956207275
       }),
       bytes: new Uint8Array([0x0a, 0x7d, 0x05, 0x80, 0x40])
@@ -112,7 +96,7 @@ describe('Variant', () => {
     {
       name: 'float64',
       instance: new Variant({
-        EncodingMask: TypeIdDouble,
+        EncodingMask: TypeId.Double,
         Value: 4.00067
       }),
       // prettier-ignore
@@ -124,7 +108,7 @@ describe('Variant', () => {
     {
       name: 'string',
       instance: new Variant({
-        EncodingMask: TypeIdString,
+        EncodingMask: TypeId.String,
         Value: 'abc'
       }),
       bytes: new Uint8Array([0x0c, 0x03, 0x00, 0x00, 0x00, 0x61, 0x62, 0x63])
@@ -132,7 +116,7 @@ describe('Variant', () => {
     {
       name: 'DateTime',
       instance: new Variant({
-        EncodingMask: TypeIdDateTime,
+        EncodingMask: TypeId.DateTime,
         Value: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112))
       }),
       // prettier-ignore
@@ -144,7 +128,7 @@ describe('Variant', () => {
     {
       name: 'Guid',
       instance: new Variant({
-        EncodingMask: TypeIdGUID,
+        EncodingMask: TypeId.GUID,
         Value: new Guid('72962B91-FA75-4AE6-8D28-B404DC7DAF63')
       }),
       // prettier-ignore
@@ -157,7 +141,7 @@ describe('Variant', () => {
     {
       name: 'ByteString',
       instance: new Variant({
-        EncodingMask: TypeIdByteString,
+        EncodingMask: TypeId.ByteString,
         Value: new Uint8Array([0x01, 0x02, 0x03])
       }),
       bytes: new Uint8Array([0x0f, 0x03, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03])

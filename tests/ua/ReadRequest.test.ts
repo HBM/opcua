@@ -7,7 +7,7 @@ import {
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
-import { AttributeIdValue } from '../../dist/ua/enums'
+import { AttributeId } from '../../dist/ua/enums'
 import QualifiedName from '../../dist/ua/QualifiedName'
 
 describe('ReadRequest', () => {
@@ -30,7 +30,7 @@ describe('ReadRequest', () => {
         NodesToRead: [
           new ReadValueId({
             NodeId: NewFourByteNodeId(0, 2256),
-            AttributeId: AttributeIdValue,
+            AttributeId: AttributeId.Value,
             DataEncoding: new QualifiedName()
           })
         ]

@@ -12,10 +12,6 @@ export type ByteString = Uint8Array
 
 export type TypedArray = Uint8Array | Uint16Array | Uint32Array | Float64Array
 
-export type TypeId = uint8
-
-export type AttributeId = uint32
-
 // export type StatusCode = uint32
 export type SecurityTokenRequestType = uint32
 export type MessageSecurityMode = uint32

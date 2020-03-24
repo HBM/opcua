@@ -4,7 +4,7 @@ import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
 import DataValue, { DataValueValue } from '../../dist/ua/DataValue'
 import Variant from '../../dist/ua/Variant'
-import { TypeIdFloat } from '../../dist/ua/enums'
+import { TypeId } from '../../dist/ua/enums'
 
 describe('ReadRequest', () => {
   run([
@@ -23,7 +23,7 @@ describe('ReadRequest', () => {
             EncodingMask: DataValueValue,
             Value: new Variant({
               Value: 2.5001559257507324,
-              EncodingMask: TypeIdFloat
+              EncodingMask: TypeId.Float
             })
           })
         ],

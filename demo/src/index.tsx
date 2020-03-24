@@ -167,15 +167,7 @@ import {
 import './style.scss'
 import { FolderMinus, FolderPlus } from './icons'
 import { OPCUAProvider, OPCUAContext } from './context'
-import {
-  AttributeIdNodeClass,
-  AttributeIdBrowseName,
-  AttributeIdDisplayName,
-  AttributeIdDescription,
-  AttributeIdWriteMask,
-  AttributeIdUserWriteMask,
-  AttributeIdEventNotifier
-} from '../../dist/ua/enums'
+import { AttributeId } from '../../dist/ua/enums'
 import QualifiedName from '../../dist/ua/QualifiedName'
 import LocalizedText from '../../dist/ua/LocalizedText'
 
@@ -263,31 +255,31 @@ const ReferenceDescriptionComponent = () => {
         NodesToRead: [
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdNodeClass
+            AttributeId: AttributeId.NodeClass
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdBrowseName
+            AttributeId: AttributeId.BrowseName
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdDisplayName
+            AttributeId: AttributeId.DisplayName
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdDescription
+            AttributeId: AttributeId.Description
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdWriteMask
+            AttributeId: AttributeId.WriteMask
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdUserWriteMask
+            AttributeId: AttributeId.UserWriteMask
           }),
           new ReadValueId({
             NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
-            AttributeId: AttributeIdEventNotifier
+            AttributeId: AttributeId.EventNotifier
           })
         ]
       })
