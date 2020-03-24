@@ -1,10 +1,5 @@
 import { Message, ChunkHeader } from './Message'
-import {
-  mapNameToId,
-  IdOpenSecureChannelRequestEncodingDefaultBinary,
-  IdCreateSessionResponseEncodingDefaultBinary,
-  mapIdToName
-} from '../id/id'
+import { Id } from '../id/id'
 import ExpandedNodeId from '../ua/ExpandedNodeId'
 import NodeId, { NewFourByteNodeId } from '../ua/NodeId'
 import SecureConversationMessageHeader from './SecureConversationMessageHeader'
@@ -97,9 +92,11 @@ export default class SecureChannel {
     }
 
     // get type id from constructor name
-    const typeId = mapNameToId.get(
-      (request as object).constructor.name + 'EncodingDefaultBinary'
-    )
+    const typeId =
+      Id[
+        ((request as object).constructor.name +
+          'EncodingDefaultBinary') as keyof typeof Id
+      ]
 
     const message = new Message({
       ChunkHeader: new ChunkHeader({
@@ -125,7 +122,7 @@ export default class SecureChannel {
 
     // set message type and security header
     switch (typeId) {
-      case IdOpenSecureChannelRequestEncodingDefaultBinary:
+      case Id.OpenSecureChannelRequestEncodingDefaultBinary:
         message.ChunkHeader.Header.MessageType = MessageTypeOpenSecureChannel
         message.ChunkHeader.SecurityHeader = new AsymmetricSecurityHeader()
         break
@@ -180,7 +177,7 @@ export default class SecureChannel {
           return
         }
 
-        const name = mapIdToName.get(typeId.NodeId.Identifier as number)
+        const name = Id[typeId.NodeId.Identifier as number]
 
         if (!name) {
           return
@@ -195,7 +192,7 @@ export default class SecureChannel {
 
         if (
           typeId.NodeId.Identifier ===
-          IdCreateSessionResponseEncodingDefaultBinary
+          Id.CreateSessionResponseEncodingDefaultBinary
         ) {
           this.authenticationToken = (instance as CreateSessionResponse).AuthenticationToken
         }

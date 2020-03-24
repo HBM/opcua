@@ -7,7 +7,7 @@ import {
   NewTwoByteExpandedNodeId,
   NewFourByteExpandedNodeId
 } from '../../dist/ua/ExpandedNodeId'
-import { IdAnonymousIdentityTokenEncodingDefaultBinary } from '../../dist/id/id'
+import { Id } from '../../dist/id/id'
 import { AnonymousIdentityToken } from '../../dist/ua/generated'
 
 describe('ExtensionObject', () => {
@@ -25,7 +25,7 @@ describe('ExtensionObject', () => {
       instance: new ExtensionObject({
         TypeId: NewFourByteExpandedNodeId(
           0,
-          IdAnonymousIdentityTokenEncodingDefaultBinary
+          Id.AnonymousIdentityTokenEncodingDefaultBinary
         ),
         Encoding: ExtensionObjectBinary,
         Value: new AnonymousIdentityToken({

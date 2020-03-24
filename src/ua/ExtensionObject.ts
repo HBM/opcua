@@ -1,6 +1,6 @@
 import Bucket from './Bucket'
 import factory from './factory'
-import { mapIdToName } from '../id/id'
+import { Id } from '../id/id'
 import ExpandedNodeId, { NewTwoByteExpandedNodeId } from './ExpandedNodeId'
 import { uint8, EnDecoder } from '../types'
 
@@ -59,13 +59,7 @@ export default class ExtensionObject implements EnDecoder {
       return bucket.position
     }
 
-    const name = mapIdToName.get(this.TypeId.NodeId.Identifier as number)
-    if (name === undefined) {
-      throw new Error(
-        `invalid extension object with id ${this.TypeId.NodeId.Identifier}`
-      )
-    }
-
+    const name = Id[this.TypeId.NodeId.Identifier as number]
     this.Value = factory(name)
     bucket.readStruct(this.Value)
 

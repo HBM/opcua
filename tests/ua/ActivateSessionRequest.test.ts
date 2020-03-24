@@ -10,7 +10,7 @@ import {
   NullRequestHeaderBytes
 } from './RequestHeader.test'
 import { NewFourByteExpandedNodeId } from '../../dist/ua/ExpandedNodeId'
-import { IdAnonymousIdentityTokenEncodingDefaultBinary } from '../../dist/id/id'
+import { Id } from '../../dist/id/id'
 import run from './run'
 
 describe('ActivateSessionRequest', () => {
@@ -22,7 +22,7 @@ describe('ActivateSessionRequest', () => {
         UserIdentityToken: new ExtensionObject({
           TypeId: NewFourByteExpandedNodeId(
             0,
-            IdAnonymousIdentityTokenEncodingDefaultBinary
+            Id.AnonymousIdentityTokenEncodingDefaultBinary
           ),
           Encoding: ExtensionObjectBinary,
           Value: new AnonymousIdentityToken({
