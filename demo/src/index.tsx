@@ -232,6 +232,28 @@ const Objects = () => {
   )
 }
 
+const ReferencesComponet = () => {
+  return (
+    <div className="card">
+      <div className="card-header border-0">References</div>
+      <table className="table table-sm table-hover mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>foo</td>
+            <td>var</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 const ReferenceDescriptionComponent = () => {
   const ctx = useContext(OPCUAContext)
   let { id } = useParams()
@@ -245,8 +267,6 @@ const ReferenceDescriptionComponent = () => {
   const [eventNotifier, setEventNotifier] = useState(0)
 
   const read = async () => {
-    console.log('foo', ctx, id)
-
     const response = await ctx.client.read(
       new ReadRequest({
         NodesToRead: [
@@ -299,63 +319,66 @@ const ReferenceDescriptionComponent = () => {
   }, [id])
 
   return (
-    <div>
-      <table className="table table-sm table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Attribute</th>
-            <th scope="col">Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Node Id</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>Node Class</td>
-            <td>
-              {NodeClass[nodeClass]} ({nodeClass})
-            </td>
-          </tr>
-          <tr>
-            <td>Browse Name</td>
-            <td>{browseName}</td>
-          </tr>
-          <tr>
-            <td>Display Name</td>
-            <td>{displayName}</td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td>{description}</td>
-          </tr>
-          <tr>
-            <td>Write Mask</td>
-            <td>
-              {AttributeWriteMask[writeMask]} ({writeMask})
-            </td>
-          </tr>
-          <tr>
-            <td>User Write Mask</td>
-            <td>
-              {AttributeWriteMask[userWriteMask]} ({userWriteMask})
-            </td>
-          </tr>
-          <tr>
-            <td>Event Notifier</td>
-            <td>
-              {EventNotifierType[eventNotifier]} ({eventNotifier})
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <React.Fragment>
+      <div className="card mb-5">
+        <div className="card-header border-0">Attributes</div>
+        <table className="table table-sm table-hover mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Node Id</td>
+              <td>...</td>
+            </tr>
+            <tr>
+              <td>Node Class</td>
+              <td>
+                {NodeClass[nodeClass]} ({nodeClass})
+              </td>
+            </tr>
+            <tr>
+              <td>Browse Name</td>
+              <td>{browseName}</td>
+            </tr>
+            <tr>
+              <td>Display Name</td>
+              <td>{displayName}</td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td>{description}</td>
+            </tr>
+            <tr>
+              <td>Write Mask</td>
+              <td>
+                {AttributeWriteMask[writeMask]} ({writeMask})
+              </td>
+            </tr>
+            <tr>
+              <td>User Write Mask</td>
+              <td>
+                {AttributeWriteMask[userWriteMask]} ({userWriteMask})
+              </td>
+            </tr>
+            <tr>
+              <td>Event Notifier</td>
+              <td>
+                {EventNotifierType[eventNotifier]} ({eventNotifier})
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ReferencesComponet />
+    </React.Fragment>
   )
 }
 
 const Index = () => {
-  // const []
   const ctx = useContext(OPCUAContext)
 
   const [isOpen, setIsOpen] = useState(false)
