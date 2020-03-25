@@ -86,8 +86,14 @@ describe('NodeId', () => {
       { s: 'ns=256;i=2', n: NewNumericNodeId(256, 2) },
       { s: 'ns=1;i=65536', n: NewNumericNodeId(1, 65536) },
       { s: 'ns=65535;i=65536', n: NewNumericNodeId(65535, 65536) },
-      {s: "ns=1;g=5eac051c-c313-43d7-b790-24aa2c3cfd37", n: NewGuidNodeId(1, "5eac051c-c313-43d7-b790-24aa2c3cfd37")},
-      {s: "ns=1;b=YWJj", n: NewByteStringNodeId(1, new Uint8Array([0x61, 0x62, 0x63]))},
+      {
+        s: 'ns=1;g=5eac051c-c313-43d7-b790-24aa2c3cfd37',
+        n: NewGuidNodeId(1, '5eac051c-c313-43d7-b790-24aa2c3cfd37')
+      },
+      {
+        s: 'ns=1;b=YWJj',
+        n: NewByteStringNodeId(1, new Uint8Array([0x61, 0x62, 0x63]))
+      },
       { s: 'ns=1;s=a', n: NewStringNodeId(1, 'a') },
       { s: 'ns=1;a', n: NewStringNodeId(1, 'a') }
     ]
