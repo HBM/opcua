@@ -22,4 +22,9 @@ describe('Guid', () => {
       ])
     }
   ])
+
+  it('toString()', () => {
+    const guid = new Guid('72962B91-FA75-4AE6-8D28-B404DC7DAF63')
+    expect(guid.toString()).toBe('72962B91-FA75-4AE6-8D28-B404DC7DAF63')
+  })
 })
