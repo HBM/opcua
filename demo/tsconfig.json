@@ -3,7 +3,8 @@
   "compilerOptions": {
     "jsx": "react",
     "outDir": "./dist",
-    "rootDir": "./"
+    "rootDir": "./",
+    "incremental": true
   },
   "references": [{ "path": "../src" }]
 }

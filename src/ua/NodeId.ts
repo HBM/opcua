@@ -1,7 +1,7 @@
 import Bucket from './Bucket'
 import Guid from './Guid'
 import { NodeIdType } from './generated'
-import { ByteString, EnDecoder, uint16, uint32 } from '../types'
+import { ByteString, EnDecoder, uint16, uint32, uint8 } from '../types'
 
 interface Options {
   Type?: NodeIdType
@@ -115,14 +115,14 @@ export default class NodeId implements EnDecoder {
   }
 }
 
-export const NewTwoByteNodeId = (value: number): NodeId =>
+export const NewTwoByteNodeId = (value: uint8): NodeId =>
   new NodeId({
     Type: NodeIdType.TwoByte,
     Identifier: value,
     Namespace: 0
   })
 
-export const NewFourByteNodeId = (namespace: number, value: number): NodeId =>
+export const NewFourByteNodeId = (namespace: uint8, value: uint16): NodeId =>
   new NodeId({
     Type: NodeIdType.FourByte,
     Identifier: value,
@@ -136,10 +136,17 @@ export const NewNumericNodeId = (namespace: uint16, id: uint32): NodeId =>
     Namespace: namespace
   })
 
-export const NewStringNodeId = (namespace: number, value: string): NodeId =>
+export const NewStringNodeId = (namespace: uint16, value: string): NodeId =>
   new NodeId({
     Type: NodeIdType.String,
     Identifier: value,
+    Namespace: namespace
+  })
+
+export const NewGuidNodeId = (namespace: uint16, id: string): NodeId =>
+  new NodeId({
+    Type: NodeIdType.Guid,
+    Identifier: new Guid(id),
     Namespace: namespace
   })
 
@@ -212,13 +219,12 @@ export const ParseNodeId = (s: string): NodeId => {
       return NewStringNodeId(ns, idval.slice(2))
     }
 
-    // case identifier.startsWith('g='): {
-    //   // return NewGuid
-    //   // return NewStringNodeId(ns, identifier.slice(2))
-    // }
+    case idval.startsWith('g='): {
+      return NewGuidNodeId(ns, idval.slice(2))
+    }
 
     case idval.startsWith('b='): {
-      const b = window.btoa(idval.slice(2))
+      const b = window.atob(idval.slice(2))
       const encoder = new TextEncoder()
       return NewByteStringNodeId(ns, encoder.encode(b))
     }
