@@ -129,7 +129,7 @@ export const NewFourByteNodeId = (namespace: number, value: number): NodeId =>
     Namespace: namespace
   })
 
-export const NewNumericNodeID = (namespace: uint16, id: uint32): NodeId =>
+export const NewNumericNodeId = (namespace: uint16, id: uint32): NodeId =>
   new NodeId({
     Type: NodeIdType.Numeric,
     Identifier: id,
@@ -152,3 +152,78 @@ export const NewByteStringNodeId = (
     Namespace: namespace,
     Identifier: id
   })
+
+export const ParseNodeId = (s: string): NodeId => {
+  if (s === '') {
+    return NewTwoByteNodeId(0)
+  }
+
+  let nsval = ''
+  let idval = ''
+
+  const parts = s.split(';')
+  switch (parts.length) {
+    case 1:
+      nsval = 'ns=0'
+      idval = parts[0]
+      break
+
+    case 2:
+      nsval = parts[0]
+      idval = parts[1]
+      break
+
+    default:
+      throw new Error(`invalid node id: ${s}`)
+  }
+
+  let ns = 0
+
+  // parse namespace
+  switch (true) {
+    case nsval.startsWith('nsu='):
+      throw new Error(`namespace urls are not supported: ${s}`)
+    case nsval.startsWith('ns='):
+      // get the last string stuff and convert into number
+      ns = Number.parseInt(nsval.slice(3), 10)
+      break
+
+    default:
+      throw new Error(`invalid node id: ${s}`)
+  }
+
+  // parse identifier
+  switch (true) {
+    case idval.startsWith('i='): {
+      const id = Number.parseInt(idval.slice(2), 10)
+      switch (true) {
+        case ns === 0 && id < 256:
+          return NewTwoByteNodeId(id)
+        case ns < 256 && id < 65535:
+          return NewFourByteNodeId(ns, id)
+        case id < 4294967295:
+          return NewNumericNodeId(ns, id)
+        default:
+          throw new Error(`numeric id out of range (0..2^32-1): ${s}`)
+      }
+    }
+
+    case idval.startsWith('s='): {
+      return NewStringNodeId(ns, idval.slice(2))
+    }
+
+    // case identifier.startsWith('g='): {
+    //   // return NewGuid
+    //   // return NewStringNodeId(ns, identifier.slice(2))
+    // }
+
+    case idval.startsWith('b='): {
+      const b = window.btoa(idval.slice(2))
+      const encoder = new TextEncoder()
+      return NewByteStringNodeId(ns, encoder.encode(b))
+    }
+
+    default:
+      return NewStringNodeId(ns, idval)
+  }
+}

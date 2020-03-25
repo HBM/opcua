@@ -12,7 +12,7 @@ import {
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
-import { NewNumericNodeID, NewByteStringNodeId } from '../../dist/ua/NodeId'
+import { NewNumericNodeId, NewByteStringNodeId } from '../../dist/ua/NodeId'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
 
 describe('CreateSessionResponse', () => {
@@ -27,7 +27,7 @@ describe('CreateSessionResponse', () => {
           StringTable: [],
           AdditionalHeader: new ExtensionObject()
         }),
-        SessionId: NewNumericNodeID(0, 1),
+        SessionId: NewNumericNodeId(0, 1),
         // prettier-ignore
         AuthenticationToken: NewByteStringNodeId(0, new Uint8Array([
             0x08, 0x22, 0x87, 0x62, 0xba, 0x81, 0xe1, 0x11,
