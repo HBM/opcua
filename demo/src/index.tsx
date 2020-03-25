@@ -21,7 +21,7 @@ import {
   // CallMethodResult,
   // MonitoringModeReporting
 } from '../../dist/ua/generated'
-import { NewTwoByteNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
+import { NewTwoByteNodeId, ParseNodeId } from '../../dist/ua/NodeId'
 import { Id } from '../../dist/id/id'
 // import Subscription from '../../dist/Subscription'
 // import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
@@ -220,7 +220,7 @@ const Objects = () => {
         return (
           <React.Fragment key={i}>
             <Link
-              to={`/id/${ref.NodeId.NodeId.Identifier}`}
+              to={`/id/${ref.NodeId.NodeId.toString()}`}
               className="list-group-item py-2"
             >
               {ref.DisplayName.Text}
@@ -235,6 +235,8 @@ const Objects = () => {
 const ReferencesComponet = () => {
   const ctx = useContext(OPCUAContext)
   let { id } = useParams()
+  const NodeId = ParseNodeId(id as string)
+
   const [references, setReferences] = useState<ReferenceDescription[]>([])
 
   const read = async () => {
@@ -242,7 +244,7 @@ const ReferencesComponet = () => {
       new BrowseRequest({
         NodesToBrowse: [
           new BrowseDescription({
-            NodeId: NewFourByteNodeId(1, 62542),
+            NodeId,
             BrowseDirection: BrowseDirection.Forward,
             ReferenceTypeId: NewTwoByteNodeId(Id.References),
             IncludeSubtypes: true,
@@ -292,6 +294,7 @@ const ReferencesComponet = () => {
 const ReferenceDescriptionComponent = () => {
   const ctx = useContext(OPCUAContext)
   let { id } = useParams()
+  const NodeId = ParseNodeId(id as string)
 
   const [nodeClass, setNodeClass] = useState(0)
   const [browseName, setBrowseName] = useState('')
@@ -306,31 +309,31 @@ const ReferenceDescriptionComponent = () => {
       new ReadRequest({
         NodesToRead: [
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.NodeClass
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.BrowseName
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.DisplayName
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.Description
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.WriteMask
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.UserWriteMask
           }),
           new ReadValueId({
-            NodeId: NewTwoByteNodeId(Number.parseInt(id as string, 10)),
+            NodeId,
             AttributeId: AttributeId.EventNotifier
           })
         ]
@@ -483,7 +486,7 @@ const Index = () => {
                 return (
                   <React.Fragment key={i}>
                     <Link
-                      to={`/id/${ref.NodeId.NodeId.Identifier}`}
+                      to={`/id/${ref.NodeId.NodeId.toString()}`}
                       className="list-group-item py-2"
                     >
                       {ref.DisplayName.Text}

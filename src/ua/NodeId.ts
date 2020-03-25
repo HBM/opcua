@@ -113,6 +113,34 @@ export default class NodeId implements EnDecoder {
   public type(): number {
     return this.Type & 0xf
   }
+
+  public toString(): string {
+    switch (this.type()) {
+      case NodeIdType.TwoByte:
+        return `i=${this.Identifier}`
+
+      case NodeIdType.FourByte:
+        if (this.Namespace === 0) {
+          return `i=${this.Identifier}`
+        }
+        return `ns=${this.Namespace};i=${this.Identifier}`
+
+      case NodeIdType.Numeric:
+        if (this.Namespace === 0) {
+          return `i=${this.Identifier}`
+        }
+        return `ns=${this.Namespace};i=${this.Identifier}`
+
+      case NodeIdType.String:
+        if (this.Namespace === 0) {
+          return `s=${this.Identifier}`
+        }
+        return `ns=${this.Namespace};s=${this.Identifier}`
+
+      default:
+        throw new Error(`invalid node id type: ${this.type()}`)
+    }
+  }
 }
 
 export const NewTwoByteNodeId = (value: uint8): NodeId =>

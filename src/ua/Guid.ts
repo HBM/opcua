@@ -9,6 +9,8 @@ const parse = (s: string): number[] => {
   return out
 }
 
+// https://reference.opcfoundation.org/v104/Core/docs/Part6/5.2.2/#5.2.2.6
+// https://reference.opcfoundation.org/v104/Core/docs/Part6/5.1.3/
 export default class Guid implements EnDecoder {
   public Data1: uint32
   public Data2: uint16
@@ -44,4 +46,8 @@ export default class Guid implements EnDecoder {
     this.Data4 = bucket.readN(8)
     return bucket.position
   }
+
+  // public toString(): string {
+  //   return `${this.Data1.toString(16)}-${this.Data2.toString(16)}-${this.Data3.toString(16)}}}`
+  // }
 }
