@@ -148,7 +148,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 // })()
 
 import './style.scss'
-import { FolderMinus, FolderPlus } from './icons'
+import { FolderPlus, ChevronRight, ChevronDown, FolderMinus } from './icons'
 import { OPCUAProvider, OPCUAContext } from './context'
 import Attributes from './attributes'
 import References from './references'
@@ -262,18 +262,22 @@ const Index = () => {
         </nav>
       </header>
       <div className="left bg-light">
-        <div className="list-group">
-          <a
-            href="#item-1-1"
-            className="list-group-item py-2"
-            data-toggle="collapse"
-            onClick={onClick}
-          >
+        <ul className="list-group">
+          <li className="list-group-item py-2">
             <div className="d-flex align-items-center">
-              {isOpen ? <FolderMinus /> : <FolderPlus />}
-              <span className="ml-2">Root Folder</span>
+              <a href="#item-1-1" data-toggle="collapse" onClick={onClick}>
+                {isOpen ? <ChevronDown /> : <ChevronRight />}
+              </a>
+
+              <span className="ml-1">
+                {isOpen ? <FolderMinus /> : <FolderPlus />}
+              </span>
+
+              <span className="ml-2">
+                <Link to={`/id/i=${Id.RootFolder}`}>Root Folder</Link>
+              </span>
             </div>
-          </a>
+          </li>
           <div className="list-group collapse" id="item-1-1">
             {references
               .filter(ref => ref.ReferenceTypeId.Identifier === Id.Organizes)
@@ -284,7 +288,13 @@ const Index = () => {
                       to={`/id/${ref.NodeId.NodeId.toString()}`}
                       className="list-group-item py-2"
                     >
-                      {ref.DisplayName.Text}
+                      <div className="d-flex align-items-center">
+                        {ref.TypeDefinition.NodeId.Identifier ===
+                        Id.FolderType ? (
+                          <FolderPlus />
+                        ) : null}
+                        <span className="ml-2">{ref.DisplayName.Text}</span>
+                      </div>
                     </Link>
                     {ref.NodeId.NodeId.Identifier === Id.ObjectsFolder ? (
                       <Objects />
@@ -293,7 +303,7 @@ const Index = () => {
                 )
               })}
           </div>
-        </div>
+        </ul>
       </div>
       <div className="content">
         <Switch>
