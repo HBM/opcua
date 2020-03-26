@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/hbm/opcua#readme",
   "devDependencies": {
+    "@types/classnames": "^2.2.10",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.2",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
@@ -36,5 +37,7 @@
     "reflect-metadata": "^0.1.13",
     "typescript": "^3.8.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.2.6"
+  }
 }

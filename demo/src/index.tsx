@@ -1,29 +1,11 @@
 // import Client from '../../dist/Client'
-import {
-  BrowseDirection,
-  BrowseResultMask,
-  BrowseRequest,
-  BrowseDescription,
-  ReferenceDescription
-  // CreateSubscriptionRequest,
-  // CreateMonitoredItemsRequest,
-  // MonitoredItemCreateRequest,
-  // ReadValueId,
-  // PublishRequest,
-  // CallRequest,
-  // CallMethodRequest,
-  // CallMethodResult,
-  // MonitoringModeReporting
-} from '../../dist/ua/generated'
-import { NewTwoByteNodeId } from '../../dist/ua/NodeId'
-import { Id } from '../../dist/id/id'
 // import Subscription from '../../dist/Subscription'
 // import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
 // import Variant from '../../dist/ua/Variant'
 
-import React, { useState, useEffect, useContext } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // ;(async function() {
 //   const client = new Client('ws://localhost:1234')
 
@@ -148,10 +130,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 // })()
 
 import './style.scss'
-import { FolderPlus, ChevronRight, ChevronDown, FolderMinus } from './icons'
-import { OPCUAProvider, OPCUAContext } from './context'
+import { OPCUAProvider } from './context'
 import Attributes from './attributes'
 import References from './references'
+import ListGroup from './ListGroup'
+import { Id } from '../../dist/id/id'
+import { ReferenceDescription } from '../../dist/ua/generated'
+import { NewTwoByteExpandedNodeId } from '../../dist/ua/ExpandedNodeId'
 
 const App = () => {
   return (
@@ -163,95 +148,7 @@ const App = () => {
   )
 }
 
-const filter = (ref: ReferenceDescription) => {
-  return (
-    ref.IsForward && ref.ReferenceTypeId.Identifier !== Id.HasTypeDefinition
-  )
-}
-
-const Objects = () => {
-  const ctx = useContext(OPCUAContext)
-  const [references, setReferences] = useState<ReferenceDescription[]>([])
-
-  const browse = async () => {
-    // browse all objects
-    const objects = await ctx.client.browse(
-      new BrowseRequest({
-        NodesToBrowse: [
-          new BrowseDescription({
-            NodeId: NewTwoByteNodeId(Id.ObjectsFolder),
-            BrowseDirection: BrowseDirection.Both,
-            IncludeSubtypes: true,
-            ResultMask: BrowseResultMask.All
-          })
-        ]
-      })
-    )
-
-    if (objects.Results) {
-      if (objects.Results[0].References) {
-        setReferences(objects.Results[0].References)
-      }
-    }
-  }
-
-  useEffect(() => {
-    browse()
-  }, [])
-
-  return (
-    <div className="list-group">
-      {references.filter(filter).map((ref, i) => {
-        return (
-          <React.Fragment key={i}>
-            <Link
-              to={`/id/${ref.NodeId.NodeId.toString()}`}
-              className="list-group-item py-2"
-            >
-              {ref.DisplayName.Text}
-            </Link>
-          </React.Fragment>
-        )
-      })}
-    </div>
-  )
-}
-
 const Index = () => {
-  const ctx = useContext(OPCUAContext)
-
-  const [isOpen, setIsOpen] = useState(false)
-  const [references, setReferences] = useState<ReferenceDescription[]>([])
-
-  const onClick = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const browse = async () => {
-    // browse root folder
-    const req = new BrowseRequest({
-      NodesToBrowse: [
-        new BrowseDescription({
-          NodeId: NewTwoByteNodeId(Id.RootFolder),
-          BrowseDirection: BrowseDirection.Both,
-          IncludeSubtypes: true,
-          ResultMask: BrowseResultMask.All
-        })
-      ]
-    })
-
-    const res = await ctx.client.browse(req)
-    if (res.Results) {
-      if (res.Results[0].References) {
-        setReferences(res.Results[0].References)
-      }
-    }
-  }
-
-  useEffect(() => {
-    browse()
-  }, [])
-
   return (
     <div className="wrapper">
       <header>
@@ -262,48 +159,13 @@ const Index = () => {
         </nav>
       </header>
       <div className="left bg-light">
-        <ul className="list-group">
-          <li className="list-group-item py-2">
-            <div className="d-flex align-items-center">
-              <a href="#item-1-1" data-toggle="collapse" onClick={onClick}>
-                {isOpen ? <ChevronDown /> : <ChevronRight />}
-              </a>
-
-              <span className="ml-1">
-                {isOpen ? <FolderMinus /> : <FolderPlus />}
-              </span>
-
-              <span className="ml-2">
-                <Link to={`/id/i=${Id.RootFolder}`}>Root Folder</Link>
-              </span>
-            </div>
-          </li>
-          <div className="list-group collapse" id="item-1-1">
-            {references
-              .filter(ref => ref.ReferenceTypeId.Identifier === Id.Organizes)
-              .map((ref, i) => {
-                return (
-                  <React.Fragment key={i}>
-                    <Link
-                      to={`/id/${ref.NodeId.NodeId.toString()}`}
-                      className="list-group-item py-2"
-                    >
-                      <div className="d-flex align-items-center">
-                        {ref.TypeDefinition.NodeId.Identifier ===
-                        Id.FolderType ? (
-                          <FolderPlus />
-                        ) : null}
-                        <span className="ml-2">{ref.DisplayName.Text}</span>
-                      </div>
-                    </Link>
-                    {ref.NodeId.NodeId.Identifier === Id.ObjectsFolder ? (
-                      <Objects />
-                    ) : null}
-                  </React.Fragment>
-                )
-              })}
-          </div>
-        </ul>
+        <ListGroup
+          referenceDescription={
+            new ReferenceDescription({
+              NodeId: NewTwoByteExpandedNodeId(Id.RootFolder)
+            })
+          }
+        />
       </div>
       <div className="content">
         <Switch>
@@ -320,3 +182,4 @@ const Index = () => {
 }
 
 render(<App />, document.getElementById('app'))
+// NewTwoByteNodeId(Id.RootFolder)

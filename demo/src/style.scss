@@ -1,6 +1,6 @@
-// body {
-//   font-size: 0.75rem;
-// }
+body {
+  font-size: 0.75rem;
+}
 
 .left {
   grid-area: left;
@@ -26,7 +26,7 @@ header {
 .wrapper {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 240px auto 120px;
+  grid-template-columns: 360px auto 240px;
   grid-template-areas:
     'header header header'
     'left content right'
@@ -53,4 +53,92 @@ header {
 
 .list-group > .list-group > .list-group > .list-group-item {
   padding-left: 2.75rem;
+}
+
+.list-group > .list-group > .list-group > .list-group > .list-group-item {
+  padding-left: 3.5rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 4.25rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 5rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 5.75rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 6.5rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 7.25rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 8rem;
+}
+
+.list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group
+  > .list-group-item {
+  padding-left: 8.75rem;
 }
