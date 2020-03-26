@@ -10,7 +10,8 @@ import {
   ReadValueId,
   AttributeWriteMask,
   EventNotifierType,
-  NodeClass
+  NodeClass,
+  NodeIdType
   // CreateSubscriptionRequest,
   // CreateMonitoredItemsRequest,
   // MonitoredItemCreateRequest,
@@ -266,7 +267,12 @@ const ReferencesComponet = () => {
   return (
     <div className="card">
       <div className="card-header border-0">References</div>
-      <table className="table table-sm table-hover mb-0">
+      <table
+        className="table table-sm table-hover mb-0"
+        style={{
+          tableLayout: 'fixed'
+        }}
+      >
         <thead>
           <tr>
             <th scope="col">Type</th>
@@ -291,7 +297,7 @@ const ReferencesComponet = () => {
   )
 }
 
-const ReferenceDescriptionComponent = () => {
+const AttributesComponent = () => {
   const ctx = useContext(OPCUAContext)
   let { id } = useParams()
   const NodeId = ParseNodeId(id as string)
@@ -360,7 +366,12 @@ const ReferenceDescriptionComponent = () => {
     <React.Fragment>
       <div className="card mb-5">
         <div className="card-header border-0">Attributes</div>
-        <table className="table table-sm table-hover mb-0">
+        <table
+          className="table table-sm table-hover mb-0"
+          style={{
+            tableLayout: 'fixed'
+          }}
+        >
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -370,7 +381,21 @@ const ReferenceDescriptionComponent = () => {
           <tbody>
             <tr>
               <td>Node Id</td>
-              <td>...</td>
+              <td>{id}</td>
+            </tr>
+            <tr>
+              <td className="pl-4">Namespace Index</td>
+              <td>{NodeId.Namespace}</td>
+            </tr>
+            <tr>
+              <td className="pl-4">Identifier Type</td>
+              <td>
+                {NodeIdType[NodeId.Type]} ({NodeId.Type})
+              </td>
+            </tr>
+            <tr>
+              <td className="pl-4">Identifier</td>
+              <td>{NodeId.Identifier}</td>
             </tr>
             <tr>
               <td>Node Class</td>
@@ -503,7 +528,7 @@ const Index = () => {
       <div className="content">
         <Switch>
           <Route path="/id/:id">
-            <ReferenceDescriptionComponent />
+            <AttributesComponent />
           </Route>
         </Switch>
       </div>
