@@ -4,14 +4,7 @@ import {
   BrowseResultMask,
   BrowseRequest,
   BrowseDescription,
-  BrowseResult,
-  ReferenceDescription,
-  ReadRequest,
-  ReadValueId,
-  AttributeWriteMask,
-  EventNotifierType,
-  NodeClass,
-  NodeIdType
+  ReferenceDescription
   // CreateSubscriptionRequest,
   // CreateMonitoredItemsRequest,
   // MonitoredItemCreateRequest,
@@ -22,7 +15,7 @@ import {
   // CallMethodResult,
   // MonitoringModeReporting
 } from '../../dist/ua/generated'
-import { NewTwoByteNodeId, ParseNodeId } from '../../dist/ua/NodeId'
+import { NewTwoByteNodeId } from '../../dist/ua/NodeId'
 import { Id } from '../../dist/id/id'
 // import Subscription from '../../dist/Subscription'
 // import { TypeIdString, AttributeIdEventNotifier } from '../../dist/ua/enums'
@@ -30,13 +23,7 @@ import { Id } from '../../dist/id/id'
 
 import React, { useState, useEffect, useContext } from 'react'
 import { render } from 'react-dom'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 // ;(async function() {
 //   const client = new Client('ws://localhost:1234')
 
@@ -163,9 +150,8 @@ import {
 import './style.scss'
 import { FolderMinus, FolderPlus } from './icons'
 import { OPCUAProvider, OPCUAContext } from './context'
-import { AttributeId } from '../../dist/ua/enums'
-import QualifiedName from '../../dist/ua/QualifiedName'
-import LocalizedText from '../../dist/ua/LocalizedText'
+import Attributes from './attributes'
+import References from './references'
 
 const App = () => {
   return (
@@ -207,8 +193,6 @@ const Objects = () => {
         setReferences(objects.Results[0].References)
       }
     }
-
-    console.log(objects)
   }
 
   useEffect(() => {
@@ -230,214 +214,6 @@ const Objects = () => {
         )
       })}
     </div>
-  )
-}
-
-const ReferencesComponet = () => {
-  const ctx = useContext(OPCUAContext)
-  let { id } = useParams()
-  const NodeId = ParseNodeId(id as string)
-
-  const [references, setReferences] = useState<ReferenceDescription[]>([])
-
-  const read = async () => {
-    const response = await ctx.client.browse(
-      new BrowseRequest({
-        NodesToBrowse: [
-          new BrowseDescription({
-            NodeId,
-            BrowseDirection: BrowseDirection.Forward,
-            ReferenceTypeId: NewTwoByteNodeId(Id.References),
-            IncludeSubtypes: true,
-            ResultMask: BrowseResultMask.All
-          })
-        ]
-      })
-    )
-
-    if (response.Results) {
-      setReferences(response.Results[0].References as ReferenceDescription[])
-    }
-  }
-
-  useEffect(() => {
-    read()
-  }, [id])
-
-  return (
-    <div className="card">
-      <div className="card-header border-0">References</div>
-      <table
-        className="table table-sm table-hover mb-0"
-        style={{
-          tableLayout: 'fixed'
-        }}
-      >
-        <thead>
-          <tr>
-            <th scope="col">Type</th>
-            <th scope="col">Target</th>
-          </tr>
-        </thead>
-        <tbody>
-          {references.map((ref, i) => {
-            return (
-              <tr key={i}>
-                <td>
-                  {Id[ref.ReferenceTypeId.Identifier as number]} (
-                  {ref.ReferenceTypeId.Identifier})
-                </td>
-                <td>{ref.DisplayName.Text}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-const AttributesComponent = () => {
-  const ctx = useContext(OPCUAContext)
-  let { id } = useParams()
-  const NodeId = ParseNodeId(id as string)
-
-  const [nodeClass, setNodeClass] = useState(0)
-  const [browseName, setBrowseName] = useState('')
-  const [displayName, setDisplayName] = useState('')
-  const [description, setDescription] = useState('')
-  const [writeMask, setWriteMask] = useState(0)
-  const [userWriteMask, setUserWriteMask] = useState(0)
-  const [eventNotifier, setEventNotifier] = useState(0)
-
-  const read = async () => {
-    const response = await ctx.client.read(
-      new ReadRequest({
-        NodesToRead: [
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.NodeClass
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.BrowseName
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.DisplayName
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.Description
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.WriteMask
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.UserWriteMask
-          }),
-          new ReadValueId({
-            NodeId,
-            AttributeId: AttributeId.EventNotifier
-          })
-        ]
-      })
-    )
-
-    const results = response.Results
-    if (results) {
-      setNodeClass(results[0].Value?.Value as number)
-      setBrowseName((response.Results![1].Value?.Value as QualifiedName).Name)
-      setDisplayName((response.Results![2].Value?.Value as LocalizedText).Text)
-      setDescription((response.Results![3].Value?.Value as LocalizedText).Text)
-      setWriteMask(response.Results![4].Value?.Value as AttributeWriteMask)
-      setUserWriteMask(response.Results![5].Value?.Value as AttributeWriteMask)
-      setEventNotifier(response.Results![6].Value?.Value as EventNotifierType)
-    }
-  }
-
-  useEffect(() => {
-    read()
-  }, [id])
-
-  return (
-    <React.Fragment>
-      <div className="card mb-5">
-        <div className="card-header border-0">Attributes</div>
-        <table
-          className="table table-sm table-hover mb-0"
-          style={{
-            tableLayout: 'fixed'
-          }}
-        >
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Node Id</td>
-              <td>{id}</td>
-            </tr>
-            <tr>
-              <td className="pl-4">Namespace Index</td>
-              <td>{NodeId.Namespace}</td>
-            </tr>
-            <tr>
-              <td className="pl-4">Identifier Type</td>
-              <td>
-                {NodeIdType[NodeId.Type]} ({NodeId.Type})
-              </td>
-            </tr>
-            <tr>
-              <td className="pl-4">Identifier</td>
-              <td>{NodeId.Identifier}</td>
-            </tr>
-            <tr>
-              <td>Node Class</td>
-              <td>
-                {NodeClass[nodeClass]} ({nodeClass})
-              </td>
-            </tr>
-            <tr>
-              <td>Browse Name</td>
-              <td>{browseName}</td>
-            </tr>
-            <tr>
-              <td>Display Name</td>
-              <td>{displayName}</td>
-            </tr>
-            <tr>
-              <td>Description</td>
-              <td>{description}</td>
-            </tr>
-            <tr>
-              <td>Write Mask</td>
-              <td>
-                {AttributeWriteMask[writeMask]} ({writeMask})
-              </td>
-            </tr>
-            <tr>
-              <td>User Write Mask</td>
-              <td>
-                {AttributeWriteMask[userWriteMask]} ({userWriteMask})
-              </td>
-            </tr>
-            <tr>
-              <td>Event Notifier</td>
-              <td>
-                {EventNotifierType[eventNotifier]} ({eventNotifier})
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ReferencesComponet />
-    </React.Fragment>
   )
 }
 
@@ -468,12 +244,6 @@ const Index = () => {
     if (res.Results) {
       if (res.Results[0].References) {
         setReferences(res.Results[0].References)
-      }
-    }
-
-    for (const result of res.Results as BrowseResult[]) {
-      for (const ref of result.References as ReferenceDescription[]) {
-        console.log(ref.DisplayName.Text)
       }
     }
   }
@@ -528,7 +298,8 @@ const Index = () => {
       <div className="content">
         <Switch>
           <Route path="/id/:id">
-            <AttributesComponent />
+            <Attributes />
+            <References />
           </Route>
         </Switch>
       </div>

@@ -12,27 +12,11 @@ export const OPCUAProvider: React.FunctionComponent = props => {
 
   const connect = async () => {
     const client = new Client('ws://localhost:1234')
-
-    // open socket connection
     await client.open()
-    console.log('open')
-
-    // send hello and wait for acknowledge
-    const ack = await client.hello()
-    console.log('ack', ack)
-
-    // open secure channel
-    const openSecureChannelResponse = await client.openSecureChannel()
-    console.log('open secure channel', openSecureChannelResponse)
-
-    // create session
-    const createSessionResponse = await client.createSession()
-    console.log('create session response', createSessionResponse)
-
-    // activate session
-    const activateSessionResponse = await client.activateSession()
-    console.log('activate session response', activateSessionResponse)
-
+    await client.hello()
+    await client.openSecureChannel()
+    await client.createSession()
+    await client.activateSession()
     setClient(client)
   }
 
