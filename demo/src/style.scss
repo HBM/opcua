@@ -142,3 +142,7 @@ header {
   > .list-group-item {
   padding-left: 8.75rem;
 }
+
+.list-group-item.active a {
+  color: white;
+}

@@ -197,8 +197,6 @@ export default class SecureChannel {
           this.authenticationToken = (instance as CreateSessionResponse).AuthenticationToken
         }
 
-        console.log('sc', instance)
-
         callback(instance)
         // remove callback from map
         this.callbacks.delete(header.SequenceHeader.RequestId)

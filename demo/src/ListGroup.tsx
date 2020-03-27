@@ -12,7 +12,7 @@ import {
 } from '../../dist/ua/generated'
 import { Id } from '../../dist/id/id'
 import { ChevronDown, ChevronRight, Play, Folder, Server } from './icons'
-import { Link, useParams } from 'react-router-dom'
+import { Link, matchPath, useLocation } from 'react-router-dom'
 import { AttributeId } from '../../dist/ua/enums'
 import LocalizedText from '../../dist/ua/LocalizedText'
 import classnames from 'classnames'
@@ -34,7 +34,7 @@ const Icon = (props: Properties) => {
 }
 
 const ListGroup = (props: Properties) => {
-  const { id } = useParams()
+  const location = useLocation()
   const ctx = useContext(OPCUAContext)
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
@@ -85,15 +85,17 @@ const ListGroup = (props: Properties) => {
     read()
   }, [])
 
-  console.log(references)
-
-  console.log(id, props.referenceDescription.NodeId.NodeId.toString())
+  const foo = matchPath<{ id: string }>(location.pathname, {
+    path: '/id/:id',
+  })
 
   return (
     <ul className="list-group">
       <li
         className={classnames('list-group-item py-2', {
-          active: id === props.referenceDescription.NodeId.NodeId.toString(),
+          active:
+            foo?.params.id ===
+            props.referenceDescription.NodeId.NodeId.toString(),
         })}
       >
         <div className="d-flex align-items-center">
