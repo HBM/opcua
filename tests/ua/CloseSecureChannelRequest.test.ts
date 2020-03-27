@@ -1,7 +1,7 @@
 import run from './run'
 import {
   CloseSecureChannelRequest,
-  RequestHeader
+  RequestHeader,
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId } from '../../dist/ua/NodeId'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -19,8 +19,8 @@ describe('CloseSecureChannelRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
-        })
+          AdditionalHeader: new ExtensionObject(),
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -32,6 +32,6 @@ describe('CloseSecureChannelRequest', () => {
         0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00,
       ])
-    }
+    },
   ])
 })

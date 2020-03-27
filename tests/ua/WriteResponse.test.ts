@@ -14,9 +14,9 @@ describe('WriteResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
-        Results: new Uint32Array([StatusCode.OK])
+        Results: new Uint32Array([StatusCode.OK]),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -35,12 +35,12 @@ describe('WriteResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         Results: new Uint32Array([
           StatusCode.OK,
-          StatusCode.BadUserAccessDenied
-        ])
+          StatusCode.BadUserAccessDenied,
+        ]),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -50,6 +50,6 @@ describe('WriteResponse', () => {
           0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
           0x00, 0x00, 0x1f, 0x80, 0xff, 0xff, 0xff, 0xff,
         ])
-    }
+    },
   ])
 })

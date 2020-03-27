@@ -5,7 +5,7 @@ import {
   ApplicationType,
   MessageSecurityMode,
   UserTokenPolicy,
-  UserTokenType
+  UserTokenType,
 } from '../../dist/ua/generated'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
 
@@ -20,12 +20,12 @@ describe('EndpointDescription', () => {
           ProductUri: 'prod-uri',
           ApplicationName: new LocalizedText({
             EncodingMask: LocalizedTextText,
-            Text: 'app-name'
+            Text: 'app-name',
           }),
           ApplicationType: ApplicationType.Server,
           GatewayServerUri: 'gw-uri',
           DiscoveryProfileUri: 'prof-uri',
-          DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
+          DiscoveryUrls: ['discov-uri-1', 'discov-uri-2'],
         }),
         // ServerCertificate: nil,
         SecurityMode: MessageSecurityMode.None,
@@ -36,17 +36,17 @@ describe('EndpointDescription', () => {
             TokenType: UserTokenType.Anonymous,
             IssuedTokenType: 'issued-token',
             IssuerEndpointUrl: 'issuer-uri',
-            SecurityPolicyUri: 'sec-uri'
+            SecurityPolicyUri: 'sec-uri',
           }),
           new UserTokenPolicy({
             PolicyId: '1',
             TokenType: UserTokenType.Anonymous,
             IssuedTokenType: 'issued-token',
             IssuerEndpointUrl: 'issuer-uri',
-            SecurityPolicyUri: 'sec-uri'
-          })
+            SecurityPolicyUri: 'sec-uri',
+          }),
         ],
-        TransportProfileUri: 'trans-uri'
+        TransportProfileUri: 'trans-uri',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -86,6 +86,6 @@ describe('EndpointDescription', () => {
         0x09, 0x00, 0x00, 0x00, 0x74, 0x72, 0x61,
         0x6e, 0x73, 0x2d, 0x75, 0x72, 0x69, 0x00,
       ])
-    }
+    },
   ])
 })

@@ -147,35 +147,35 @@ export const NewTwoByteNodeId = (value: uint8): NodeId =>
   new NodeId({
     Type: NodeIdType.TwoByte,
     Identifier: value,
-    Namespace: 0
+    Namespace: 0,
   })
 
 export const NewFourByteNodeId = (namespace: uint8, value: uint16): NodeId =>
   new NodeId({
     Type: NodeIdType.FourByte,
     Identifier: value,
-    Namespace: namespace
+    Namespace: namespace,
   })
 
 export const NewNumericNodeId = (namespace: uint16, id: uint32): NodeId =>
   new NodeId({
     Type: NodeIdType.Numeric,
     Identifier: id,
-    Namespace: namespace
+    Namespace: namespace,
   })
 
 export const NewStringNodeId = (namespace: uint16, value: string): NodeId =>
   new NodeId({
     Type: NodeIdType.String,
     Identifier: value,
-    Namespace: namespace
+    Namespace: namespace,
   })
 
 export const NewGuidNodeId = (namespace: uint16, id: string): NodeId =>
   new NodeId({
     Type: NodeIdType.Guid,
     Identifier: new Guid(id),
-    Namespace: namespace
+    Namespace: namespace,
   })
 
 export const NewByteStringNodeId = (
@@ -185,7 +185,7 @@ export const NewByteStringNodeId = (
   new NodeId({
     Type: NodeIdType.ByteString,
     Namespace: namespace,
-    Identifier: id
+    Identifier: id,
   })
 
 export const ParseNodeId = (s: string): NodeId => {

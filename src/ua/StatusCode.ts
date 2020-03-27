@@ -247,5 +247,5 @@ export enum StatusCode {
   BadExpectedStreamToBlock = 0x80b40000 as uint32,
   BadWouldBlock = 0x80b50000 as uint32,
   BadSyntaxError = 0x80b60000 as uint32,
-  BadMaxConnectionsReached = 0x80b70000 as uint32
+  BadMaxConnectionsReached = 0x80b70000 as uint32,
 }

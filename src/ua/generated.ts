@@ -40,7 +40,7 @@ import {
   int32,
   int64,
   int16,
-  int8
+  int8,
 } from '../types'
 
 export enum NodeIdType {
@@ -49,20 +49,20 @@ export enum NodeIdType {
   Numeric = 2 as uint8,
   String = 3 as uint8,
   Guid = 4 as uint8,
-  ByteString = 5 as uint8
+  ByteString = 5 as uint8,
 }
 
 export enum NamingRuleType {
   Mandatory = 1 as uint32,
   Optional = 2 as uint32,
-  Constraint = 3 as uint32
+  Constraint = 3 as uint32,
 }
 
 export enum OpenFileMode {
   Read = 1 as uint32,
   Write = 2 as uint32,
   EraseExisting = 4 as uint32,
-  Append = 8 as uint32
+  Append = 8 as uint32,
 }
 
 export enum IdentityCriteriaType {
@@ -71,7 +71,7 @@ export enum IdentityCriteriaType {
   Role = 3 as uint32,
   GroupId = 4 as uint32,
   Anonymous = 5 as uint32,
-  AuthenticatedUser = 6 as uint32
+  AuthenticatedUser = 6 as uint32,
 }
 
 export enum TrustListMasks {
@@ -80,19 +80,19 @@ export enum TrustListMasks {
   TrustedCrls = 2 as uint32,
   IssuerCertificates = 4 as uint32,
   IssuerCrls = 8 as uint32,
-  All = 15 as uint32
+  All = 15 as uint32,
 }
 
 export enum PubSubState {
   Disabled = 0 as uint32,
   Paused = 1 as uint32,
   Operational = 2 as uint32,
-  Error = 3 as uint32
+  Error = 3 as uint32,
 }
 
 export enum DataSetFieldFlags {
   None = 0 as uint16,
-  PromotedField = 1 as uint16
+  PromotedField = 1 as uint16,
 }
 
 export enum DataSetFieldContentMask {
@@ -102,19 +102,19 @@ export enum DataSetFieldContentMask {
   ServerTimestamp = 4 as uint32,
   SourcePicoSeconds = 8 as uint32,
   ServerPicoSeconds = 16 as uint32,
-  RawData = 32 as uint32
+  RawData = 32 as uint32,
 }
 
 export enum OverrideValueHandling {
   Disabled = 0 as uint32,
   LastUsableValue = 1 as uint32,
-  OverrideValue = 2 as uint32
+  OverrideValue = 2 as uint32,
 }
 
 export enum DataSetOrderingType {
   Undefined = 0 as uint32,
   AscendingWriterId = 1 as uint32,
-  AscendingWriterIdSingle = 2 as uint32
+  AscendingWriterIdSingle = 2 as uint32,
 }
 
 export enum UadpNetworkMessageContentMask {
@@ -129,7 +129,7 @@ export enum UadpNetworkMessageContentMask {
   Timestamp = 128 as uint32,
   PicoSeconds = 256 as uint32,
   DataSetClassId = 512 as uint32,
-  PromotedFields = 1024 as uint32
+  PromotedFields = 1024 as uint32,
 }
 
 export enum UadpDataSetMessageContentMask {
@@ -139,7 +139,7 @@ export enum UadpDataSetMessageContentMask {
   Status = 4 as uint32,
   MajorVersion = 8 as uint32,
   MinorVersion = 16 as uint32,
-  SequenceNumber = 32 as uint32
+  SequenceNumber = 32 as uint32,
 }
 
 export enum JsonNetworkMessageContentMask {
@@ -149,7 +149,7 @@ export enum JsonNetworkMessageContentMask {
   SingleDataSetMessage = 4 as uint32,
   PublisherId = 8 as uint32,
   DataSetClassId = 16 as uint32,
-  ReplyTo = 32 as uint32
+  ReplyTo = 32 as uint32,
 }
 
 export enum JsonDataSetMessageContentMask {
@@ -158,7 +158,7 @@ export enum JsonDataSetMessageContentMask {
   MetaDataVersion = 2 as uint32,
   SequenceNumber = 4 as uint32,
   Timestamp = 8 as uint32,
-  Status = 16 as uint32
+  Status = 16 as uint32,
 }
 
 export enum BrokerTransportQualityOfService {
@@ -166,7 +166,7 @@ export enum BrokerTransportQualityOfService {
   BestEffort = 1 as uint32,
   AtLeastOnce = 2 as uint32,
   AtMostOnce = 3 as uint32,
-  ExactlyOnce = 4 as uint32
+  ExactlyOnce = 4 as uint32,
 }
 
 export enum DiagnosticsLevel {
@@ -174,19 +174,19 @@ export enum DiagnosticsLevel {
   Advanced = 1 as uint32,
   Info = 2 as uint32,
   Log = 3 as uint32,
-  Debug = 4 as uint32
+  Debug = 4 as uint32,
 }
 
 export enum PubSubDiagnosticsCounterClassification {
   Information = 0 as uint32,
-  Error = 1 as uint32
+  Error = 1 as uint32,
 }
 
 export enum IdType {
   Numeric = 0 as uint32,
   String = 1 as uint32,
   Guid = 2 as uint32,
-  Opaque = 3 as uint32
+  Opaque = 3 as uint32,
 }
 
 export enum NodeClass {
@@ -198,7 +198,7 @@ export enum NodeClass {
   VariableType = 16 as uint32,
   ReferenceType = 32 as uint32,
   DataType = 64 as uint32,
-  View = 128 as uint32
+  View = 128 as uint32,
 }
 
 export enum PermissionType {
@@ -219,7 +219,7 @@ export enum PermissionType {
   AddReference = 8192 as uint32,
   RemoveReference = 16384 as uint32,
   DeleteNode = 32768 as uint32,
-  AddNode = 65536 as uint32
+  AddNode = 65536 as uint32,
 }
 
 export enum AccessLevelType {
@@ -230,7 +230,7 @@ export enum AccessLevelType {
   HistoryWrite = 8 as uint8,
   SemanticChange = 16 as uint8,
   StatusWrite = 32 as uint8,
-  TimestampWrite = 64 as uint8
+  TimestampWrite = 64 as uint8,
 }
 
 export enum AccessLevelExType {
@@ -244,53 +244,53 @@ export enum AccessLevelExType {
   TimestampWrite = 64 as uint32,
   NonatomicRead = 256 as uint32,
   NonatomicWrite = 512 as uint32,
-  WriteFullArrayOnly = 1024 as uint32
+  WriteFullArrayOnly = 1024 as uint32,
 }
 
 export enum EventNotifierType {
   None = 0 as uint8,
   SubscribeToEvents = 1 as uint8,
   HistoryRead = 4 as uint8,
-  HistoryWrite = 8 as uint8
+  HistoryWrite = 8 as uint8,
 }
 
 export enum AccessRestrictionType {
   None = 0 as uint32,
   SigningRequired = 1 as uint32,
   EncryptionRequired = 2 as uint32,
-  SessionRequired = 4 as uint32
+  SessionRequired = 4 as uint32,
 }
 
 export enum StructureType {
   Structure = 0 as uint32,
   StructureWithOptionalFields = 1 as uint32,
-  Union = 2 as uint32
+  Union = 2 as uint32,
 }
 
 export enum ApplicationType {
   Server = 0 as uint32,
   Client = 1 as uint32,
   ClientAndServer = 2 as uint32,
-  DiscoveryServer = 3 as uint32
+  DiscoveryServer = 3 as uint32,
 }
 
 export enum MessageSecurityMode {
   Invalid = 0 as uint32,
   None = 1 as uint32,
   Sign = 2 as uint32,
-  SignAndEncrypt = 3 as uint32
+  SignAndEncrypt = 3 as uint32,
 }
 
 export enum UserTokenType {
   Anonymous = 0 as uint32,
   UserName = 1 as uint32,
   Certificate = 2 as uint32,
-  IssuedToken = 3 as uint32
+  IssuedToken = 3 as uint32,
 }
 
 export enum SecurityTokenRequestType {
   Issue = 0 as uint32,
-  Renew = 1 as uint32
+  Renew = 1 as uint32,
 }
 
 export enum NodeAttributesMask {
@@ -328,7 +328,7 @@ export enum NodeAttributesMask {
   VariableType = 28600438 as uint32,
   Method = 26632548 as uint32,
   ReferenceType = 26537060 as uint32,
-  View = 26501356 as uint32
+  View = 26501356 as uint32,
 }
 
 export enum AttributeWriteMask {
@@ -358,14 +358,14 @@ export enum AttributeWriteMask {
   DataTypeDefinition = 4194304 as uint32,
   RolePermissions = 8388608 as uint32,
   AccessRestrictions = 16777216 as uint32,
-  AccessLevelEx = 33554432 as uint32
+  AccessLevelEx = 33554432 as uint32,
 }
 
 export enum BrowseDirection {
   Forward = 0 as uint32,
   Inverse = 1 as uint32,
   Both = 2 as uint32,
-  Invalid = 3 as uint32
+  Invalid = 3 as uint32,
 }
 
 export enum BrowseResultMask {
@@ -378,7 +378,7 @@ export enum BrowseResultMask {
   TypeDefinition = 32 as uint32,
   All = 63 as uint32,
   ReferenceTypeInfo = 3 as uint32,
-  TargetInfo = 60 as uint32
+  TargetInfo = 60 as uint32,
 }
 
 export enum FilterOperator {
@@ -399,7 +399,7 @@ export enum FilterOperator {
   OfType = 14 as uint32,
   RelatedTo = 15 as uint32,
   BitwiseAnd = 16 as uint32,
-  BitwiseOr = 17 as uint32
+  BitwiseOr = 17 as uint32,
 }
 
 export enum TimestampsToReturn {
@@ -407,39 +407,39 @@ export enum TimestampsToReturn {
   Server = 1 as uint32,
   Both = 2 as uint32,
   Neither = 3 as uint32,
-  Invalid = 4 as uint32
+  Invalid = 4 as uint32,
 }
 
 export enum HistoryUpdateType {
   Insert = 1 as uint32,
   Replace = 2 as uint32,
   Update = 3 as uint32,
-  Delete = 4 as uint32
+  Delete = 4 as uint32,
 }
 
 export enum PerformUpdateType {
   Insert = 1 as uint32,
   Replace = 2 as uint32,
   Update = 3 as uint32,
-  Remove = 4 as uint32
+  Remove = 4 as uint32,
 }
 
 export enum MonitoringMode {
   Disabled = 0 as uint32,
   Sampling = 1 as uint32,
-  Reporting = 2 as uint32
+  Reporting = 2 as uint32,
 }
 
 export enum DataChangeTrigger {
   Status = 0 as uint32,
   StatusValue = 1 as uint32,
-  StatusValueTimestamp = 2 as uint32
+  StatusValueTimestamp = 2 as uint32,
 }
 
 export enum DeadbandType {
   None = 0 as uint32,
   Absolute = 1 as uint32,
-  Percent = 2 as uint32
+  Percent = 2 as uint32,
 }
 
 export enum RedundancySupport {
@@ -448,7 +448,7 @@ export enum RedundancySupport {
   Warm = 2 as uint32,
   Hot = 3 as uint32,
   Transparent = 4 as uint32,
-  HotAndMirrored = 5 as uint32
+  HotAndMirrored = 5 as uint32,
 }
 
 export enum ServerState {
@@ -459,7 +459,7 @@ export enum ServerState {
   Shutdown = 4 as uint32,
   Test = 5 as uint32,
   CommunicationFault = 6 as uint32,
-  Unknown = 7 as uint32
+  Unknown = 7 as uint32,
 }
 
 export enum ModelChangeStructureVerbMask {
@@ -467,13 +467,13 @@ export enum ModelChangeStructureVerbMask {
   NodeDeleted = 2 as uint32,
   ReferenceAdded = 4 as uint32,
   ReferenceDeleted = 8 as uint32,
-  DataTypeChanged = 16 as uint32
+  DataTypeChanged = 16 as uint32,
 }
 
 export enum AxisScaleEnumeration {
   Linear = 0 as uint32,
   Log = 1 as uint32,
-  Ln = 2 as uint32
+  Ln = 2 as uint32,
 }
 
 export enum ExceptionDeviationFormat {
@@ -481,7 +481,7 @@ export enum ExceptionDeviationFormat {
   PercentOfValue = 1 as uint32,
   PercentOfRange = 2 as uint32,
   PercentOfEURange = 3 as uint32,
-  Unknown = 4 as uint32
+  Unknown = 4 as uint32,
 }
 
 export class KeyValuePair {

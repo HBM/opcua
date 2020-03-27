@@ -2,7 +2,7 @@ import run from './run'
 import {
   OpenSecureChannelRequest,
   RequestHeader,
-  MessageSecurityMode
+  MessageSecurityMode,
 } from '../../dist/ua/generated'
 
 describe('OpenSecureChannelRequest', () => {
@@ -11,10 +11,10 @@ describe('OpenSecureChannelRequest', () => {
       name: 'normal',
       instance: new OpenSecureChannelRequest({
         RequestHeader: new RequestHeader({
-          Timestamp: new Date(Date.UTC(1601, 0, 1, 0, 0, 0, 0))
+          Timestamp: new Date(Date.UTC(1601, 0, 1, 0, 0, 0, 0)),
         }),
         SecurityMode: MessageSecurityMode.None,
-        RequestedLifetime: 600000
+        RequestedLifetime: 600000,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -26,6 +26,6 @@ describe('OpenSecureChannelRequest', () => {
         0x00, 0xff, 0xff, 0xff, 0xff, 0xc0, 0x27, 0x09,
         0x00
       ])
-    }
+    },
   ])
 })

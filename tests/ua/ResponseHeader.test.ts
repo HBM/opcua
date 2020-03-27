@@ -8,7 +8,7 @@ export const NewNullResponseHeader = (): ResponseHeader =>
   new ResponseHeader({
     Timestamp: new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0)),
     ServiceDiagnostics: new DiagnosticInfo(),
-    AdditionalHeader: new ExtensionObject()
+    AdditionalHeader: new ExtensionObject(),
   })
 
 // prettier-ignore
@@ -23,7 +23,7 @@ describe('ResponseHeader', () => {
     {
       name: 'null',
       instance: NewNullResponseHeader(),
-      bytes: NullResponseHeaderBytes
+      bytes: NullResponseHeaderBytes,
     },
     {
       name: 'normal',
@@ -32,8 +32,8 @@ describe('ResponseHeader', () => {
         RequestHandle: 1,
         StringTable: ['foo', 'bar'],
         AdditionalHeader: new ExtensionObject({
-          TypeId: NewTwoByteExpandedNodeId(255)
-        })
+          TypeId: NewTwoByteExpandedNodeId(255),
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -43,6 +43,6 @@ describe('ResponseHeader', () => {
         0x00, 0x66, 0x6f, 0x6f, 0x03, 0x00, 0x00, 0x00,
         0x62, 0x61, 0x72, 0x00, 0xff, 0x00,
       ])
-    }
+    },
   ])
 })

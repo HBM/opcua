@@ -3,7 +3,7 @@ import {
   FindServersResponse,
   ResponseHeader,
   ApplicationDescription,
-  ApplicationType
+  ApplicationType,
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -19,7 +19,7 @@ describe('FindServersResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         Servers: [
           new ApplicationDescription({
@@ -27,26 +27,26 @@ describe('FindServersResponse', () => {
             ProductUri: 'prod-uri',
             ApplicationName: new LocalizedText({
               EncodingMask: LocalizedTextText,
-              Text: 'app-name'
+              Text: 'app-name',
             }),
             ApplicationType: ApplicationType.Server,
             GatewayServerUri: 'gw-uri',
             DiscoveryProfileUri: 'prof-uri',
-            DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
+            DiscoveryUrls: ['discov-uri-1', 'discov-uri-2'],
           }),
           new ApplicationDescription({
             ApplicationUri: 'app-uri',
             ProductUri: 'prod-uri',
             ApplicationName: new LocalizedText({
               EncodingMask: LocalizedTextText,
-              Text: 'app-name'
+              Text: 'app-name',
             }),
             ApplicationType: ApplicationType.Server,
             GatewayServerUri: 'gw-uri',
             DiscoveryProfileUri: 'prof-uri',
-            DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
-          })
-        ]
+            DiscoveryUrls: ['discov-uri-1', 'discov-uri-2'],
+          }),
+        ],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -79,6 +79,6 @@ describe('FindServersResponse', () => {
         0x0c, 0x00, 0x00, 0x00, 0x64, 0x69, 0x73, 0x63,
         0x6f, 0x76, 0x2d, 0x75, 0x72, 0x69, 0x2d, 0x32,
       ])
-    }
+    },
   ])
 })

@@ -29,7 +29,7 @@ export enum AttributeId {
   RolePermissions = 24 as uint32,
   UserRolePermissions = 25 as uint32,
   AccessRestrictions = 26 as uint32,
-  AccessLevelEx = 27 as uint32
+  AccessLevelEx = 27 as uint32,
 }
 
 // https://reference.opcfoundation.org/v104/Core/docs/Part6/5.1.2/
@@ -59,5 +59,5 @@ export enum TypeId {
   ExtensionObject = 22 as uint8,
   DataValue = 23 as uint8,
   Variant = 24 as uint8,
-  DiagnosticInfo = 25 as uint8
+  DiagnosticInfo = 25 as uint8,
 }

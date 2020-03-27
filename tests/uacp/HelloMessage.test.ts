@@ -11,7 +11,7 @@ describe('HelloMessage', () => {
         SendBufferSize: 147456,
         MaxMessageSize: 4194240,
         MaxChunkCount: 65535,
-        EndpointUrl: 'opc.tcp://localhost:4840'
+        EndpointUrl: 'opc.tcp://localhost:4840',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -22,6 +22,6 @@ describe('HelloMessage', () => {
         0x2f, 0x2f, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x68,
         0x6f, 0x73, 0x74, 0x3a, 0x34, 0x38, 0x34, 0x30
       ])
-    }
+    },
   ])
 })

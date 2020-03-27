@@ -8,7 +8,7 @@ import { decodeService } from '../ua/service'
 import {
   MessageTypeMessage,
   MessageTypeCloseSecureChannel,
-  MessageTypeOpenSecureChannel
+  MessageTypeOpenSecureChannel,
 } from './MessageType'
 
 export class ChunkHeader {

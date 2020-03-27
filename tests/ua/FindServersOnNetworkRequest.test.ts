@@ -1,7 +1,7 @@
 import run from './run'
 import {
   FindServersOnNetworkRequest,
-  RequestHeader
+  RequestHeader,
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId } from '../../dist/ua/NodeId'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -19,10 +19,10 @@ describe('FindServersOnNetworkRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         StartingRecordId: 1000,
-        MaxRecordsToReturn: 0
+        MaxRecordsToReturn: 0,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -35,6 +35,6 @@ describe('FindServersOnNetworkRequest', () => {
         0x00, 0x00, 0xe8, 0x03, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

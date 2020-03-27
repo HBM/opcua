@@ -2,7 +2,7 @@ import run from './run'
 import {
   WriteRequest,
   RequestHeader,
-  WriteValue
+  WriteValue,
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -10,7 +10,7 @@ import { AttributeId, TypeId } from '../../dist/ua/enums'
 import DataValue, {
   DataValueValue,
   DataValueSourceTimestamp,
-  DataValueServerTimestamp
+  DataValueServerTimestamp,
 } from '../../dist/ua/DataValue'
 import Variant from '../../dist/ua/Variant'
 
@@ -27,7 +27,7 @@ describe('WriteRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         NodesToWrite: [
           new WriteValue({
@@ -40,13 +40,13 @@ describe('WriteRequest', () => {
                 DataValueServerTimestamp,
               Value: new Variant({
                 EncodingMask: TypeId.Float,
-                Value: 2.5001699924468994
+                Value: 2.5001699924468994,
               }),
               SourceTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),
-              ServerTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112))
-            })
-          })
-        ]
+              ServerTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),
+            }),
+          }),
+        ],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -62,6 +62,6 @@ describe('WriteRequest', () => {
         0x80, 0x3b, 0xe8, 0xb3, 0x92, 0x4e, 0xd4, 0x01,
         0x80, 0x3b, 0xe8, 0xb3, 0x92, 0x4e, 0xd4, 0x01,
       ])
-    }
+    },
   ])
 })

@@ -11,7 +11,7 @@ import {
   CallResponse,
   OpenSecureChannelResponse,
   CreateSessionResponse,
-  ActivateSessionResponse
+  ActivateSessionResponse,
 } from './ua/generated'
 import Subscription from './Subscription'
 import AcknowledgeMessage from './uacp/AcknowledgeMessage'
@@ -49,25 +49,25 @@ export default class Client {
   }
 
   public browse(req: BrowseRequest): Promise<BrowseResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.secureChannel.send(req, resolve)
     })
   }
 
   public read(req: ReadRequest): Promise<ReadResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.secureChannel.send(req, resolve)
     })
   }
 
   public write(req: WriteRequest): Promise<WriteRequest> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.secureChannel.send(req, resolve)
     })
   }
 
   public call(req: CallRequest): Promise<CallResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.secureChannel.send(req, resolve)
     })
   }
@@ -75,7 +75,7 @@ export default class Client {
   public subscribe(
     req: CreateSubscriptionRequest
   ): Promise<CreateSubscriptionResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.secureChannel.send(req, resolve)
     })
   }

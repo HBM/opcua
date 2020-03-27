@@ -11,7 +11,7 @@ describe('ReadValueId', () => {
       instance: new ReadValueId({
         NodeId: NewFourByteNodeId(0, 2256),
         AttributeId: AttributeId.Value,
-        DataEncoding: new QualifiedName()
+        DataEncoding: new QualifiedName(),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -19,6 +19,6 @@ describe('ReadValueId', () => {
         0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0xff, 0xff,
         0xff, 0xff,
       ])
-    }
+    },
   ])
 })

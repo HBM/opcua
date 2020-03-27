@@ -28,11 +28,11 @@ export const decodeService = (b: ArrayBuffer, position?: number): Service => {
   decode({
     bytes: b,
     instance: service,
-    position
+    position,
   })
 
   return {
     typeId,
-    service
+    service,
   }
 }

@@ -8,7 +8,7 @@ import {
   AttributeWriteMask,
   EventNotifierType,
   NodeClass,
-  NodeIdType
+  NodeIdType,
 } from '../../dist/ua/generated'
 import { AttributeId } from '../../dist/ua/enums'
 import QualifiedName from '../../dist/ua/QualifiedName'
@@ -33,33 +33,33 @@ const Attributes = () => {
         NodesToRead: [
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.NodeClass
+            AttributeId: AttributeId.NodeClass,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.BrowseName
+            AttributeId: AttributeId.BrowseName,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.DisplayName
+            AttributeId: AttributeId.DisplayName,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.Description
+            AttributeId: AttributeId.Description,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.WriteMask
+            AttributeId: AttributeId.WriteMask,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.UserWriteMask
+            AttributeId: AttributeId.UserWriteMask,
           }),
           new ReadValueId({
             NodeId,
-            AttributeId: AttributeId.EventNotifier
-          })
-        ]
+            AttributeId: AttributeId.EventNotifier,
+          }),
+        ],
       })
     )
 
@@ -85,7 +85,7 @@ const Attributes = () => {
       <table
         className="table table-sm table-hover mb-0"
         style={{
-          tableLayout: 'fixed'
+          tableLayout: 'fixed',
         }}
       >
         <thead>

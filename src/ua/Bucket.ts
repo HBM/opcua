@@ -11,7 +11,7 @@ import {
   int64,
   uint64,
   float32,
-  float64
+  float64,
 } from '../types'
 
 export default class Bucket {
@@ -233,7 +233,7 @@ export default class Bucket {
       this.position = decode({
         bytes: this.bytes,
         instance: w,
-        position: this.position
+        position: this.position,
       })
     }
   }

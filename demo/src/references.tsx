@@ -7,7 +7,7 @@ import {
   BrowseRequest,
   BrowseDirection,
   BrowseResultMask,
-  BrowseDescription
+  BrowseDescription,
 } from '../../dist/ua/generated'
 import { Id } from '../../dist/id/id'
 
@@ -27,9 +27,9 @@ const References = () => {
             BrowseDirection: BrowseDirection.Forward,
             ReferenceTypeId: NewTwoByteNodeId(Id.References),
             IncludeSubtypes: true,
-            ResultMask: BrowseResultMask.All
-          })
-        ]
+            ResultMask: BrowseResultMask.All,
+          }),
+        ],
       })
     )
 
@@ -48,7 +48,7 @@ const References = () => {
       <table
         className="table table-sm table-hover mb-0"
         style={{
-          tableLayout: 'fixed'
+          tableLayout: 'fixed',
         }}
       >
         <thead>

@@ -1,13 +1,13 @@
 import ExtensionObject, {
-  ExtensionObjectBinary
+  ExtensionObjectBinary,
 } from '../../dist/ua/ExtensionObject'
 import {
   ActivateSessionRequest,
-  AnonymousIdentityToken
+  AnonymousIdentityToken,
 } from '../../dist/ua/generated'
 import {
   NewNullRequestHeader,
-  NullRequestHeaderBytes
+  NullRequestHeaderBytes,
 } from './RequestHeader.test'
 import { NewFourByteExpandedNodeId } from '../../dist/ua/ExpandedNodeId'
 import { Id } from '../../dist/id/id'
@@ -26,9 +26,9 @@ describe('ActivateSessionRequest', () => {
           ),
           Encoding: ExtensionObjectBinary,
           Value: new AnonymousIdentityToken({
-            PolicyId: 'anonymous'
-          })
-        })
+            PolicyId: 'anonymous',
+          }),
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -40,6 +40,6 @@ describe('ActivateSessionRequest', () => {
         0x6e, 0x79, 0x6d, 0x6f, 0x75, 0x73, 0xff, 0xff,
         0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

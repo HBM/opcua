@@ -96,7 +96,7 @@ export const encode = (args: Arguments): ArrayBuffer => {
         for (const item of instance) {
           const b = encode({
             instance: item,
-            type: subtype
+            type: subtype,
           })
           bucket.write(b)
         }
@@ -113,7 +113,7 @@ export const encode = (args: Arguments): ArrayBuffer => {
           const b = encode({
             instance: instance[name],
             type,
-            subtype
+            subtype,
           })
           bucket.write(b)
         }

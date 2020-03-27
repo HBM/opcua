@@ -3,7 +3,7 @@ import {
   CreateSessionRequest,
   RequestHeader,
   ApplicationDescription,
-  ApplicationType
+  ApplicationType,
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId } from '../../dist/ua/NodeId'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
@@ -23,25 +23,25 @@ describe('CreateSessionRequest', () => {
             ])
           ),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
-          RequestHandle: 1
+          RequestHandle: 1,
         }),
         ClientDescription: new ApplicationDescription({
           ApplicationUri: 'app-uri',
           ProductUri: 'prod-uri',
           ApplicationName: new LocalizedText({
             EncodingMask: LocalizedTextText,
-            Text: 'app-name'
+            Text: 'app-name',
           }),
           ApplicationType: ApplicationType.Client,
           GatewayServerUri: 'gw-uri',
           DiscoveryProfileUri: 'profile-uri',
-          DiscoveryUrls: ['1', '2']
+          DiscoveryUrls: ['1', '2'],
         }),
         ServerUri: 'server-uri',
         EndpointUrl: 'endpoint-url',
         SessionName: 'session-name',
         RequestedSessionTimeout: 6000000,
-        MaxResponseMessageSize: 65534
+        MaxResponseMessageSize: 65534,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -71,6 +71,6 @@ describe('CreateSessionRequest', () => {
         0x00, 0x00, 0x00, 0x60, 0xe3, 0x56, 0x41, 0xfe,
         0xff, 0x00, 0x00,
     ])
-    }
+    },
   ])
 })

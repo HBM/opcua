@@ -7,7 +7,7 @@ interface Context {
 
 export const OPCUAContext = React.createContext<Context>({} as Context)
 
-export const OPCUAProvider: React.FunctionComponent = props => {
+export const OPCUAProvider: React.FunctionComponent = (props) => {
   const [client, setClient] = useState<Client | null>(null)
 
   const connect = async () => {
@@ -31,7 +31,7 @@ export const OPCUAProvider: React.FunctionComponent = props => {
   return (
     <OPCUAContext.Provider
       value={{
-        client: client
+        client: client,
       }}
     >
       {props.children}

@@ -5,7 +5,7 @@ import { NewTwoByteNodeId } from '../../dist/ua/NodeId'
 export const NewNullRequestHeader = (): RequestHeader =>
   new RequestHeader({
     AuthenticationToken: NewTwoByteNodeId(0),
-    Timestamp: new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0))
+    Timestamp: new Date(Date.UTC(1970, 0, 1, 0, 0, 0, 0)),
   })
 
 // prettier-ignore
@@ -21,7 +21,7 @@ describe('RequestHeader', () => {
     {
       name: 'normal',
       instance: new RequestHeader({
-        Timestamp: new Date(Date.UTC(1601, 0, 1, 0, 0, 0, 0))
+        Timestamp: new Date(Date.UTC(1601, 0, 1, 0, 0, 0, 0)),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -34,7 +34,7 @@ describe('RequestHeader', () => {
     {
       name: 'null',
       instance: NewNullRequestHeader(),
-      bytes: NullRequestHeaderBytes
-    }
+      bytes: NullRequestHeaderBytes,
+    },
   ])
 })

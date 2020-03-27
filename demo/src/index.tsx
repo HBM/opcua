@@ -162,7 +162,7 @@ const Index = () => {
         <ListGroup
           referenceDescription={
             new ReferenceDescription({
-              NodeId: NewTwoByteExpandedNodeId(Id.RootFolder)
+              NodeId: NewTwoByteExpandedNodeId(Id.RootFolder),
             })
           }
         />

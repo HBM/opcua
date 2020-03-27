@@ -16,9 +16,9 @@ describe('CloseSessionRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
-        DeleteSubscriptions: true
+        DeleteSubscriptions: true,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -30,6 +30,6 @@ describe('CloseSessionRequest', () => {
         0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x01,
       ])
-    }
+    },
   ])
 })

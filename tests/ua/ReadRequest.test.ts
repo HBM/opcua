@@ -3,7 +3,7 @@ import {
   ReadRequest,
   RequestHeader,
   TimestampsToReturn,
-  ReadValueId
+  ReadValueId,
 } from '../../dist/ua/generated'
 import { NewByteStringNodeId, NewFourByteNodeId } from '../../dist/ua/NodeId'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -23,7 +23,7 @@ describe('ReadRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         MaxAge: 0,
         TimestampsToReturn: TimestampsToReturn.Both,
@@ -31,9 +31,9 @@ describe('ReadRequest', () => {
           new ReadValueId({
             NodeId: NewFourByteNodeId(0, 2256),
             AttributeId: AttributeId.Value,
-            DataEncoding: new QualifiedName()
-          })
-        ]
+            DataEncoding: new QualifiedName(),
+          }),
+        ],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -49,6 +49,6 @@ describe('ReadRequest', () => {
         0x00, 0x00, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
         0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

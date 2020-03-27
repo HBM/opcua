@@ -8,7 +8,7 @@ describe('AsymmetricSecurityHeader', () => {
       instance: new AsymmetricSecurityHeader({
         SecurityPolicyUri: 'http://opcfoundation.org/UA/SecurityPolicy#None',
         SenderCertificate: '',
-        ReceiverCertificateThumbprint: ''
+        ReceiverCertificateThumbprint: '',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -21,6 +21,6 @@ describe('AsymmetricSecurityHeader', () => {
         0x6f, 0x6e, 0x65, 0xff, 0xff, 0xff, 0xff, 0xff,
         0xff, 0xff, 0xff
       ])
-    }
+    },
   ])
 })

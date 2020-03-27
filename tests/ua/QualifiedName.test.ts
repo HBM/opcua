@@ -7,7 +7,7 @@ describe('QualifiedName', () => {
       name: 'normal',
       instance: new QualifiedName({
         NamespaceIndex: 1,
-        Name: 'foobar'
+        Name: 'foobar',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -18,12 +18,12 @@ describe('QualifiedName', () => {
     {
       name: 'empty',
       instance: new QualifiedName({
-        NamespaceIndex: 1
+        NamespaceIndex: 1,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
         0x01, 0x00, 0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

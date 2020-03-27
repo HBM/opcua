@@ -10,7 +10,7 @@ describe('AcknowledgeMessage', () => {
         ReceiveBufferSize: 65535,
         SendBufferSize: 65535,
         MaxMessageSize: 0,
-        MaxChunkCount: 0
+        MaxChunkCount: 0,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -18,6 +18,6 @@ describe('AcknowledgeMessage', () => {
         0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00
       ])
-    }
+    },
   ])
 })

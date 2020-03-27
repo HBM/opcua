@@ -5,7 +5,7 @@ import { AttributeId, TypeId } from '../../dist/ua/enums'
 import DataValue, {
   DataValueValue,
   DataValueSourceTimestamp,
-  DataValueServerTimestamp
+  DataValueServerTimestamp,
 } from '../../dist/ua/DataValue'
 import Variant from '../../dist/ua/Variant'
 
@@ -23,11 +23,11 @@ describe('WriteValue', () => {
             DataValueServerTimestamp,
           Value: new Variant({
             EncodingMask: TypeId.Float,
-            Value: 2.5001699924468994
+            Value: 2.5001699924468994,
           }),
           SourceTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),
-          ServerTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112))
-        })
+          ServerTimestamp: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -37,6 +37,6 @@ describe('WriteValue', () => {
         0xd4, 0x01, 0x80, 0x3b, 0xe8, 0xb3, 0x92, 0x4e,
         0xd4, 0x01,
       ])
-    }
+    },
   ])
 })

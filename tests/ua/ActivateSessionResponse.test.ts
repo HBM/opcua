@@ -1,7 +1,7 @@
 import run from './run'
 import {
   NewNullResponseHeader,
-  NullResponseHeaderBytes
+  NullResponseHeaderBytes,
 } from './ResponseHeader.test'
 import { ActivateSessionResponse } from '../../dist/ua/generated'
 
@@ -10,7 +10,7 @@ describe('ActivateSessionResponse', () => {
     {
       name: 'nothing',
       instance: new ActivateSessionResponse({
-        ResponseHeader: NewNullResponseHeader()
+        ResponseHeader: NewNullResponseHeader(),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -23,7 +23,7 @@ describe('ActivateSessionResponse', () => {
       name: 'with nonce',
       instance: new ActivateSessionResponse({
         ResponseHeader: NewNullResponseHeader(),
-        ServerNonce: new Uint8Array([0xde, 0xad, 0xbe, 0xef])
+        ServerNonce: new Uint8Array([0xde, 0xad, 0xbe, 0xef]),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -31,6 +31,6 @@ describe('ActivateSessionResponse', () => {
 					0x04, 0x00, 0x00, 0x00, 0xde, 0xad, 0xbe, 0xef,
 					0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

@@ -1,7 +1,7 @@
 import run from './run'
 import {
   CloseSecureChannelResponse,
-  ResponseHeader
+  ResponseHeader,
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -16,8 +16,8 @@ describe('CloseSecureChannelResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
-        })
+          AdditionalHeader: new ExtensionObject(),
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -25,6 +25,6 @@ describe('CloseSecureChannelResponse', () => {
         0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       ])
-    }
+    },
   ])
 })

@@ -18,7 +18,7 @@ import {
   int64,
   uint64,
   float32,
-  float64
+  float64,
 } from '../types'
 
 // VariantArrayDimensions flags whether the array has more than one dimension

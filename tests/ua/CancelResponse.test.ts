@@ -13,9 +13,9 @@ describe('CancelResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
-        CancelCount: 1
+        CancelCount: 1,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -24,6 +24,6 @@ describe('CancelResponse', () => {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x01, 0x00, 0x00, 0x00,
       ])
-    }
+    },
   ])
 })

@@ -9,63 +9,63 @@ describe('Variant', () => {
       name: 'boolean',
       instance: new Variant({
         EncodingMask: TypeId.Boolean,
-        Value: false
+        Value: false,
       }),
-      bytes: new Uint8Array([0x01, 0x00])
+      bytes: new Uint8Array([0x01, 0x00]),
     },
     {
       name: 'int8',
       instance: new Variant({
         EncodingMask: TypeId.SByte,
-        Value: -5
+        Value: -5,
       }),
-      bytes: new Uint8Array([0x02, 0xfb])
+      bytes: new Uint8Array([0x02, 0xfb]),
     },
     {
       name: 'uint8',
       instance: new Variant({
         EncodingMask: TypeId.Byte,
-        Value: 5
+        Value: 5,
       }),
-      bytes: new Uint8Array([0x03, 0x05])
+      bytes: new Uint8Array([0x03, 0x05]),
     },
     {
       name: 'int16',
       instance: new Variant({
         EncodingMask: TypeId.Int16,
-        Value: -5
+        Value: -5,
       }),
-      bytes: new Uint8Array([0x04, 0xfb, 0xff])
+      bytes: new Uint8Array([0x04, 0xfb, 0xff]),
     },
     {
       name: 'uint16',
       instance: new Variant({
         EncodingMask: TypeId.Uint16,
-        Value: 5
+        Value: 5,
       }),
-      bytes: new Uint8Array([0x05, 0x05, 0x00])
+      bytes: new Uint8Array([0x05, 0x05, 0x00]),
     },
     {
       name: 'int32',
       instance: new Variant({
         EncodingMask: TypeId.Int32,
-        Value: -5
+        Value: -5,
       }),
-      bytes: new Uint8Array([0x06, 0xfb, 0xff, 0xff, 0xff])
+      bytes: new Uint8Array([0x06, 0xfb, 0xff, 0xff, 0xff]),
     },
     {
       name: 'uint32',
       instance: new Variant({
         EncodingMask: TypeId.Uint32,
-        Value: 5
+        Value: 5,
       }),
-      bytes: new Uint8Array([0x07, 0x05, 0x00, 0x00, 0x00])
+      bytes: new Uint8Array([0x07, 0x05, 0x00, 0x00, 0x00]),
     },
     {
       name: 'int64',
       instance: new Variant({
         EncodingMask: TypeId.Int64,
-        Value: BigInt(-5)
+        Value: BigInt(-5),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -77,7 +77,7 @@ describe('Variant', () => {
       name: 'uint64',
       instance: new Variant({
         EncodingMask: TypeId.Uint64,
-        Value: BigInt(5)
+        Value: BigInt(5),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -89,15 +89,15 @@ describe('Variant', () => {
       name: 'float32',
       instance: new Variant({
         EncodingMask: TypeId.Float,
-        Value: 4.000669956207275
+        Value: 4.000669956207275,
       }),
-      bytes: new Uint8Array([0x0a, 0x7d, 0x05, 0x80, 0x40])
+      bytes: new Uint8Array([0x0a, 0x7d, 0x05, 0x80, 0x40]),
     },
     {
       name: 'float64',
       instance: new Variant({
         EncodingMask: TypeId.Double,
-        Value: 4.00067
+        Value: 4.00067,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -109,15 +109,15 @@ describe('Variant', () => {
       name: 'string',
       instance: new Variant({
         EncodingMask: TypeId.String,
-        Value: 'abc'
+        Value: 'abc',
       }),
-      bytes: new Uint8Array([0x0c, 0x03, 0x00, 0x00, 0x00, 0x61, 0x62, 0x63])
+      bytes: new Uint8Array([0x0c, 0x03, 0x00, 0x00, 0x00, 0x61, 0x62, 0x63]),
     },
     {
       name: 'DateTime',
       instance: new Variant({
         EncodingMask: TypeId.DateTime,
-        Value: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112))
+        Value: new Date(Date.UTC(2018, 8, 17, 14, 28, 29, 112)),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -129,7 +129,7 @@ describe('Variant', () => {
       name: 'Guid',
       instance: new Variant({
         EncodingMask: TypeId.GUID,
-        Value: new Guid('72962B91-FA75-4AE6-8D28-B404DC7DAF63')
+        Value: new Guid('72962B91-FA75-4AE6-8D28-B404DC7DAF63'),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -142,9 +142,9 @@ describe('Variant', () => {
       name: 'ByteString',
       instance: new Variant({
         EncodingMask: TypeId.ByteString,
-        Value: new Uint8Array([0x01, 0x02, 0x03])
+        Value: new Uint8Array([0x01, 0x02, 0x03]),
       }),
-      bytes: new Uint8Array([0x0f, 0x03, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03])
-    }
+      bytes: new Uint8Array([0x0f, 0x03, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03]),
+    },
   ])
 })

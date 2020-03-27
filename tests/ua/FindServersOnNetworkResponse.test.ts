@@ -2,7 +2,7 @@ import run from './run'
 import {
   FindServersOnNetworkResponse,
   ResponseHeader,
-  ServerOnNetwork
+  ServerOnNetwork,
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -17,7 +17,7 @@ describe('FindServersOnNetworkResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         LastCounterResetTime: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
         Servers: [
@@ -25,9 +25,9 @@ describe('FindServersOnNetworkResponse', () => {
             RecordId: 1,
             ServerName: 'server-name',
             DiscoveryUrl: 'discov-uri',
-            ServerCapabilities: ['server-cap-1']
-          })
-        ]
+            ServerCapabilities: ['server-cap-1'],
+          }),
+        ],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -53,7 +53,7 @@ describe('FindServersOnNetworkResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         LastCounterResetTime: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
         Servers: [
@@ -61,15 +61,15 @@ describe('FindServersOnNetworkResponse', () => {
             RecordId: 1,
             ServerName: 'server-name',
             DiscoveryUrl: 'discov-uri',
-            ServerCapabilities: ['server-cap-1']
+            ServerCapabilities: ['server-cap-1'],
           }),
           new ServerOnNetwork({
             RecordId: 1,
             ServerName: 'server-name',
             DiscoveryUrl: 'discov-uri',
-            ServerCapabilities: ['server-cap-1', 'server-cap-2']
-          })
-        ]
+            ServerCapabilities: ['server-cap-1', 'server-cap-2'],
+          }),
+        ],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -94,6 +94,6 @@ describe('FindServersOnNetworkResponse', () => {
         0x00, 0x00, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72,
         0x2d, 0x63, 0x61, 0x70, 0x2d, 0x32,
       ])
-    }
+    },
   ])
 })

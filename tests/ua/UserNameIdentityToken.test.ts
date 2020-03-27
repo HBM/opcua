@@ -12,7 +12,7 @@ describe('UserNameIdentityToken', () => {
         Password: new Uint8Array([
           0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64
         ]),
-        EncryptionAlgorithm: 'plain'
+        EncryptionAlgorithm: 'plain',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -23,6 +23,6 @@ describe('UserNameIdentityToken', () => {
         0x05, 0x00, 0x00, 0x00, 0x70, 0x6c, 0x61, 0x69,
         0x6e
       ])
-    }
+    },
   ])
 })

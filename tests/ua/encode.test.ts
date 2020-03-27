@@ -11,7 +11,7 @@ import {
   uint64,
   float32,
   float64,
-  ByteString
+  ByteString,
 } from '../../dist/types'
 
 describe('encoding', () => {

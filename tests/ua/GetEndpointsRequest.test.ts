@@ -16,9 +16,9 @@ describe('GetEndpointsRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
-        EndpointUrl: 'opc.tcp://wow.its.easy:11111/UA/Server'
+        EndpointUrl: 'opc.tcp://wow.its.easy:11111/UA/Server',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -36,6 +36,6 @@ describe('GetEndpointsRequest', () => {
         0x72, 0x76, 0x65, 0x72, 0xff, 0xff, 0xff, 0xff,
         0xff, 0xff, 0xff, 0xff,
       ])
-    }
+    },
   ])
 })

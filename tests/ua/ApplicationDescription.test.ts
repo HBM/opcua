@@ -1,7 +1,7 @@
 import run from './run'
 import {
   ApplicationDescription,
-  ApplicationType
+  ApplicationType,
 } from '../../dist/ua/generated'
 import LocalizedText, { LocalizedTextText } from '../../dist/ua/LocalizedText'
 
@@ -14,12 +14,12 @@ describe('ApplicationDescription', () => {
         ProductUri: 'prod-uri',
         ApplicationName: new LocalizedText({
           EncodingMask: LocalizedTextText,
-          Text: 'app-name'
+          Text: 'app-name',
         }),
         ApplicationType: ApplicationType.Server,
         GatewayServerUri: 'gw-uri',
         DiscoveryProfileUri: 'prof-uri',
-        DiscoveryUrls: ['discov-uri-1', 'discov-uri-2']
+        DiscoveryUrls: ['discov-uri-1', 'discov-uri-2'],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -37,6 +37,6 @@ describe('ApplicationDescription', () => {
         0x73, 0x63, 0x6f, 0x76, 0x2d, 0x75, 0x72, 0x69,
         0x2d, 0x32
       ])
-    }
+    },
   ])
 })

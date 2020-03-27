@@ -20,7 +20,7 @@ import {
   ActivateSessionRequest,
   ActivateSessionResponse,
   MessageSecurityMode,
-  Request
+  Request,
 } from '../ua/generated'
 import SymmetricSecurityHeader from './SymmetricSecurityHeader'
 import factory from '../ua/factory'
@@ -60,26 +60,26 @@ export default class SecureChannel {
   }
 
   public openSecureChannel(): Promise<OpenSecureChannelResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const open = new OpenSecureChannelRequest({
         RequestHeader: new RequestHeader(),
         RequestType: SecurityTokenRequestTypeIssue,
         SecurityMode: MessageSecurityMode.None,
-        RequestedLifetime: 3600000
+        RequestedLifetime: 3600000,
       })
       this.send(open, resolve)
     })
   }
 
   public createSession(): Promise<CreateSessionResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const create = new CreateSessionRequest()
       this.send(create, resolve)
     })
   }
 
   public activateSession(): Promise<ActivateSessionResponse> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const activate = new ActivateSessionRequest()
       this.send(activate, resolve)
     })
@@ -102,17 +102,17 @@ export default class SecureChannel {
       ChunkHeader: new ChunkHeader({
         Header: new SecureConversationMessageHeader({
           IsFinal: ChunkTypeFinal,
-          SecureChannelId: this.secureChannelId
+          SecureChannelId: this.secureChannelId,
         }),
         SequenceHeader: new SequenceHeader({
           SequenceNumber: this.sequenceNumber += 1,
-          RequestId: this.requestId += 1
-        })
+          RequestId: this.requestId += 1,
+        }),
       }),
       TypeId: new ExpandedNodeId({
-        NodeId: NewFourByteNodeId(0, typeId as number)
+        NodeId: NewFourByteNodeId(0, typeId as number),
       }),
-      Service: request
+      Service: request,
     })
 
     // store resolve function for request id
@@ -129,7 +129,7 @@ export default class SecureChannel {
       default:
         message.ChunkHeader.Header.MessageType = MessageTypeMessage
         message.ChunkHeader.SecurityHeader = new SymmetricSecurityHeader({
-          TokenId: this.securityTokenId
+          TokenId: this.securityTokenId,
         })
         break
     }
@@ -149,7 +149,7 @@ export default class SecureChannel {
     offset = decode({
       bytes: event.data,
       instance: typeId,
-      position: offset
+      position: offset,
     })
 
     switch (header.Header.MessageType) {
@@ -158,7 +158,7 @@ export default class SecureChannel {
         offset = decode({
           bytes: event.data,
           instance: response,
-          position: offset
+          position: offset,
         })
 
         this.secureChannelId = response.SecurityToken.ChannelId
@@ -187,7 +187,7 @@ export default class SecureChannel {
         decode({
           bytes: event.data,
           instance,
-          position: offset
+          position: offset,
         })
 
         if (

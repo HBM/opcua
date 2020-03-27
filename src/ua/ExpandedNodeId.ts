@@ -63,7 +63,7 @@ export default class ExpandedNodeId {
 
 export const NewTwoByteExpandedNodeId = (id: uint8): ExpandedNodeId =>
   new ExpandedNodeId({
-    NodeId: NewTwoByteNodeId(id)
+    NodeId: NewTwoByteNodeId(id),
   })
 
 export const NewFourByteExpandedNodeId = (
@@ -71,5 +71,5 @@ export const NewFourByteExpandedNodeId = (
   id: uint16
 ): ExpandedNodeId =>
   new ExpandedNodeId({
-    NodeId: NewFourByteNodeId(ns, id)
+    NodeId: NewFourByteNodeId(ns, id),
   })

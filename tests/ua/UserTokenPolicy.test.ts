@@ -10,7 +10,7 @@ describe('UserTokenPolicy', () => {
         TokenType: UserTokenType.Anonymous,
         IssuedTokenType: 'issued-token',
         IssuerEndpointUrl: 'issuer-uri',
-        SecurityPolicyUri: 'sec-uri'
+        SecurityPolicyUri: 'sec-uri',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -22,6 +22,6 @@ describe('UserTokenPolicy', () => {
         0x00, 0x00, 0x00, 0x73, 0x65, 0x63, 0x2d, 0x75,
         0x72, 0x69,
       ])
-    }
+    },
   ])
 })

@@ -23,7 +23,7 @@ const run = (cases: Case[]): void => {
         const instance = factory(name)
         decode({
           bytes: c.bytes.buffer,
-          instance
+          instance,
         })
         expect(instance).toEqual(c.instance)
       })

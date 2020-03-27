@@ -16,9 +16,9 @@ describe('CancelRequest', () => {
           ])),
           Timestamp: new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)),
           RequestHandle: 1,
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
-        RequestHandle: 1
+        RequestHandle: 1,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -30,6 +30,6 @@ describe('CancelRequest', () => {
         0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x01, 0x00, 0x00, 0x00,
       ])
-    }
+    },
   ])
 })

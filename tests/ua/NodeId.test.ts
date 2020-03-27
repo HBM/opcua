@@ -6,7 +6,7 @@ import NodeId, {
   NewByteStringNodeId,
   ParseNodeId,
   NewNumericNodeId,
-  NewGuidNodeId
+  NewGuidNodeId,
 } from '../../dist/ua/NodeId'
 
 interface Case {
@@ -19,12 +19,12 @@ describe('NodeId', () => {
     {
       name: 'TwoByte',
       instance: NewTwoByteNodeId(72),
-      bytes: new Uint8Array([0x00, 0x48])
+      bytes: new Uint8Array([0x00, 0x48]),
     },
     {
       name: 'FourByte',
       instance: NewFourByteNodeId(5, 1025),
-      bytes: new Uint8Array([0x01, 0x05, 0x01, 0x04])
+      bytes: new Uint8Array([0x01, 0x05, 0x01, 0x04]),
     },
     {
       name: 'String',
@@ -73,7 +73,7 @@ describe('NodeId', () => {
         0x05, 0x00, 0x80, 0x04, 0x00, 0x00, 0x00, 0xde,
         0xad, 0xbe, 0xef,
       ])
-    }
+    },
   ])
 
   describe('parse', () => {
@@ -88,14 +88,14 @@ describe('NodeId', () => {
       { s: 'ns=65535;i=65536', n: NewNumericNodeId(65535, 65536) },
       {
         s: 'ns=1;g=5eac051c-c313-43d7-b790-24aa2c3cfd37',
-        n: NewGuidNodeId(1, '5eac051c-c313-43d7-b790-24aa2c3cfd37')
+        n: NewGuidNodeId(1, '5eac051c-c313-43d7-b790-24aa2c3cfd37'),
       },
       {
         s: 'ns=1;b=YWJj',
-        n: NewByteStringNodeId(1, new Uint8Array([0x61, 0x62, 0x63]))
+        n: NewByteStringNodeId(1, new Uint8Array([0x61, 0x62, 0x63])),
       },
       { s: 'ns=1;s=a', n: NewStringNodeId(1, 'a') },
-      { s: 'ns=1;a', n: NewStringNodeId(1, 'a') }
+      { s: 'ns=1;a', n: NewStringNodeId(1, 'a') },
     ]
     for (const c of cases) {
       it(`string: ${c.s}`, () => {

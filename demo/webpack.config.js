@@ -6,11 +6,11 @@ module.exports = {
   entry: path.join(__dirname, 'src', 'index.tsx'),
   output: {
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -23,17 +23,17 @@ module.exports = {
           // Translates CSS into CommonJS
           'css-loader',
           // Compiles Sass to CSS
-          'sass-loader'
-        ]
-      }
-    ]
+          'sass-loader',
+        ],
+      },
+    ],
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'index.html')
-    })
-  ]
+      template: path.join(__dirname, 'src', 'index.html'),
+    }),
+  ],
 }

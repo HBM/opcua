@@ -49,11 +49,11 @@ export default class Guid implements EnDecoder {
 
   public toString(): string {
     const a = Array.from(this.Data4.slice(0, 2))
-      .map(b => b.toString(16).padStart(2, '0'))
+      .map((b) => b.toString(16).padStart(2, '0'))
       .join('')
 
     const b = Array.from(this.Data4.slice(2))
-      .map(b => b.toString(16).padStart(2, '0'))
+      .map((b) => b.toString(16).padStart(2, '0'))
       .join('')
 
     return `${this.Data1.toString(16)}-${this.Data2.toString(

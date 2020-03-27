@@ -8,7 +8,7 @@ import {
   BrowseResultMask,
   ReadValueId,
   ReadRequest,
-  NodeClass
+  NodeClass,
 } from '../../dist/ua/generated'
 import { Id } from '../../dist/id/id'
 import { ChevronDown, ChevronRight, Play, Folder, Server } from './icons'
@@ -51,9 +51,9 @@ const ListGroup = (props: Properties) => {
         NodesToRead: [
           new ReadValueId({
             NodeId: props.referenceDescription.NodeId.NodeId,
-            AttributeId: AttributeId.DisplayName
-          })
-        ]
+            AttributeId: AttributeId.DisplayName,
+          }),
+        ],
       })
     )
     if (response.Results) {
@@ -68,9 +68,9 @@ const ListGroup = (props: Properties) => {
           NodeId: props.referenceDescription.NodeId.NodeId,
           BrowseDirection: BrowseDirection.Forward,
           IncludeSubtypes: true,
-          ResultMask: BrowseResultMask.All
-        })
-      ]
+          ResultMask: BrowseResultMask.All,
+        }),
+      ],
     })
 
     const res = await ctx.client.browse(req)
@@ -93,7 +93,7 @@ const ListGroup = (props: Properties) => {
     <ul className="list-group">
       <li
         className={classnames('list-group-item py-2', {
-          active: id === props.referenceDescription.NodeId.NodeId.toString()
+          active: id === props.referenceDescription.NodeId.NodeId.toString(),
         })}
       >
         <div className="d-flex align-items-center">
@@ -114,7 +114,7 @@ const ListGroup = (props: Properties) => {
       </li>
       <div
         className={classnames('list-group collapse', {
-          show: isOpen
+          show: isOpen,
         })}
       >
         {references

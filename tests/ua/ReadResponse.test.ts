@@ -16,18 +16,18 @@ describe('ReadRequest', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         Results: [
           new DataValue({
             EncodingMask: DataValueValue,
             Value: new Variant({
               Value: 2.5001559257507324,
-              EncodingMask: TypeId.Float
-            })
-          })
+              EncodingMask: TypeId.Float,
+            }),
+          }),
         ],
-        DiagnosticInfos: [new DiagnosticInfo()]
+        DiagnosticInfos: [new DiagnosticInfo()],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -37,6 +37,6 @@ describe('ReadRequest', () => {
         0x01, 0x00, 0x00, 0x00, 0x01, 0x0a, 0x8e, 0x02,
         0x20, 0x40, 0x01, 0x00, 0x00, 0x00, 0x00,
       ])
-    }
+    },
   ])
 })

@@ -8,7 +8,7 @@ describe('X509IdentityToken', () => {
       name: '',
       instance: new X509IdentityToken({
         PolicyId: 'x509',
-        CertificateData: encoder.encode('certificate')
+        CertificateData: encoder.encode('certificate'),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -16,6 +16,6 @@ describe('X509IdentityToken', () => {
         0x0b, 0x00, 0x00, 0x00, 0x63, 0x65, 0x72, 0x74,
         0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65,
       ])
-    }
+    },
   ])
 })

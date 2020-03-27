@@ -62,7 +62,7 @@ export default class Connection {
   }
 
   public open(): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.socket = new WebSocket(this.endpointUrl)
       this.socket.binaryType = 'arraybuffer'
       this.resolvers.set('open', resolve)
@@ -74,7 +74,7 @@ export default class Connection {
   }
 
   public hello(): Promise<AcknowledgeMessage> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.resolvers.set('hello', resolve)
 
       const hello = new HelloMessage({
@@ -83,7 +83,7 @@ export default class Connection {
         SendBufferSize: DefaultSendBufferSize,
         MaxMessageSize: 0,
         MaxChunkCount: 0,
-        EndpointUrl: this.endpointUrl
+        EndpointUrl: this.endpointUrl,
       })
       this.send('HEL', 'F', hello)
     })
@@ -108,7 +108,7 @@ export default class Connection {
     const header = new ConnectionProtocolMessageHeader({
       MessageType,
       ChunkType,
-      MessageSize: body.byteLength + 8
+      MessageSize: body.byteLength + 8,
     }).encode()
 
     const b = new Uint8Array(header.byteLength + body.byteLength)

@@ -136,7 +136,7 @@ const decode = (args: Arguments): number => {
           instance: isPrimitiveType(subtype) ? a : a[i],
           key: i,
           type: subtype,
-          position: bucket.position
+          position: bucket.position,
         })
       }
       Reflect.set(instance as object, key, a)
@@ -152,7 +152,7 @@ const decode = (args: Arguments): number => {
             instance: type === 'object' ? instance[name] : instance,
             key: name,
             type,
-            position: bucket.position
+            position: bucket.position,
           })
         }
       }

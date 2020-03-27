@@ -6,7 +6,7 @@ import DiagnosticInfo, {
   Locale,
   AdditionalInfo,
   InnerStatusCode,
-  InnerDiagnosticInfo
+  InnerDiagnosticInfo,
 } from '../../dist/ua/DiagnosticInfo'
 
 describe('DiagnosticInfo', () => {
@@ -14,13 +14,13 @@ describe('DiagnosticInfo', () => {
     {
       name: 'nothing',
       instance: new DiagnosticInfo(),
-      bytes: new Uint8Array([0x00])
+      bytes: new Uint8Array([0x00]),
     },
     {
       name: 'has symbolicID',
       instance: new DiagnosticInfo({
         EncodingMask: SymbolicId,
-        SymbolicId: 1
+        SymbolicId: 1,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -31,7 +31,7 @@ describe('DiagnosticInfo', () => {
       name: 'has namespaceURI',
       instance: new DiagnosticInfo({
         EncodingMask: NamespaceUri,
-        NamespaceUri: 2
+        NamespaceUri: 2,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -42,7 +42,7 @@ describe('DiagnosticInfo', () => {
       name: 'has localizedText',
       instance: new DiagnosticInfo({
         EncodingMask: LocalizedText,
-        LocalizedText: 3
+        LocalizedText: 3,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -53,7 +53,7 @@ describe('DiagnosticInfo', () => {
       name: 'has locale',
       instance: new DiagnosticInfo({
         EncodingMask: Locale,
-        Locale: 4
+        Locale: 4,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -64,7 +64,7 @@ describe('DiagnosticInfo', () => {
       name: 'has additionalInfo',
       instance: new DiagnosticInfo({
         EncodingMask: AdditionalInfo,
-        AdditionalInfo: 'foobar'
+        AdditionalInfo: 'foobar',
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -76,7 +76,7 @@ describe('DiagnosticInfo', () => {
       name: 'has innerStatusCode',
       instance: new DiagnosticInfo({
         EncodingMask: InnerStatusCode,
-        InnerStatusCode: 6
+        InnerStatusCode: 6,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -89,8 +89,8 @@ describe('DiagnosticInfo', () => {
         EncodingMask: InnerDiagnosticInfo,
         InnerDiagnosticInfo: new DiagnosticInfo({
           EncodingMask: SymbolicId,
-          SymbolicId: 7
-        })
+          SymbolicId: 7,
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -116,8 +116,8 @@ describe('DiagnosticInfo', () => {
         InnerStatusCode: 6,
         InnerDiagnosticInfo: new DiagnosticInfo({
           EncodingMask: SymbolicId,
-          SymbolicId: 7
-        })
+          SymbolicId: 7,
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -127,6 +127,6 @@ describe('DiagnosticInfo', () => {
         0x62, 0x61, 0x72, 0x06, 0x00, 0x00, 0x00, 0x01,
         0x07, 0x00, 0x00, 0x00
       ])
-    }
+    },
   ])
 })

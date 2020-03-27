@@ -9,7 +9,7 @@ describe('ServerOnNetwork', () => {
         RecordId: 1,
         ServerName: 'server-name',
         DiscoveryUrl: 'discov-uri',
-        ServerCapabilities: ['server-cap-1']
+        ServerCapabilities: ['server-cap-1'],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -28,7 +28,7 @@ describe('ServerOnNetwork', () => {
         RecordId: 1,
         ServerName: 'server-name',
         DiscoveryUrl: 'discov-uri',
-        ServerCapabilities: ['server-cap-1', 'server-cap-2']
+        ServerCapabilities: ['server-cap-1', 'server-cap-2'],
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -42,6 +42,6 @@ describe('ServerOnNetwork', () => {
         0x00, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x2d,
         0x63, 0x61, 0x70, 0x2d, 0x32,
       ])
-    }
+    },
   ])
 })

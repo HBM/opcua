@@ -1,7 +1,7 @@
 import run from './run'
 import {
   CreateSubscriptionResponse,
-  ResponseHeader
+  ResponseHeader,
 } from '../../dist/ua/generated'
 import DiagnosticInfo from '../../dist/ua/DiagnosticInfo'
 import ExtensionObject from '../../dist/ua/ExtensionObject'
@@ -16,12 +16,12 @@ describe('CreateSubscriptionResponse', () => {
           RequestHandle: 1,
           ServiceDiagnostics: new DiagnosticInfo(),
           StringTable: [],
-          AdditionalHeader: new ExtensionObject()
+          AdditionalHeader: new ExtensionObject(),
         }),
         SubscriptionId: 1,
         RevisedPublishingInterval: 1000,
         RevisedLifetimeCount: 60,
-        RevisedMaxKeepAliveCount: 20
+        RevisedMaxKeepAliveCount: 20,
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -32,6 +32,6 @@ describe('CreateSubscriptionResponse', () => {
         0x00, 0x40, 0x8f, 0x40, 0x3c, 0x00, 0x00, 0x00,
         0x14, 0x00, 0x00, 0x00,
       ])
-    }
+    },
   ])
 })

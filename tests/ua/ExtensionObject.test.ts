@@ -1,11 +1,11 @@
 import run from './run'
 import ExtensionObject, {
   ExtensionObjectEmpty,
-  ExtensionObjectBinary
+  ExtensionObjectBinary,
 } from '../../dist/ua/ExtensionObject'
 import {
   NewTwoByteExpandedNodeId,
-  NewFourByteExpandedNodeId
+  NewFourByteExpandedNodeId,
 } from '../../dist/ua/ExpandedNodeId'
 import { Id } from '../../dist/id/id'
 import { AnonymousIdentityToken } from '../../dist/ua/generated'
@@ -16,9 +16,9 @@ describe('ExtensionObject', () => {
       name: 'empty',
       instance: new ExtensionObject({
         TypeId: NewTwoByteExpandedNodeId(0),
-        Encoding: ExtensionObjectEmpty
+        Encoding: ExtensionObjectEmpty,
       }),
-      bytes: new Uint8Array([0x00, 0x00, 0x00])
+      bytes: new Uint8Array([0x00, 0x00, 0x00]),
     },
     {
       name: 'anonymous',
@@ -29,8 +29,8 @@ describe('ExtensionObject', () => {
         ),
         Encoding: ExtensionObjectBinary,
         Value: new AnonymousIdentityToken({
-          PolicyId: 'anonymous'
-        })
+          PolicyId: 'anonymous',
+        }),
       }),
       // prettier-ignore
       bytes: new Uint8Array([
@@ -38,6 +38,6 @@ describe('ExtensionObject', () => {
         0x00, 0x09, 0x00, 0x00, 0x00, 0x61, 0x6e, 0x6f,
         0x6e, 0x79, 0x6d, 0x6f, 0x75, 0x73,
       ])
-    }
+    },
   ])
 })

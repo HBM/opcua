@@ -11,7 +11,7 @@ import {
   uint64,
   float32,
   float64,
-  ByteString
+  ByteString,
 } from '../../dist/types'
 
 describe('decode', () => {
@@ -23,7 +23,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x01]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(true)
   })
@@ -36,7 +36,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x00]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(false)
   })
@@ -49,7 +49,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xfb]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(-5)
   })
@@ -62,7 +62,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x05]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(5)
   })
@@ -75,7 +75,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xfb, 0xff]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(-5)
   })
@@ -88,7 +88,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x34, 0x12]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(0x1234)
   })
@@ -101,7 +101,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xfb, 0xff, 0xff, 0xff]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(-5)
   })
@@ -114,7 +114,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x78, 0x56, 0x34, 0x12]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(0x12345678)
   })
@@ -128,7 +128,7 @@ describe('decode', () => {
     decode({
       bytes: new Uint8Array([0xfb, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff])
         .buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(BigInt(-5))
   })
@@ -142,7 +142,7 @@ describe('decode', () => {
     decode({
       bytes: new Uint8Array([0xef, 0xcd, 0xab, 0x90, 0x78, 0x56, 0x34, 0x12])
         .buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBe(BigInt('0x1234567890ABCDEF'))
   })
@@ -155,7 +155,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xb6, 0xf3, 0x9d, 0x3f]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBeCloseTo(1.234)
   })
@@ -169,7 +169,7 @@ describe('decode', () => {
     decode({
       bytes: new Uint8Array([0x58, 0x39, 0xb4, 0xc8, 0x76, 0xbe, 0xf3, 0xbf])
         .buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toBeCloseTo(-1.234)
   })
@@ -186,7 +186,7 @@ describe('decode', () => {
         0x02, 0x00, 0x00, 0x00, 0x34, 0x12, 0x00, 0x00,
         0x67, 0x45, 0x00, 0x00
       ]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual(new Uint32Array([0x1234, 0x4567]))
   })
@@ -199,7 +199,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xff, 0xff, 0xff, 0xff]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual(null)
   })
@@ -212,7 +212,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x00, 0x00, 0x00, 0x00]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual(new Uint32Array())
   })
@@ -225,7 +225,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x03, 0x00, 0x00, 0x00, 0x61, 0x62, 0x63]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual('abc')
   })
@@ -238,7 +238,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0xff, 0xff, 0xff, 0xff]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual('')
   })
@@ -251,7 +251,7 @@ describe('decode', () => {
     const result = new Wrapper()
     decode({
       bytes: new Uint8Array([0x03, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03]).buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual(new Uint8Array([0x01, 0x02, 0x03]))
   })
@@ -265,7 +265,7 @@ describe('decode', () => {
     decode({
       bytes: new Uint8Array([0x00, 0x98, 0x67, 0xdd, 0xfd, 0x30, 0xd4, 0x01])
         .buffer,
-      instance: result
+      instance: result,
     })
     expect(result.value).toEqual(new Date(Date.UTC(2018, 7, 10, 23, 0, 0, 0)))
   })
