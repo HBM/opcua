@@ -137,6 +137,8 @@ import ListGroup from './ListGroup'
 import { Id } from '../../dist/id/id'
 import { ReferenceDescription } from '../../dist/ua/generated'
 import { NewTwoByteExpandedNodeId } from '../../dist/ua/ExpandedNodeId'
+import Finder from './Finder'
+import Breadcrumb from './Breadcrumb'
 
 const App = () => {
   return (
@@ -170,6 +172,8 @@ const Index = () => {
       <div className="content">
         <Switch>
           <Route path="/id/:id">
+            <Breadcrumb />
+            <Finder />
             <Attributes />
             <References />
           </Route>

@@ -16,7 +16,7 @@ import LocalizedText from '../../dist/ua/LocalizedText'
 
 const Attributes = () => {
   const ctx = useContext(OPCUAContext)
-  let { id } = useParams()
+  const { id } = useParams()
   const NodeId = ParseNodeId(id as string)
 
   const [nodeClass, setNodeClass] = useState(0)

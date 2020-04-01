@@ -13,7 +13,7 @@ import { Id } from '../../dist/id/id'
 
 const References = () => {
   const ctx = useContext(OPCUAContext)
-  let { id } = useParams()
+  const { id } = useParams()
   const NodeId = ParseNodeId(id as string)
 
   const [references, setReferences] = useState<ReferenceDescription[]>([])

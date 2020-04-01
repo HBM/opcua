@@ -9,7 +9,7 @@
     "test:cov": "npm run clear && tsc --sourceMap && jest --coverage",
     "test": "rm -rf ./compiled && tsc --project ./tests/tsconfig.json && jest",
     "tsc": "tsc --project ./src/tsconfig.json --skipLibCheck",
-    "watch": "tsc -w --skipLibCheck",
+    "watch": "tsc --project ./src/tsconfig.json -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "eslint": "eslint \"./**/*.{js,ts,tsx}\""
