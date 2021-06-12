@@ -12,7 +12,8 @@
     "watch": "tsc --project ./src/tsconfig.json -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
-    "eslint": "eslint \"./**/*.{js,ts,tsx}\""
+    "eslint": "eslint \"./**/*.{js,ts,tsx}\"",
+    "prepublish": "npm run tsc"
   },
   "repository": {
     "type": "git",
