@@ -13,6 +13,7 @@
     "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "eslint": "eslint \"./**/*.{js,ts,tsx}\"",
+    "prepare": "tsc --project ./src/tsconfig.json --skipLibCheck",
     "prepublish": "npm run tsc"
   },
   "repository": {

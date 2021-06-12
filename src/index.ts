@@ -108,6 +108,8 @@ import Variant, {
   VariantArrayValues,
 } from './ua/Variant'
 
+import { Id } from './id/id'
+
 export default Client
 export {
   Bucket,
@@ -150,5 +152,6 @@ export {
   isPrimitiveType,
   Variant,
   VariantArrayDimensions,
-  VariantArrayValues
+  VariantArrayValues,
+  Id
 }
