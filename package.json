@@ -12,7 +12,9 @@
     "watch": "tsc --project ./src/tsconfig.json -w --skipLibCheck",
     "prettier": "prettier --write \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
     "prettier:ci": "prettier --list-different \"./**/*.{js,ts,tsx,json,html,yml,scss}\"",
-    "eslint": "eslint \"./**/*.{js,ts,tsx}\""
+    "eslint": "eslint \"./**/*.{js,ts,tsx}\"",
+    "prepare": "tsc --project ./src/tsconfig.json --skipLibCheck",
+    "prepublish": "npm run tsc"
   },
   "repository": {
     "type": "git",
@@ -34,10 +36,10 @@
     "eslint-config-prettier": "^6.10.1",
     "jest": "^25.2.3",
     "prettier": "^2.0.2",
-    "reflect-metadata": "^0.1.13",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "reflect-metadata": "^0.1.13"
   }
 }
